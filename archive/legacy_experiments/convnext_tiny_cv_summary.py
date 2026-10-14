@@ -1,7 +1,7 @@
 import json
 from statistics import mean, stdev
 
-from trained_model_evaluation import save_evaluation_report
+from evaluation.trained_model_evaluation import save_evaluation_report
 
 
 fold_reports = []

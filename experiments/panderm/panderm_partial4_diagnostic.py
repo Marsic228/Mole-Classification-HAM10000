@@ -21,7 +21,7 @@ from experiments.panderm.panderm_cv_train import (
     DEVICE, FocalLoss, build_panderm_model,
     run_validation_epoch_with_macro_f1,
 )
-from trained_model_evaluation import build_evaluation_report, calculate_overall_accuracy
+from evaluation.trained_model_evaluation import build_evaluation_report, calculate_overall_accuracy
 
 FOLD = 1
 CHECKPOINT = Path(f"checkpoints/panderm_base_partial4_ema_seed123_fold{FOLD}_best.pt")

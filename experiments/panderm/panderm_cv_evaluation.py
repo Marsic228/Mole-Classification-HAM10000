@@ -8,7 +8,7 @@ from torchvision.models import ConvNeXt_Tiny_Weights
 from cross_validation_dataset import CrossValidationDataset
 from cross_validation_split import get_fold_metadata
 from experiments.panderm.panderm_cv_train import build_panderm_model, DEVICE
-from trained_model_evaluation import (
+from evaluation.trained_model_evaluation import (
     build_evaluation_report,
     calculate_overall_accuracy,
     save_evaluation_report,

@@ -10,7 +10,7 @@ from torchvision.models import (
 from cross_validation_split import get_fold_metadata
 from cross_validation_dataset import CrossValidationDataset
 
-from trained_model_evaluation import (
+from evaluation.trained_model_evaluation import (
     build_evaluation_report,
     save_evaluation_report,
     calculate_overall_accuracy,
