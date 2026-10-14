@@ -1,4 +1,4 @@
-﻿"""Export out-of-fold predictions using EACH MODEL'S ORIGINAL ENVIRONMENT.
+"""Export out-of-fold predictions using EACH MODEL'S ORIGINAL ENVIRONMENT.
 
 Run twice, from the Mole Classification project root:
 
@@ -45,7 +45,7 @@ def load_model(model_name: str, checkpoint_path: Path) -> nn.Module:
         model = convnext_tiny(weights=None)
         model.classifier[2] = nn.Linear(model.classifier[2].in_features, 7)
     else:
-        from panderm_cv_train import build_panderm_model
+        from experiments.panderm.panderm_cv_train import build_panderm_model
         model = build_panderm_model()
 
     checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=True)

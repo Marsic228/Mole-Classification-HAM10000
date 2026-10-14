@@ -17,7 +17,7 @@ from torchvision.models import ConvNeXt_Tiny_Weights
 
 from cross_validation_split import get_fold_metadata
 from cross_validation_dataset import CrossValidationDataset
-from panderm_cv_train import (
+from experiments.panderm.panderm_cv_train import (
     DEVICE, FocalLoss, build_panderm_model,
     run_validation_epoch_with_macro_f1,
 )

@@ -11,7 +11,7 @@ from pathlib import Path
 
 import numpy as np
 
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 PANDERM_DIR = PROJECT_ROOT / "PanDerm" / "classification"
 
 PANDERM_MODEL_FILE = (
