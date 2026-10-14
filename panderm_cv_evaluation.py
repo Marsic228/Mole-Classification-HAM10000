@@ -1,13 +1,3 @@
-"""Evaluate saved PanDerm partial8 EMA best checkpoints on their CV validation folds.
-
-Put this file beside panderm_cv_train.py in the Mole Classification project.
-Run from the project root in the .venv-panderm environment:
-    python panderm_partial8_cv_evaluation.py
-
-This script does not train or modify checkpoints. It uses the same validation
-preprocessing and fold metadata as panderm_cv_train.py.
-"""
-
 from pathlib import Path
 from statistics import mean, stdev
 
@@ -26,7 +16,7 @@ from trained_model_evaluation import (
 from train import save_json
 
 
-TAG = "checkpoints/panderm_base_partial4_ema_seed123"
+TAG = "panderm_base_partial4_ema_seed123"
 TRANSFORM = ConvNeXt_Tiny_Weights.DEFAULT.transforms()
 
 
