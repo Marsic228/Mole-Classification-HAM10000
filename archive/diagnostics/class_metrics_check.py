@@ -1,7 +1,7 @@
 from pathlib import Path
 import json
 
-from metrics import calculate_class_metrics
+from evaluation.metrics import calculate_class_metrics
 
 
 def load_confusion_matrix_report(path):

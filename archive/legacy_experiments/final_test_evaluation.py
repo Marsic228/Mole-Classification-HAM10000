@@ -6,8 +6,8 @@ from torch import nn
 
 import torch
 from dataset_loader_check import build_split_datasets, build_split_loaders
-from confusion_matrix_check import collect_validation_predictions, build_confusion_matrix
-from metrics import calculate_class_metrics
+from evaluation.confusion_matrix_check import collect_validation_predictions, build_confusion_matrix
+from evaluation.metrics import calculate_class_metrics
 from archive.legacy_experiments.baseline_experiment import calculate_majority_class_baseline
 
 def save_json(data, path):
