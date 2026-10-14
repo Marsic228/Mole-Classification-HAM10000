@@ -1,7 +1,7 @@
-from training_step_check import build_loss_function, build_optimizer, run_training_step
+from archive.diagnostics.training_step_check import build_loss_function, build_optimizer, run_training_step
 from torchvision import transforms
-from dataset_loader_check import build_split_datasets, build_split_loaders
-from baseline_cnn_forward_check import build_baseline_cnn
+from archive.diagnostics.dataset_loader_check import build_split_datasets, build_split_loaders
+from archive.diagnostics.baseline_cnn_forward_check import build_baseline_cnn
 
 def run_tiny_training_loop(model, train_loader, loss_function, optimizer, max_batches):
     losses = []

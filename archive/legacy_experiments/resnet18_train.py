@@ -4,9 +4,9 @@ import torch
 from torchvision import models
 from torch import nn
 
-from dataset_loader_check import build_split_datasets, build_split_loaders
-from training_step_check import build_loss_function, run_training_step
-from one_epoch_training_check import run_validation_epoch
+from archive.diagnostics.dataset_loader_check import build_split_datasets, build_split_loaders
+from archive.diagnostics.training_step_check import build_loss_function, run_training_step
+from archive.diagnostics.one_epoch_training_check import run_validation_epoch
 
 def save_json(data, path):
     path = Path(path)

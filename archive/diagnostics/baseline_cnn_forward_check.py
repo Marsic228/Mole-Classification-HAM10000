@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from torchvision import transforms
-from dataset_loader_check import build_split_datasets, build_split_loaders
+from archive.diagnostics.dataset_loader_check import build_split_datasets, build_split_loaders
 
 def build_baseline_cnn(num_classes):
     model = nn.Sequential(

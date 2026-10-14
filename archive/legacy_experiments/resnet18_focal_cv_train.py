@@ -4,8 +4,8 @@ import math
 
 import torch.nn.functional as F
 
-from training_step_check import run_training_step
-from one_epoch_training_check import run_validation_epoch
+from archive.diagnostics.training_step_check import run_training_step
+from archive.diagnostics.one_epoch_training_check import run_validation_epoch
 
 from torch.utils.data import DataLoader, WeightedRandomSampler
 from torchvision.models import resnet18, ResNet18_Weights

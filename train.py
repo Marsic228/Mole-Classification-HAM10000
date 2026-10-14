@@ -3,10 +3,10 @@ import json
 import torch
 from torchvision import transforms
 
-from dataset_loader_check import build_split_datasets, build_split_loaders
-from baseline_cnn_forward_check import build_baseline_cnn
-from training_step_check import build_loss_function, build_optimizer, run_training_step
-from one_epoch_training_check import run_validation_epoch
+from archive.diagnostics.dataset_loader_check import build_split_datasets, build_split_loaders
+from archive.diagnostics.baseline_cnn_forward_check import build_baseline_cnn
+from archive.diagnostics.training_step_check import build_loss_function, build_optimizer, run_training_step
+from archive.diagnostics.one_epoch_training_check import run_validation_epoch
 
 def save_json(data, path):
     path = Path(path)

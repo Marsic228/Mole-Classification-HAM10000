@@ -1,7 +1,7 @@
 import torch
 from torchvision import models, transforms
 from torch import nn
-from dataset_loader_check import build_split_datasets, build_split_loaders
+from archive.diagnostics.dataset_loader_check import build_split_datasets, build_split_loaders
 
 
 

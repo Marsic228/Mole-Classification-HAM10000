@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from training_step_check import run_training_step
+from archive.diagnostics.training_step_check import run_training_step
 
 from torch.utils.data import DataLoader, WeightedRandomSampler
 from torchvision.models import resnet18, ResNet18_Weights
@@ -10,7 +10,7 @@ from cross_validation_dataset import CrossValidationDataset
 
 from utils import count_images_per_class, build_class_weights
 from train import save_json, save_checkpoint, build_epoch_report
-from one_epoch_training_check import run_validation_epoch
+from archive.diagnostics.one_epoch_training_check import run_validation_epoch
 
 
 

@@ -4,8 +4,8 @@ from pathlib import Path
 import torch
 from torchvision import transforms
 
-from dataset_loader_check import build_split_datasets, build_split_loaders
-from baseline_cnn_forward_check import build_baseline_cnn
+from archive.diagnostics.dataset_loader_check import build_split_datasets, build_split_loaders
+from archive.diagnostics.baseline_cnn_forward_check import build_baseline_cnn
 from evaluation.confusion_matrix_check import collect_validation_predictions, build_confusion_matrix
 from evaluation.metrics import calculate_class_metrics
 

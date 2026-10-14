@@ -1,7 +1,7 @@
-from dataset_loader_check import build_split_datasets, build_split_loaders
-from baseline_cnn_forward_check import build_baseline_cnn
-from training_step_check import build_loss_function, build_optimizer
-from one_epoch_training_check import run_one_train_epoch, run_validation_epoch
+from archive.diagnostics.dataset_loader_check import build_split_datasets, build_split_loaders
+from archive.diagnostics.baseline_cnn_forward_check import build_baseline_cnn
+from archive.diagnostics.training_step_check import build_loss_function, build_optimizer
+from archive.diagnostics.one_epoch_training_check import run_one_train_epoch, run_validation_epoch
 from torchvision import transforms
 
 

@@ -1,8 +1,8 @@
 import torch
 from torch import nn
 from torchvision import transforms
-from dataset_loader_check import build_split_datasets, build_split_loaders
-from baseline_cnn_forward_check import build_baseline_cnn
+from archive.diagnostics.dataset_loader_check import build_split_datasets, build_split_loaders
+from archive.diagnostics.baseline_cnn_forward_check import build_baseline_cnn
 
 def build_loss_function():
     loss_function = nn.CrossEntropyLoss()
