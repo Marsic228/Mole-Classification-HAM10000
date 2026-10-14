@@ -42,6 +42,9 @@ class FocalLoss(nn.Module):
 
 TRAIN_SEED = 123
 EMA_DECAY = 0.999
+BASE_LR = 1e-4
+WARMUP_START_FACTOR = 0.1
+RUN_NAME = "convnext_tiny_finetune_v17_warmup_seed123"
 
 
 def update_ema(ema_model, model, decay):
@@ -225,7 +228,8 @@ def run_convnext_train_epoch(
     loss_function,
     optimizer,
     scaler,
-    device
+    device,
+    warmup=False,
 ):
     # Keep frozen modules in eval mode while training only
     # the last feature modules and classifier.
@@ -236,7 +240,19 @@ def run_convnext_train_epoch(
 
     losses = []
 
-    for images, labels in train_loader:
+    for batch_idx, (images, labels) in enumerate(train_loader):
+        # v17: only during epoch 1, gradually increase LR from
+        # 0.1 * BASE_LR to BASE_LR across the training batches.
+        # The existing epoch-level cosine scheduler remains unchanged.
+        if warmup:
+            warmup_progress = batch_idx / max(len(train_loader) - 1, 1)
+            batch_lr = BASE_LR * (
+                WARMUP_START_FACTOR
+                + (1.0 - WARMUP_START_FACTOR) * warmup_progress
+            )
+            for group in optimizer.param_groups:
+                group["lr"] = batch_lr
+
         images = images.to(device)
         labels = labels.to(device)
 
@@ -348,7 +364,7 @@ def run_fold(fold_number, num_epochs=15):
 
     optimizer = torch.optim.Adam(
         trainable_params,
-        lr=1e-4
+        lr=BASE_LR
     )
 
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
@@ -378,7 +394,8 @@ def run_fold(fold_number, num_epochs=15):
             loss_function,
             optimizer,
             scaler,
-            DEVICE
+            DEVICE,
+            warmup=(epoch == 1),
         )
 
         val_loss, val_accuracy, val_macro_f1 = (
@@ -401,8 +418,18 @@ def run_fold(fold_number, num_epochs=15):
 
         epoch_report["val_macro_f1"] = val_macro_f1
         epoch_report["learning_rate"] = current_lr
+        if epoch == 1:
+            epoch_report["warmup_start_lr"] = BASE_LR * WARMUP_START_FACTOR
+            epoch_report["warmup_end_lr"] = BASE_LR
+            epoch_report["warmup_batches"] = len(train_loader)
 
         history.append(epoch_report)
+
+        if epoch == 1:
+            print(
+                f"  -> Warmup: {BASE_LR * WARMUP_START_FACTOR:.1e} "
+                f"-> {BASE_LR:.1e} over {len(train_loader)} batches"
+            )
 
         print(
             f"Fold {fold_number}: "
@@ -415,8 +442,7 @@ def run_fold(fold_number, num_epochs=15):
 
         save_json(
             epoch_report,
-            f"reports/convnext_tiny_finetune_v13_ema_seed123_"
-            f"fold{fold_number}_epoch_{epoch}_report.json"
+            f"reports/{RUN_NAME}_fold{fold_number}_epoch_{epoch}_report.json"
         )
 
         if val_macro_f1 > best_macro_f1:
@@ -424,14 +450,13 @@ def run_fold(fold_number, num_epochs=15):
             best_epoch = epoch
             epochs_without_improvement = 0
 
-            # v13 reference checkpoint contains EMA weights.
+            # v17 checkpoint contains EMA weights (as in v13).
             save_checkpoint(
                 ema_model,
                 optimizer,
                 epoch,
                 epoch_report,
-                f"checkpoints/convnext_tiny_finetune_v13_ema_seed123_"
-                f"fold{fold_number}_best.pt"
+                f"checkpoints/{RUN_NAME}_fold{fold_number}_best.pt"
             )
 
             print(
@@ -447,6 +472,8 @@ def run_fold(fold_number, num_epochs=15):
                 f"({epochs_without_improvement}/{patience})"
             )
 
+        # Warmup reaches BASE_LR at the end of epoch 1.
+        # From epoch 2 onward, the LR matches the original v13 cosine schedule.
         scheduler.step()
 
         if epochs_without_improvement >= patience:
@@ -459,22 +486,22 @@ def run_fold(fold_number, num_epochs=15):
 
     save_json(
         history,
-        f"reports/convnext_tiny_finetune_v13_ema_seed123_"
-        f"fold{fold_number}_training_history.json"
+        f"reports/{RUN_NAME}_fold{fold_number}_training_history.json"
     )
 
     best_summary = {
         "fold": fold_number,
         "train_seed": TRAIN_SEED,
         "ema_decay": EMA_DECAY,
+        "warmup_start_factor": WARMUP_START_FACTOR,
+        "warmup_epochs": 1,
         "best_epoch": best_epoch,
         "best_macro_f1": best_macro_f1,
     }
 
     save_json(
         best_summary,
-        f"reports/convnext_tiny_finetune_v13_ema_seed123_"
-        f"fold{fold_number}_best_summary.json"
+        f"reports/{RUN_NAME}_fold{fold_number}_best_summary.json"
     )
 
     return history
@@ -490,6 +517,6 @@ if __name__ == "__main__":
     elapsed = time.perf_counter() - start_time
 
     print(
-        f"\nV13 full CV time: "
+        f"\nV17 warmup elapsed time: "
         f"{elapsed / 60:.1f} minutes"
     )
