@@ -1,6 +1,6 @@
 from PIL import Image
 from pathlib import Path
-from validate_image_paths import load_metadata
+from preprocessing.validate_image_paths import load_metadata
 
 def inspect_one_image(image_path):
     image = Image.open(image_path)

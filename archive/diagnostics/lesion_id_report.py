@@ -1,4 +1,4 @@
-from validate_image_paths import load_metadata
+from preprocessing.validate_image_paths import load_metadata
 import json
 from pathlib import Path
 

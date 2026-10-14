@@ -1,6 +1,6 @@
 import random
-from validate_image_paths import load_metadata
-from split_config import build_split_config
+from preprocessing.validate_image_paths import load_metadata
+from preprocessing.split_config import build_split_config
 import json
 from pathlib import Path
 

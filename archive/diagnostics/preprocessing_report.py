@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from preprocessing.inspect_images import inspect_image_sample
-from validate_image_paths import load_metadata
+from preprocessing.validate_image_paths import load_metadata
 
 
 

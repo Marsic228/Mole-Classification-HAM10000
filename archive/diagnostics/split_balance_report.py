@@ -1,8 +1,8 @@
 from pathlib import Path
 import json
-from validate_image_paths import load_metadata
-from split_config import build_split_config
-from split_dataset import group_records_by_lesion_id, split_lesion_ids, assign_records_to_splits
+from preprocessing.validate_image_paths import load_metadata
+from preprocessing.split_config import build_split_config
+from preprocessing.split_dataset import group_records_by_lesion_id, split_lesion_ids, assign_records_to_splits
 
 def count_labels(records):
     result = {}
