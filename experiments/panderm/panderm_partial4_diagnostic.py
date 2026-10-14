@@ -15,8 +15,8 @@ from sklearn.metrics import accuracy_score, f1_score
 from torch.utils.data import DataLoader
 from torchvision.models import ConvNeXt_Tiny_Weights
 
-from cross_validation_split import get_fold_metadata
-from cross_validation_dataset import CrossValidationDataset
+from core.cross_validation_split import get_fold_metadata
+from core.cross_validation_dataset import CrossValidationDataset
 from experiments.panderm.panderm_cv_train import (
     DEVICE, FocalLoss, build_panderm_model,
     run_validation_epoch_with_macro_f1,

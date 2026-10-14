@@ -1,10 +1,10 @@
 import torch.nn as nn
 import torch
-from cross_validation_split import get_fold_metadata
+from core.cross_validation_split import get_fold_metadata
 from torch.utils.data import DataLoader
-from cross_validation_dataset import CrossValidationDataset
+from core.cross_validation_dataset import CrossValidationDataset
 from torch.utils.data import WeightedRandomSampler
-from utils import count_images_per_class, build_class_weights
+from core.utils import count_images_per_class, build_class_weights
 
 from torchvision.models import (
     efficientnet_b0,

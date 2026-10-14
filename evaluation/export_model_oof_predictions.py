@@ -24,8 +24,8 @@ from torch.utils.data import DataLoader
 from torchvision.models import ConvNeXt_Tiny_Weights, convnext_tiny
 import torch.nn as nn
 
-from cross_validation_dataset import CrossValidationDataset
-from cross_validation_split import get_fold_metadata
+from core.cross_validation_dataset import CrossValidationDataset
+from core.cross_validation_split import get_fold_metadata
 
 CLASSES = ["akiec", "bcc", "bkl", "df", "mel", "nv", "vasc"]
 CHECKPOINTS = {

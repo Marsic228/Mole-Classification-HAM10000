@@ -1,9 +1,9 @@
 import pandas as pd
-from cross_validation_dataset import CrossValidationDataset
+from core.cross_validation_dataset import CrossValidationDataset
 from torchvision import transforms
 
 from torch.utils.data import DataLoader, WeightedRandomSampler
-from utils import count_images_per_class, build_class_weights
+from core.utils import count_images_per_class, build_class_weights
 
 from sklearn.model_selection import StratifiedGroupKFold
 from preprocessing.validate_image_paths import load_metadata

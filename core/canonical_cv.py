@@ -2,7 +2,7 @@
 
 Run from the Mole Classification repository root.
 This does not overwrite the original ConvNeXt/PanDerm exports or retrain models.
-For NEW experiments only: `from canonical_cv import get_fold_metadata`.
+For NEW experiments only: `from core.canonical_cv import get_fold_metadata`.
 """
 from __future__ import annotations
 
@@ -69,7 +69,7 @@ def load_assignments(path: Path) -> tuple[dict[str, dict], dict[int, dict]]:
 
 def check_against_metadata(assignments: dict[str, dict]):
     # Existing project metadata construction; do NOT regenerate splits here.
-    from cross_validation_split import metadata
+    from core.cross_validation_split import metadata
     meta = metadata.copy().reset_index(drop=True)
     for col in ("image_id", "lesion_id", "dx", "source_split"):
         if col not in meta.columns or meta[col].isna().any():

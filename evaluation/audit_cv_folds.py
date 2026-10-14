@@ -60,7 +60,7 @@ def export(args: argparse.Namespace) -> None:
         raise FileNotFoundError(f"cross_validation_split.py not found in {project}")
     os.chdir(project)
     sys.path.insert(0, str(project))
-    module = importlib.import_module("cross_validation_split")
+    module = importlib.import_module("core.cross_validation_split")
 
     metadata = module.metadata.reset_index(drop=True)
     required = {"image_id", "lesion_id", "dx", "source_split"}

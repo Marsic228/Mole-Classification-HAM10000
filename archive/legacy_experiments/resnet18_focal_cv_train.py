@@ -10,11 +10,11 @@ from archive.diagnostics.one_epoch_training_check import run_validation_epoch
 from torch.utils.data import DataLoader, WeightedRandomSampler
 from torchvision.models import resnet18, ResNet18_Weights
 
-from cross_validation_split import get_fold_metadata
-from cross_validation_dataset import CrossValidationDataset
+from core.cross_validation_split import get_fold_metadata
+from core.cross_validation_dataset import CrossValidationDataset
 
-from utils import count_images_per_class, build_class_weights
-from train import save_json, save_checkpoint, build_epoch_report
+from core.utils import count_images_per_class, build_class_weights
+from core.train import save_json, save_checkpoint, build_epoch_report
 
 
 class FocalLoss(nn.Module):

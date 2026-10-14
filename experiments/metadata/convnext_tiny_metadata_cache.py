@@ -7,8 +7,8 @@ from torchvision.models import (
     ConvNeXt_Tiny_Weights,
 )
 
-from cross_validation_split import get_fold_metadata
-from cross_validation_dataset import CrossValidationDataset
+from core.cross_validation_split import get_fold_metadata
+from core.cross_validation_dataset import CrossValidationDataset
 
 from pathlib import Path
 

@@ -15,11 +15,11 @@ from torchvision.models import (
     ConvNeXt_Tiny_Weights,
 )
 
-from canonical_cv import get_fold_metadata
-from cross_validation_dataset import CrossValidationDataset
+from core.canonical_cv import get_fold_metadata
+from core.cross_validation_dataset import CrossValidationDataset
 
-from utils import count_images_per_class
-from train import save_json, save_checkpoint, build_epoch_report
+from core.utils import count_images_per_class
+from core.train import save_json, save_checkpoint, build_epoch_report
 
 
 class FocalLoss(nn.Module):

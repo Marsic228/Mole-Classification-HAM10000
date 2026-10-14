@@ -5,8 +5,8 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from torchvision.models import resnet18, ResNet18_Weights
 
-from cross_validation_split import get_fold_metadata
-from cross_validation_dataset import CrossValidationDataset
+from core.cross_validation_split import get_fold_metadata
+from core.cross_validation_dataset import CrossValidationDataset
 
 
 HARD_CLASSES = {2, 4, 5}  # bkl, mel, nv

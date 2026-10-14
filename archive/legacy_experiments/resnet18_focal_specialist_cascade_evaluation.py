@@ -5,8 +5,8 @@ from statistics import mean, stdev
 from torch.utils.data import DataLoader
 from torchvision.models import resnet18, ResNet18_Weights
 
-from cross_validation_split import get_fold_metadata
-from cross_validation_dataset import CrossValidationDataset
+from core.cross_validation_split import get_fold_metadata
+from core.cross_validation_dataset import CrossValidationDataset
 
 from evaluation.trained_model_evaluation import (
     build_evaluation_report,

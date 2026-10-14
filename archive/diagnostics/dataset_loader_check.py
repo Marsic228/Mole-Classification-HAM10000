@@ -2,7 +2,7 @@ from pathlib import Path
 from torchvision.datasets import ImageFolder
 from torchvision import transforms
 from torch.utils.data import DataLoader, WeightedRandomSampler
-from utils import count_images_per_class, build_class_weights
+from core.utils import count_images_per_class, build_class_weights
 
 class AugmentedImageFolder(ImageFolder):
     def __init__(

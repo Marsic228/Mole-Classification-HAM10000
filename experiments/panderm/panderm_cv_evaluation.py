@@ -5,15 +5,15 @@ import torch
 from torch.utils.data import DataLoader
 from torchvision.models import ConvNeXt_Tiny_Weights
 
-from cross_validation_dataset import CrossValidationDataset
-from cross_validation_split import get_fold_metadata
+from core.cross_validation_dataset import CrossValidationDataset
+from core.cross_validation_split import get_fold_metadata
 from experiments.panderm.panderm_cv_train import build_panderm_model, DEVICE
 from evaluation.trained_model_evaluation import (
     build_evaluation_report,
     calculate_overall_accuracy,
     save_evaluation_report,
 )
-from train import save_json
+from core.train import save_json
 
 
 TAG = "panderm_base_partial4_ema_seed123"
