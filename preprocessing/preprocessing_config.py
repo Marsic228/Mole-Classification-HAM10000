@@ -1,5 +1,5 @@
 import json
-from inspect_images import inspect_one_image
+from preprocessing.inspect_images import inspect_one_image
 
 def build_preprocessing_config():
     return {

@@ -8,7 +8,7 @@ import torch
 from dataset_loader_check import build_split_datasets, build_split_loaders
 from confusion_matrix_check import collect_validation_predictions, build_confusion_matrix
 from metrics import calculate_class_metrics
-from baseline_experiment import calculate_majority_class_baseline
+from archive.legacy_experiments.baseline_experiment import calculate_majority_class_baseline
 
 def save_json(data, path):
     path = Path(path)

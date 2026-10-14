@@ -1,7 +1,7 @@
 from pathlib import Path
 from PIL import Image
 from preprocessing.preprocessing_config import load_preprocessing_config
-from inspect_images import inspect_one_image
+from preprocessing.inspect_images import inspect_one_image
 
 def resize_one_image(input_path, output_path, config):
     input_path = Path(input_path)
