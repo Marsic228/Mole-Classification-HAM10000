@@ -17,3 +17,10 @@ dataset files and Python environment.
 
 Do not move shared utilities or historical training implementations
 without checking their imports and evaluation dependencies.
+
+legacy_experiments/ - Historical ResNet18, EfficientNet-B0 and
+MobileNetV3 training and evaluation scripts.
+
+These scripts rely on shared utilities in the project root.
+Historical experiments may also require their original Python
+environments and fold assignments.
