@@ -1,6 +1,6 @@
 from pprint import pprint
-from dataset_config import DatasetConfig
-from experiment_run import ExperimentRun
+from archive.diagnostics.dataset_config import DatasetConfig
+from archive.diagnostics.experiment_run import ExperimentRun
 import json
 import csv
 

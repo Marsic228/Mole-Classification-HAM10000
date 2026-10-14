@@ -1,7 +1,7 @@
 from pathlib import Path
 from preprocessing.preprocessing_config import load_preprocessing_config
 from preprocessing.resize_preview import resize_one_image
-from dataset_summary import load_metadata_sample
+from archive.diagnostics.dataset_summary import load_metadata_sample
 
 def resize_image_sample(records, image_dir, output_dir, config, limit):
     image_dir = Path(image_dir)
