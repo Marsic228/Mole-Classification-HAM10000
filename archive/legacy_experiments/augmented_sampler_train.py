@@ -3,7 +3,7 @@ from baseline_cnn_forward_check import build_baseline_cnn
 from torch import nn
 from training_step_check import build_optimizer
 from one_epoch_training_check import run_one_train_epoch, run_validation_epoch
-from weighted_train import build_epoch_report, save_json, save_checkpoint
+from archive.legacy_experiments.weighted_train import build_epoch_report, save_json, save_checkpoint
 
 def run_augmented_sampler_training_experiment(num_epochs, train_max_batches=None, val_max_batches=None):
     transforms_dict = build_transforms()
