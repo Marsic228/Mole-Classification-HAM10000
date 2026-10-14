@@ -3,7 +3,7 @@ from PIL import Image
 from validate_image_paths import load_metadata
 from split_config import build_split_config
 from split_dataset import group_records_by_lesion_id, split_lesion_ids, assign_records_to_splits
-from preprocessing_config import load_preprocessing_config
+from preprocessing.preprocessing_config import load_preprocessing_config
 import json
 
 def build_output_path(output_dir, split_name, label, image_id, config):

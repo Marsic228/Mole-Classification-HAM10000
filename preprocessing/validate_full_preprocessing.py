@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from preprocess_split_sample import validate_processed_image
+from preprocessing.preprocess_split_sample import validate_processed_image
 
 def load_json(path):
     path = Path(path)
