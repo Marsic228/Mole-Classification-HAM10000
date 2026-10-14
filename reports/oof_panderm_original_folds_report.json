@@ -1,0 +1,54 @@
+{
+  "model": "panderm",
+  "sklearn_version": "1.7.2",
+  "torch_version": "2.4.1+cu118",
+  "fold_reports": [
+    {
+      "fold": 1,
+      "train_count": 6831,
+      "val_count": 1699,
+      "macro_f1": 0.7463884658674907,
+      "accuracy": 0.8393172454384933,
+      "expected_f1": 0.7464,
+      "reference_difference": -1.1534132509205541e-05
+    },
+    {
+      "fold": 2,
+      "train_count": 6835,
+      "val_count": 1695,
+      "macro_f1": 0.7472496281054967,
+      "accuracy": 0.8383480825958702,
+      "expected_f1": 0.7469,
+      "reference_difference": 0.0003496281054966577
+    },
+    {
+      "fold": 3,
+      "train_count": 6817,
+      "val_count": 1713,
+      "macro_f1": 0.7638175672724639,
+      "accuracy": 0.8447168709865732,
+      "expected_f1": 0.7638,
+      "reference_difference": 1.756727246382539e-05
+    },
+    {
+      "fold": 4,
+      "train_count": 6828,
+      "val_count": 1702,
+      "macro_f1": 0.721646969275839,
+      "accuracy": 0.8307873090481787,
+      "expected_f1": 0.7216,
+      "reference_difference": 4.69692758390261e-05
+    },
+    {
+      "fold": 5,
+      "train_count": 6809,
+      "val_count": 1721,
+      "macro_f1": 0.7051930672264138,
+      "accuracy": 0.8221963974433469,
+      "expected_f1": 0.7052,
+      "reference_difference": -6.932773586210139e-06
+    }
+  ],
+  "total_images": 8530,
+  "npz": "reports\\oof_panderm_original_folds.npz"
+}

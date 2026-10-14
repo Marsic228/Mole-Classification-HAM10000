@@ -1,0 +1,54 @@
+{
+  "model": "convnext",
+  "sklearn_version": "1.9.0",
+  "torch_version": "2.12.0+cu126",
+  "fold_reports": [
+    {
+      "fold": 1,
+      "train_count": 6823,
+      "val_count": 1707,
+      "macro_f1": 0.7481266810738457,
+      "accuracy": 0.8459285295840656,
+      "expected_f1": 0.7481,
+      "reference_difference": 2.6681073845735703e-05
+    },
+    {
+      "fold": 2,
+      "train_count": 6824,
+      "val_count": 1706,
+      "macro_f1": 0.7450622580426757,
+      "accuracy": 0.8475967174677609,
+      "expected_f1": 0.7451,
+      "reference_difference": -3.774195732431096e-05
+    },
+    {
+      "fold": 3,
+      "train_count": 6824,
+      "val_count": 1706,
+      "macro_f1": 0.7591302476141465,
+      "accuracy": 0.8522860492379836,
+      "expected_f1": 0.7586,
+      "reference_difference": 0.0005302476141464396
+    },
+    {
+      "fold": 4,
+      "train_count": 6825,
+      "val_count": 1705,
+      "macro_f1": 0.7193401892760143,
+      "accuracy": 0.829325513196481,
+      "expected_f1": 0.7195,
+      "reference_difference": -0.0001598107239857427
+    },
+    {
+      "fold": 5,
+      "train_count": 6824,
+      "val_count": 1706,
+      "macro_f1": 0.743661098350232,
+      "accuracy": 0.85052754982415,
+      "expected_f1": 0.7437,
+      "reference_difference": -3.890164976805277e-05
+    }
+  ],
+  "total_images": 8530,
+  "npz": "reports\\oof_convnext_original_folds.npz"
+}

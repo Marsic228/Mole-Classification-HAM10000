@@ -1,0 +1,75 @@
+{
+  "folds": [
+    1
+  ],
+  "results": [
+    {
+      "fold": 1,
+      "sample_count": 1707,
+      "convnext_v17": {
+        "accuracy": 0.8459285295840656,
+        "macro_precision": 0.7630782582198423,
+        "macro_recall": 0.746866777728385,
+        "macro_f1": 0.7481266810738457,
+        "per_class_f1": {
+          "akiec": 0.6440677966101694,
+          "bcc": 0.7783783783783784,
+          "bkl": 0.7119565217391305,
+          "df": 0.625,
+          "mel": 0.628140703517588,
+          "nv": 0.9234174413457282,
+          "vasc": 0.9259259259259259
+        }
+      },
+      "panderm_partial4": {
+        "accuracy": 0.9466900995899239,
+        "macro_precision": 0.9320842671843697,
+        "macro_recall": 0.951434434709982,
+        "macro_f1": 0.9410775585553586,
+        "per_class_f1": {
+          "akiec": 0.9491525423728814,
+          "bcc": 0.9349112426035503,
+          "bkl": 0.9157894736842105,
+          "df": 0.975609756097561,
+          "mel": 0.8655256723716381,
+          "nv": 0.9661620658949243,
+          "vasc": 0.9803921568627451
+        }
+      },
+      "ensemble_50_50": {
+        "accuracy": 0.929701230228471,
+        "macro_precision": 0.92629683020986,
+        "macro_recall": 0.9387140364584836,
+        "macro_f1": 0.9322976149769175,
+        "per_class_f1": {
+          "akiec": 0.9322033898305084,
+          "bcc": 0.9425287356321839,
+          "bkl": 0.8997289972899729,
+          "df": 1.0,
+          "mel": 0.797979797979798,
+          "nv": 0.9536423841059603,
+          "vasc": 1.0
+        }
+      },
+      "complementarity": {
+        "convnext_wrong_panderm_correct": 210,
+        "convnext_correct_panderm_wrong": 38,
+        "both_wrong": 53
+      },
+      "reference_check_passed": false
+    }
+  ],
+  "convnext_v17_macro_f1": {
+    "mean": 0.7481266810738457,
+    "sample_sd": null
+  },
+  "panderm_partial4_macro_f1": {
+    "mean": 0.9410775585553586,
+    "sample_sd": null
+  },
+  "ensemble_50_50_macro_f1": {
+    "mean": 0.9322976149769175,
+    "sample_sd": null
+  },
+  "all_reference_checks_passed": false
+}

@@ -1,0 +1,7 @@
+{
+  "fold": 4,
+  "train_seed": 123,
+  "ema_decay": 0.999,
+  "best_epoch": 7,
+  "best_macro_f1": 0.7441374230888265
+}

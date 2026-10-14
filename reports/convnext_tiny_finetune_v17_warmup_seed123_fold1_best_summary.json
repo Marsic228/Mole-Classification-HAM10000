@@ -1,0 +1,9 @@
+{
+  "fold": 1,
+  "train_seed": 123,
+  "ema_decay": 0.999,
+  "warmup_start_factor": 0.1,
+  "warmup_epochs": 1,
+  "best_epoch": 3,
+  "best_macro_f1": 0.7481266810738457
+}
