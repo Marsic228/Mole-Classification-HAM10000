@@ -26,7 +26,7 @@ Diploma research project for seven-class classification of dermatoscopic skin-le
 
 ## Project structure
 
-Research scripts currently live in the repository root to preserve historical imports. Do not move them without reviewing dependencies.
+Active scripts and shared utilities remain in the repository root. Historical scripts are preserved in archive/.
 
 ```text
 Mole-Classification/
@@ -146,3 +146,30 @@ The exporters generate each model's held-out probabilities using its **own origi
 7. Perform disjoint independent evaluation, input/domain-shift screening, confidence calibration and unsupported-input handling before considering a research application ready.
 
 The intended application is a **research prototype**, not a medical diagnostic device.
+## Code organization
+
+### Active research
+
+- `convnext_tiny_cv_train_reference.py` — stable ConvNeXt v17 reference, using its original historical CV protocol.
+- `convnext_tiny_cv_train.py` — editable workspace for new experiments.
+- `convnext_tiny_cv_train_natural_ce.py` — completed natural-sampling Cross-Entropy control (macro F1: 0.7386 ± 0.0178).
+- `canonical_cv.py` and `splits/` — fixed lesion-safe folds for new experiments.
+- `reports/` — historical and current experiment results, including unsuccessful experiments.
+
+### Research archive
+
+- `archive/diagnostics/` — earlier learning exercises and diagnostic scripts.
+- `archive/legacy_experiments/` — historical training, evaluation and model-comparison scripts.
+
+See `archive/README.md` for archive details.
+
+### Experiment management
+
+1. Start from the experimental workspace, using canonical folds.
+2. Change one major experimental factor at a time.
+3. Give each experiment a unique `RUN_NAME`.
+4. Preserve completed experimental code under a separate filename.
+5. Archive reports and preserve negative results.
+6. Update the stable reference only when a new model has been properly validated.
+
+Do not overwrite historical checkpoints or change the original fold assignments associated with them.
