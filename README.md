@@ -1,4 +1,4 @@
-﻿# Mole Classification — HAM10000
+# Mole Classification — HAM10000
 
 Diploma research project for seven-class classification of dermatoscopic skin-lesion images. The work covers data preparation, class imbalance, transfer learning, group-safe cross-validation and complementary-model ensembles.
 
@@ -26,32 +26,38 @@ Diploma research project for seven-class classification of dermatoscopic skin-le
 
 ## Project structure
 
-Active scripts and shared utilities remain in the repository root. Historical scripts are preserved in archive/.
+Python source code is organized into packages. Run module commands from the repository root.
 
 ```text
 Mole-Classification/
-├── HAM10000_metadata.csv          # Committed source metadata
-├── audit_cv_folds.py              # Historical cross-environment fold audit
-├── canonical_cv.py                # Fixed folds for new experiments
-├── splits/
-│   ├── ham10000_dev_cv_v1.csv     # Immutable fold assignment
-│   └── ham10000_dev_cv_v1.json    # Provenance and SHA256
-├── cross_validation_dataset.py    # Dataset loader for processed images
-├── cross_validation_split.py      # Legacy environment-dependent fold generator
-├── convnext_tiny_*.py             # ConvNeXt experimental scripts
-├── panderm_*.py                   # PanDerm training/evaluation wrappers
-├── metadata_features.py          # Structured-metadata preprocessing
-├── export_model_oof_predictions.py
-├── merge_model_oof_ensemble.py
-├── reports/                       # Experimental evidence; tracked where committed
-├── data/                          # Local raw/processed images; ignored by Git
-├── checkpoints/                   # Local model weights; ignored
-├── cache/                         # Local generated representations; ignored
-├── venv/                          # Local main Python environment; ignored
-└── PanDerm/                       # External source repository; ignored
+├── core/                  # CV protocols, dataset and shared utilities
+│   ├── canonical_cv.py
+│   ├── cross_validation_split.py
+│   ├── cross_validation_dataset.py
+│   ├── train.py
+│   └── utils.py
+├── experiments/
+│   ├── convnext/          # Reference, workspace and completed experiments
+│   ├── panderm/           # PanDerm research scripts
+│   └── metadata/          # Metadata-fusion experiments
+├── evaluation/            # Evaluations, OOF ensemble and CV audit
+├── preprocessing/         # Dataset preparation and validation
+├── archive/
+│   ├── diagnostics/
+│   └── legacy_experiments/
+├── splits/                # Frozen canonical fold assignments
+├── reports/               # Experiment results
+├── HAM10000_metadata.csv
+├── README.md
+├── requirements.txt
+├── data/                  # Local dataset; ignored by Git
+├── checkpoints/           # Local model weights; ignored
+├── cache/                 # Local generated cache; ignored
+├── venv/                  # Main Python environment; ignored
+└── PanDerm/               # External repository; ignored
 ```
 
-Preserve rejected and diagnostic experiment reports, including intermediate epoch reports. Some recent reports may still be local-only. Keep independent backups of checkpoint files and larger probability arrays.
+Historical scripts are retained for research traceability. Some require their original Python environments, checkpoints and fold assignments.
 
 ## Installation (Windows / PowerShell)
 
@@ -66,7 +72,7 @@ py -m venv venv
 
 **Important:** `requirements.txt` is an incomplete reproducibility specification for the full project. In particular, CUDA-enabled PyTorch and the independent PanDerm environment may need additional installation steps. Use historical environment manifests when reproducing historical runs. Do not assume that one environment reproduces both backbones.
 
-Get the HAM10000 images separately and place the original JPG files in `data/images/`. The repository contains `HAM10000_metadata.csv`, but not the full image dataset. The preprocessing scripts (`preprocessing_config.py`, `preprocess_full.py`) produce processed train/validation/test folders using the original group-safe partition. The dataset loader currently expects:
+Get the HAM10000 images separately and place the original JPG files in `data/images/`. The repository contains `HAM10000_metadata.csv`, but not the full image dataset. The preprocessing scripts (`preprocessing/preprocessing_config.py`, `preprocessing/preprocess_full.py`) produce processed train/validation/test folders using the original group-safe partition. The dataset loader currently expects:
 
 ```text
 data/processed/{source_split}/{class_name}/{image_id}_224x224.jpg
@@ -92,17 +98,17 @@ a55ff247594caa882a0cd3c45daabaa056fa864bdba850bfb172b6a3b0a67248
 Validate it in the project root:
 
 ```powershell
-.\venv\Scripts\python.exe canonical_cv.py verify
+.\venv\Scripts\python.exe -m core.canonical_cv verify
 ```
 
 For **new** training/evaluation scripts:
 
 ```python
-from canonical_cv import get_fold_metadata
+from core.canonical_cv import get_fold_metadata
 train_metadata, val_metadata = get_fold_metadata(1)
 ```
 
-**Do not change historic checkpoint folds.** Scripts used to reproduce existing ConvNeXt/PanDerm checkpoints may need their original `cross_validation_split.py` and original Python environment. A matching fold number across environments does not imply a matching validation image set. Save and compare image/lesion IDs, rather than assuming numeric fold identity.
+**Do not change historic checkpoint folds.** Scripts used to reproduce existing ConvNeXt/PanDerm checkpoints may need their historical `core/cross_validation_split.py` and original Python environment. A matching fold number across environments does not imply a matching validation image set. Save and compare image/lesion IDs, rather than assuming numeric fold identity.
 
 ## PanDerm (third-party dependency)
 
@@ -112,7 +118,7 @@ PanDerm is kept as its **own local Git checkout**, not committed as a folder or 
 - Historical source commit: `fd7a80748ba7fc3e203fed88f909f4689d0d6f24`
 - Local source: `PanDerm/classification/`
 - Historical Python environment: `PanDerm/.venv-panderm/`
-- Pretrained weights expected by `panderm_cv_train.py`: `PanDerm/classification/pretrain_weight/panderm_bb_data6_checkpoint-499.pth`
+- Pretrained weights expected by `experiments/panderm/panderm_cv_train.py`: `PanDerm/classification/pretrain_weight/panderm_bb_data6_checkpoint-499.pth`
 
 Obtain the pinned source:
 
@@ -146,32 +152,41 @@ The exporters generate each model's held-out probabilities using its **own origi
 7. Perform disjoint independent evaluation, input/domain-shift screening, confidence calibration and unsupported-input handling before considering a research application ready.
 
 The intended application is a **research prototype**, not a medical diagnostic device.
-## Code organization
+
+## Code organization and research workflow
 
 ### Active research
 
-- `experiments/convnext/convnext_tiny_cv_train_reference.py` — stable ConvNeXt v17 reference, using its original historical CV protocol.
-- `convnext_tiny_cv_train.py` — editable workspace for new experiments.
-- `experiments/convnext/convnext_tiny_cv_train_natural_ce.py` — completed natural-sampling Cross-Entropy control (macro F1: 0.7386 ± 0.0178).
-- `canonical_cv.py` and `splits/` — fixed lesion-safe folds for new experiments.
-- `reports/` — historical and current experiment results, including unsuccessful experiments.
-
-### Research archive
-
-- `archive/diagnostics/` — earlier learning exercises and diagnostic scripts.
-- `archive/legacy_experiments/` — historical training, evaluation and model-comparison scripts.
+- `experiments/convnext/convnext_tiny_cv_train_reference.py` — stable ConvNeXt v17 reference using the original historical CV assignments.
+- `experiments/convnext/convnext_tiny_cv_train.py` — editable experimental workspace (local, uncommitted experiment changes are deliberately kept outside documentation commits).
+- `experiments/convnext/convnext_tiny_cv_train_natural_ce.py` — completed natural-sampling Cross-Entropy control (mean fold macro F1: 0.7386 ± 0.0178).
+- `core/canonical_cv.py` and `splits/` — frozen lesion-safe folds for new experiments.
+- `experiments/panderm/` and `experiments/metadata/` — model research scripts.
+- `evaluation/` — independent evaluation, OOF aggregation and CV audit.
+- `archive/` — historical experiments and diagnostic exercises.
 
 See `archive/README.md` for archive details.
 
+### Commands (Windows / PowerShell)
+
+Run from the repository root:
+
+```powershell
+# Verify frozen development folds; does not train
+.\venv\Scripts\python.exe -m core.canonical_cv verify
+
+# Launch the experimental ConvNeXt workspace (starts training)
+.\venv\Scripts\python.exe -m experiments.convnext.convnext_tiny_cv_train
+```
+
+Do not run the second command until an experiment is configured and ready.
+
 ### Experiment management
 
-1. Start from the experimental workspace, using canonical folds.
-2. Change one major experimental factor at a time.
-3. Give each experiment a unique `RUN_NAME`.
-4. Preserve completed experimental code under a separate filename.
-5. Archive reports and preserve negative results.
-6. Update the stable reference only when a new model has been properly validated.
+1. Use canonical lesion-safe folds for **new** experiments, preserving historical fold assignments for existing checkpoints.
+2. Change one major experimental factor at a time and give every experiment a unique `RUN_NAME`.
+3. Preserve completed experiment source code, validation reports and unsuccessful results.
+4. Compare metrics only under compatible evaluation protocols, separating fold means from pooled OOF results.
+5. Update the stable reference only after properly validated improvements.
 
-Do not overwrite historical checkpoints or change the original fold assignments associated with them.
-
-
+Do not overwrite historical experiment artifacts. Keep the local weights and image data backed up separately.
