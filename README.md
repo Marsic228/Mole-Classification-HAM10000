@@ -190,3 +190,5 @@ Do not run the second command until an experiment is configured and ready.
 5. Update the stable reference only after properly validated improvements.
 
 Do not overwrite historical experiment artifacts. Keep the local weights and image data backed up separately.
+
+For detailed experiment results, see [Research Reports Index](reports/README.md).
