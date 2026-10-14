@@ -1,4 +1,4 @@
-# Mole Classification — HAM10000
+﻿# Mole Classification — HAM10000
 
 Diploma research project for seven-class classification of dermatoscopic skin-lesion images. The work covers data preparation, class imbalance, transfer learning, group-safe cross-validation and complementary-model ensembles.
 
@@ -128,9 +128,9 @@ Follow upstream installation and weight-acquisition instructions. The dedicated 
 Only run these commands when the original compatible model checkpoints, processed data and historical environments are available. They reproduce the historical evaluation, **not the new canonical-fold policy**:
 
 ```powershell
-.\venv\Scripts\python.exe export_model_oof_predictions.py --model convnext
-.\PanDerm\.venv-panderm\Scripts\python.exe export_model_oof_predictions.py --model panderm
-.\venv\Scripts\python.exe merge_model_oof_ensemble.py
+.\venv\Scripts\python.exe -m evaluation.export_model_oof_predictions --model convnext
+.\PanDerm\.venv-panderm\Scripts\python.exe -m evaluation.export_model_oof_predictions --model panderm
+.\venv\Scripts\python.exe -m evaluation.merge_model_oof_ensemble
 ```
 
 The exporters generate each model's held-out probabilities using its **own original folds**. The merger aligns images by `image_id`, checks labels/class ordering, and averages corresponding class probabilities. Pooled results are saved in `reports/oof_convnext_panderm_ensemble_results.json` along with prediction arrays. Do not tune ensemble weights on a set and label the same-set result as unbiased independent performance.
@@ -150,9 +150,9 @@ The intended application is a **research prototype**, not a medical diagnostic d
 
 ### Active research
 
-- `convnext_tiny_cv_train_reference.py` — stable ConvNeXt v17 reference, using its original historical CV protocol.
+- `experiments/convnext/convnext_tiny_cv_train_reference.py` — stable ConvNeXt v17 reference, using its original historical CV protocol.
 - `convnext_tiny_cv_train.py` — editable workspace for new experiments.
-- `convnext_tiny_cv_train_natural_ce.py` — completed natural-sampling Cross-Entropy control (macro F1: 0.7386 ± 0.0178).
+- `experiments/convnext/convnext_tiny_cv_train_natural_ce.py` — completed natural-sampling Cross-Entropy control (macro F1: 0.7386 ± 0.0178).
 - `canonical_cv.py` and `splits/` — fixed lesion-safe folds for new experiments.
 - `reports/` — historical and current experiment results, including unsuccessful experiments.
 
@@ -173,3 +173,5 @@ See `archive/README.md` for archive details.
 6. Update the stable reference only when a new model has been properly validated.
 
 Do not overwrite historical checkpoints or change the original fold assignments associated with them.
+
+

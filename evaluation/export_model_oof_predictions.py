@@ -1,9 +1,9 @@
-"""Export out-of-fold predictions using EACH MODEL'S ORIGINAL ENVIRONMENT.
+﻿"""Export out-of-fold predictions using EACH MODEL'S ORIGINAL ENVIRONMENT.
 
 Run twice, from the Mole Classification project root:
 
-    python export_model_oof_predictions.py --model convnext
-    .\\PanDerm\\.venv-panderm\\Scripts\\python.exe export_model_oof_predictions.py --model panderm
+    python -m evaluation.export_model_oof_predictions --model convnext
+    .\\PanDerm\\.venv-panderm\\Scripts\\python.exe -m evaluation.export_model_oof_predictions --model panderm
 
 Never evaluate one model on the other environment's fold list.
 The two NPZ files can then be combined by image ID with merge_model_oof_ensemble.py.
@@ -158,3 +158,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
