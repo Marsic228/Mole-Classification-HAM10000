@@ -12,8 +12,8 @@ from sklearn.metrics import (
 from torch.utils.data import DataLoader, TensorDataset
 
 from cross_validation_split import get_fold_metadata
-from metadata_features import MetadataFeatureEncoder
-from convnext_tiny_metadata_fusion import FrozenImageMetadataResidual
+from experiments.metadata.metadata_features import MetadataFeatureEncoder
+from experiments.metadata.convnext_tiny_metadata_fusion import FrozenImageMetadataResidual
 
 
 DEVICE = torch.device(
