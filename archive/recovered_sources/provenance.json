@@ -1,0 +1,246 @@
+{
+  "title": "VS Code Local History research-source candidates",
+  "created_date": "2026-10-15",
+  "origin_git_head": "4ec340ff5af16da52f318fb42cd10c30fbf4b24a",
+  "candidate_count": 22,
+  "preservation": "raw Python snapshot content; .txt suffix appended to filenames, SHA256 of original bytes unchanged",
+  "source_code_verification": "All 22 parse as Python; no training or checkpoint/source authentication performed",
+  "selected_snapshots": {
+    "convnext_v18_llrd": {
+      "fold1": "18sU",
+      "folds2to5": "87P5",
+      "evaluation": "3tVZ"
+    },
+    "panderm_partial8_ema": {
+      "fold1": "RqQr",
+      "folds2to5": "uWQC"
+    },
+    "panderm_partial4_adamw": {
+      "fold1": "H6pT",
+      "folds2to5": "ZmWB",
+      "evaluation": "r2i1"
+    },
+    "resnet18_focal_aux02": {
+      "fold1": "vVeV",
+      "folds2to5": "Q4NT",
+      "evaluation": "QA8Q"
+    }
+  },
+  "selection_notes": {
+    "convnext_v18_llrd": "LR_DECAY=0.8; Adam parameter groups; one-epoch warmup; EMA; 15 epochs maximum. Raw snapshot imports use old root-level module names.",
+    "panderm_partial8_ema": "TRAINABLE_BLOCKS=8; Adam; EMA; WRS+focal; 15 epochs maximum. Intermediate DZZV.py has TRAINABLE_BLOCKS=4 with partial8 filenames: do not use it as partial8 source.",
+    "panderm_partial4_adamw": "TRAINABLE_BLOCKS=4; AdamW(lr=1e-4,weight_decay=1e-2); EMA; WRS+focal; 15 epochs maximum. 8DSI.py uses AdamW with stale partial8 filenames and is not the selected source.",
+    "resnet18_focal_aux02": "7-class main head + 3-class auxiliary head for {bkl,mel,nv}; auxiliary loss weight=0.2; Adam; WRS+focal; 3 epochs maximum. Historical root imports are not updated."
+  },
+  "snapshots": [
+    {
+      "path": "archive/recovered_sources/snapshots/resnet18_focal_cv_train__qrDw__04e623a3d063.py.txt",
+      "vscode_snapshot_name": "qrDw.py",
+      "timestamp_utc": "2026-09-14T07:39:07.334000+00:00",
+      "sha256_original_bytes": "04e623a3d06394c7e4279bb30beb5c912ecbe809e5fb2b0ff9b7de5da1405ed9",
+      "bytes": 5848,
+      "original_basename": "resnet18_focal_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/resnet18_focal_cv_train__I9K1__e8d6952b18b9.py.txt",
+      "vscode_snapshot_name": "I9K1.py",
+      "timestamp_utc": "2026-09-14T07:44:42.557000+00:00",
+      "sha256_original_bytes": "e8d6952b18b9ef34e4d550bf50dc2cfde2034bff86aba42cfb8f5e444e3a5d42",
+      "bytes": 7233,
+      "original_basename": "resnet18_focal_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/resnet18_focal_cv_train__jyVF__14558d1b18cd.py.txt",
+      "vscode_snapshot_name": "jyVF.py",
+      "timestamp_utc": "2026-09-14T07:50:14.005000+00:00",
+      "sha256_original_bytes": "14558d1b18cd489ff12b8fbfa58ce5b18c2309ad9bd61707a2556422dabf73c2",
+      "bytes": 7367,
+      "original_basename": "resnet18_focal_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/resnet18_focal_cv_train__vVeV__f4be7be19424.py.txt",
+      "vscode_snapshot_name": "vVeV.py",
+      "timestamp_utc": "2026-09-14T07:52:04.633000+00:00",
+      "sha256_original_bytes": "f4be7be19424545d2b915e8d70f2f7063d20605610c7b162073a80b980478218",
+      "bytes": 7295,
+      "original_basename": "resnet18_focal_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established",
+      "selected_for": "resnet18_focal_aux02:fold1"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/resnet18_focal_cv_train__Q4NT__a77a7b30e004.py.txt",
+      "vscode_snapshot_name": "Q4NT.py",
+      "timestamp_utc": "2026-09-14T08:06:21.792000+00:00",
+      "sha256_original_bytes": "a77a7b30e0041a1133ae7a74d743c12093602e7d6235b93ca218bc3829f4c594",
+      "bytes": 7398,
+      "original_basename": "resnet18_focal_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established",
+      "selected_for": "resnet18_focal_aux02:folds2to5"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/resnet18_focal_cv_evaluation__QA8Q__a55fedd0adbb.py.txt",
+      "vscode_snapshot_name": "QA8Q.py",
+      "timestamp_utc": "2026-09-14T08:56:33.548000+00:00",
+      "sha256_original_bytes": "a55fedd0adbb1a0be225cad9ac25bc3bc5e58bf9366bc4c2255f849bf0752e85",
+      "bytes": 6305,
+      "original_basename": "resnet18_focal_cv_evaluation.py",
+      "status": "raw historical candidate; execution and training provenance not established",
+      "selected_for": "resnet18_focal_aux02:evaluation"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/panderm_cv_train__ofRo__2cef7922b1e5.py.txt",
+      "vscode_snapshot_name": "ofRo.py",
+      "timestamp_utc": "2026-10-09T07:28:32.788000+00:00",
+      "sha256_original_bytes": "2cef7922b1e50aff65a1cf9403910f65d9049cd1f497331c958d82e02b83112e",
+      "bytes": 14289,
+      "original_basename": "panderm_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/panderm_cv_train__1VEY__d3c199e53dd3.py.txt",
+      "vscode_snapshot_name": "1VEY.py",
+      "timestamp_utc": "2026-10-09T07:29:19.234000+00:00",
+      "sha256_original_bytes": "d3c199e53dd390a380fe9598b7ff4c33ffd0338f875d967409021fbe9b3f9b80",
+      "bytes": 14289,
+      "original_basename": "panderm_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/panderm_cv_train__g4lE__f34af7a4006d.py.txt",
+      "vscode_snapshot_name": "g4lE.py",
+      "timestamp_utc": "2026-10-09T07:31:56.225000+00:00",
+      "sha256_original_bytes": "f34af7a4006d80f208a15cabd56d3f2231eff32ddcd4907e51b5e336b47e0e9b",
+      "bytes": 14289,
+      "original_basename": "panderm_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/panderm_cv_train__RqQr__fa1ad5637c49.py.txt",
+      "vscode_snapshot_name": "RqQr.py",
+      "timestamp_utc": "2026-10-09T07:33:31.169000+00:00",
+      "sha256_original_bytes": "fa1ad5637c49cbe36d67e375881bac854b45cb6def62b0513d72d787cbc36b94",
+      "bytes": 14504,
+      "original_basename": "panderm_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established",
+      "selected_for": "panderm_partial8_ema:fold1"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/panderm_cv_train__uWQC__092e667bce5b.py.txt",
+      "vscode_snapshot_name": "uWQC.py",
+      "timestamp_utc": "2026-10-09T08:14:37.761000+00:00",
+      "sha256_original_bytes": "092e667bce5bc9c154742165d0d34fcc78cdd093e29b1727e60095e630b38323",
+      "bytes": 14504,
+      "original_basename": "panderm_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established",
+      "selected_for": "panderm_partial8_ema:folds2to5"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/panderm_cv_train__DZZV__405f36cdfa68.py.txt",
+      "vscode_snapshot_name": "DZZV.py",
+      "timestamp_utc": "2026-10-10T07:42:26.100000+00:00",
+      "sha256_original_bytes": "405f36cdfa68e7ff92e42f017dc63608f36fd51bbeaff30afd35b76c1375f05f",
+      "bytes": 14504,
+      "original_basename": "panderm_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/panderm_cv_train__8DSI__c347031cf632.py.txt",
+      "vscode_snapshot_name": "8DSI.py",
+      "timestamp_utc": "2026-10-10T07:43:14.691000+00:00",
+      "sha256_original_bytes": "c347031cf6327e5382a746b3bfddddafb6eba2dc7dddceeb003d7cb4afa31e60",
+      "bytes": 14534,
+      "original_basename": "panderm_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/panderm_cv_train__H6pT__6bd5f3de975d.py.txt",
+      "vscode_snapshot_name": "H6pT.py",
+      "timestamp_utc": "2026-10-10T07:46:50.014000+00:00",
+      "sha256_original_bytes": "6bd5f3de975ddcb5c7ee36eabbf49cbfccc5f11b1c6d7183367c7051c1914043",
+      "bytes": 14510,
+      "original_basename": "panderm_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established",
+      "selected_for": "panderm_partial4_adamw:fold1"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/panderm_cv_train__ZmWB__29652336298f.py.txt",
+      "vscode_snapshot_name": "ZmWB.py",
+      "timestamp_utc": "2026-10-10T08:17:14.176000+00:00",
+      "sha256_original_bytes": "29652336298f5c309c9d0fcecccc256112b88c99c153951b3f0b0aefdf522b7c",
+      "bytes": 14510,
+      "original_basename": "panderm_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established",
+      "selected_for": "panderm_partial4_adamw:folds2to5"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/panderm_cv_evaluation__3VYo__a0388d186587.py.txt",
+      "vscode_snapshot_name": "3VYo.py",
+      "timestamp_utc": "2026-10-10T09:51:37.953000+00:00",
+      "sha256_original_bytes": "a0388d186587af644ccaf28dc15decf2e3c53fc232a4504b0530af2387f9954f",
+      "bytes": 4549,
+      "original_basename": "panderm_cv_evaluation.py",
+      "status": "raw historical candidate; execution and training provenance not established"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/panderm_cv_evaluation__r2i1__ef8d9ac831ed.py.txt",
+      "vscode_snapshot_name": "r2i1.py",
+      "timestamp_utc": "2026-10-10T09:52:28.329000+00:00",
+      "sha256_original_bytes": "ef8d9ac831edf665bdc2a540dd30a210bafce5b7fd5346ff21f72c8ea7335ca4",
+      "bytes": 4548,
+      "original_basename": "panderm_cv_evaluation.py",
+      "status": "raw historical candidate; execution and training provenance not established",
+      "selected_for": "panderm_partial4_adamw:evaluation"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/convnext_tiny_cv_train__Vxlc__541a98901522.py.txt",
+      "vscode_snapshot_name": "Vxlc.py",
+      "timestamp_utc": "2026-10-12T07:37:06.293000+00:00",
+      "sha256_original_bytes": "541a98901522c6e9b3a8640063371f8bf108857bf2e2f15a95e4c09ae9bef147",
+      "bytes": 13427,
+      "original_basename": "convnext_tiny_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/convnext_tiny_cv_train__3a5S__6a871a3d2613.py.txt",
+      "vscode_snapshot_name": "3a5S.py",
+      "timestamp_utc": "2026-10-12T07:37:18.027000+00:00",
+      "sha256_original_bytes": "6a871a3d2613168bff660cd8460833645758fdc3523709c4e560efa092327fd9",
+      "bytes": 13427,
+      "original_basename": "convnext_tiny_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/convnext_tiny_cv_train__18sU__d61e29bdf7db.py.txt",
+      "vscode_snapshot_name": "18sU.py",
+      "timestamp_utc": "2026-10-12T07:38:22.884000+00:00",
+      "sha256_original_bytes": "d61e29bdf7db1f670a4fba38fae4af2feb9a87172f9850cedab01e49bc0d325a",
+      "bytes": 13425,
+      "original_basename": "convnext_tiny_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established",
+      "selected_for": "convnext_v18_llrd:fold1"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/convnext_tiny_cv_train__87P5__d3f3908e0434.py.txt",
+      "vscode_snapshot_name": "87P5.py",
+      "timestamp_utc": "2026-10-12T07:55:40.579000+00:00",
+      "sha256_original_bytes": "d3f3908e0434c7dabc5b3c2c92c835c3a3dd6cbc8ec4362d73a2452cf3c5c153",
+      "bytes": 13425,
+      "original_basename": "convnext_tiny_cv_train.py",
+      "status": "raw historical candidate; execution and training provenance not established",
+      "selected_for": "convnext_v18_llrd:folds2to5"
+    },
+    {
+      "path": "archive/recovered_sources/snapshots/convnext_tiny_cv_evaluation__3tVZ__1554fca06fec.py.txt",
+      "vscode_snapshot_name": "3tVZ.py",
+      "timestamp_utc": "2026-10-12T08:47:27.910000+00:00",
+      "sha256_original_bytes": "1554fca06fec42f8a5c366522e6c9f54ed79b727b41b4188d2b0d009d36c3380",
+      "bytes": 4104,
+      "original_basename": "convnext_tiny_cv_evaluation.py",
+      "status": "raw historical candidate; execution and training provenance not established",
+      "selected_for": "convnext_v18_llrd:evaluation"
+    }
+  ]
+}
