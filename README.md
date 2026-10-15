@@ -12,17 +12,34 @@ Diploma research project for seven-class classification of dermatoscopic skin-le
 - **Primary metric:** macro F1. Also report accuracy, per-class precision/recall/F1, confusion matrices and fold variability.
 - **Test policy:** the old exposed test split is historical evidence only; do not use it to select models or claim independent final validation.
 
-### Development results (as of 14 October 2026)
+### Development results (as of 15 October 2026)
 
 | System | Metric type | Macro F1 | Accuracy |
 |---|---|---:|---:|
 | ConvNeXt-Tiny v17, warmup + CutMix + EMA | Mean of five folds ± sample SD | **0.7430 ± 0.0144** | 0.8450 ± 0.0091 |
 | PanDerm Base partial4 | Mean of five folds ± sample SD | **0.7368 ± 0.0232** | 0.8350 ± 0.0087 |
+| Natural-sampling ordinary CE (Balanced Softmax control) | Selected best checkpoints: five-fold mean ± sample SD | **0.7386 ± 0.0178** | 0.8478 (mean) |
 | ConvNeXt v17 | Pooled OOF, 8,530 images | **0.7444** | 0.8451 |
 | PanDerm partial4 | Pooled OOF, 8,530 images | **0.7379** | 0.8351 |
 | ConvNeXt v17 + PanDerm partial4, 50/50 probability averaging | Pooled matched OOF, 8,530 images | **0.7621** | 0.8570 |
 
-**Mean fold F1 and pooled out-of-fold (OOF) F1 are different measures.** The ensemble is a promising development result, **not external or clinical validation**. Balanced Softmax/LDAM investigations are ongoing and are not included as established improvements.
+**Mean fold F1 and pooled out-of-fold (OOF) F1 are different measures.** The ensemble is a promising development result, **not external or clinical validation**. Balanced Softmax training has **not started**; the natural-sampling ordinary-CE control is complete. LDAM is planned after the Balanced Softmax comparison. Neither planned method is an established improvement.
+
+## Approved seven-stage research roadmap (15 October 2026)
+
+The following is the agreed **execution order**, not a claim that later methods have been tested. Collect comparable evidence throughout; perform the systematic synthesis at Stage 5.
+
+| Stage | Scope | Status and evidence boundary |
+|---|---|---|
+| **1. Reproducibility audit** | Freeze folds, environments, model/preprocessing details and evaluation | **Checkpoint-replay milestone reached:** 15/15 saved fold checkpoints reproduced metrics within the declared 0.003 tolerance. End-to-end retraining, a clean-machine rebuild and external validation remain unverified. |
+| **2. Long-tail methods** | Balanced Softmax, then LDAM | **Next.** Natural-sampling + ordinary CE control: macro F1 **0.7386 ± 0.0178** across five selected validation folds. Balanced Softmax training has not started. Keep sampling, canonical folds and recipe fixed for the loss comparison; perform a one-fold preflight first. |
+| **3. ROI / segmentation** | Test lesion-centered preprocessing | **Planned.** Check masks/annotations, cropping errors and lesion-safe comparison. |
+| **4. Supervised Contrastive Learning** | Test improvements in learned representations | **Planned.** Account for positive pairs and RTX 2060 6-GB / batch-8 limits. |
+| **5. Systematic experiment analysis** | Compare comparable experiments, errors and complementarity | **Planned synthesis.** Gather per-fold, per-class and matched-ID OOF evidence throughout earlier stages; do the comprehensive analysis before final selection. Do not mix pooled OOF macro F1 with five-fold means. |
+| **6. Final ensemble selection** | Choose a defensible standalone or ensemble model | **Planned.** ConvNeXt v17 + PanDerm partial4, 50/50, has development-only pooled matched OOF macro F1 **0.7621**; it is a candidate, not an independently validated final model. Consider error diversity, minority classes and inference cost. |
+| **7. Independent evaluation and application** | Assess generalization and build a research prototype | **Planned.** Seek non-overlapping external data, study domain shift, calibration and unsupported/OOD inputs. No clinical diagnosis claim. |
+
+**Next executable step:** prepare a separate natural-sampling Balanced Softmax training script and unique run name, check loss/class counts and CutMix, then preflight one fold before full CV. Keep existing CE artifacts and experimental workspace untouched. Details belong in [the experiment history](docs/research/Diploma_Experiment_History.md).
 
 ## Project structure
 
@@ -36,6 +53,8 @@ Mole-Classification/
 │   ├── cross_validation_dataset.py
 │   ├── train.py
 │   └── utils.py
+├── docs/
+│   └── research/         # Experiment history and reproducibility evidence
 ├── experiments/
 │   ├── convnext/          # Reference, workspace and completed experiments
 │   ├── panderm/           # PanDerm research scripts
@@ -44,7 +63,8 @@ Mole-Classification/
 ├── preprocessing/         # Dataset preparation and validation
 ├── archive/
 │   ├── diagnostics/
-│   └── legacy_experiments/
+│   ├── legacy_experiments/
+│   └── recovered_sources/ # Preserved historical snapshots and provenance
 ├── splits/                # Frozen canonical fold assignments
 ├── reports/               # Experiment results
 ├── HAM10000_metadata.csv
@@ -83,6 +103,20 @@ For development folds, `source_split` is `train` or `val`. Check that preprocess
 ## Frozen folds: new experiments only
 
 The October 2026 audit found that the main ConvNeXt and original PanDerm Python environments produced different numeric folds, despite the same declared splitting settings. All 8,530 images and labels matched, but only **1,741 / 8,530** images had the same fold number across the environments. Package versions differ; their exact causal role has not been established.
+
+### Canonical five-fold structure (new experiments)
+
+Use **StratifiedGroupKFold (n_splits=5, shuffle=True, random_state=42)** with diagnosis label **dx** for stratification and **lesion_id** for grouping. Every development image is validated exactly once; train and validation have **zero shared lesions** within each fold.
+
+| Fold | Training images | Validation images |
+|---|---:|---:|
+| 1 | 6,823 | 1,707 |
+| 2 | 6,824 | 1,706 |
+| 3 | 6,824 | 1,706 |
+| 4 | 6,825 | 1,705 |
+| 5 | 6,824 | 1,706 |
+
+The frozen new-experiment development pool totals **8,530 images from 6,349 distinct lesions**. These are **canonical fold memberships**, not interchangeable with historical numeric PanDerm folds: PanDerm original validation sizes are 1,699 / 1,695 / 1,713 / 1,702 / 1,721. Preserve the saved original folds when replaying historical checkpoints.
 
 For **future** experiments, use the audited ConvNeXt fold assignment recorded in:
 
