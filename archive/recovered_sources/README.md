@@ -33,9 +33,11 @@ editor revision was executed during model training. No retraining was performed.
   `from cross_validation_split import`, etc.) and original filesystem layout.
   **Do not run or rename them to active `.py` files**. Create a separately
   documented compatibility copy if training replay is ever needed.
-- `convnext_tiny_cv_train.py` in `experiments/convnext/` is an editable workbench;
-  do not replace it with any recovered snapshot. Ensure its future experiment
-  run name is unique and does not overwrite existing checkpoints/reports.
+- The former generic `experiments/convnext/convnext_tiny_cv_train.py` workbench
+  was removed from active source after confirming that its committed bytes
+  already exist at `archive/legacy_experiments/convnext_tiny_cv_train_v14_sam.py`.
+  Recovered snapshots remain immutable; future training uses uniquely named scripts
+  and run prefixes to protect existing checkpoints/reports.
 - The already completed **15/15 checkpoint inference replays** verify ConvNeXt
   v17, PanDerm partial4, and natural CE checkpoints within stated tolerance.
   They do **not** authenticate these four additional training sources or

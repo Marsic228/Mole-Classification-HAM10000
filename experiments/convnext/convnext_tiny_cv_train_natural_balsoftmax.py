@@ -9,17 +9,17 @@ import numpy as np
 
 from sklearn.metrics import f1_score
 
-from torch.utils.data import DataLoader, WeightedRandomSampler
+from torch.utils.data import DataLoader
 from torchvision.models import (
     convnext_tiny,
     ConvNeXt_Tiny_Weights,
 )
 
-from core.cross_validation_split import get_fold_metadata
+from core.canonical_cv import get_fold_metadata
 from core.cross_validation_dataset import CrossValidationDataset
 
-from core.utils import count_images_per_class, build_class_weights
 from core.train import save_json, save_checkpoint, build_epoch_report
+
 
 class FocalLoss(nn.Module):
     def __init__(self, gamma=2.0):
@@ -38,75 +38,32 @@ class FocalLoss(nn.Module):
 
         return focal_loss.mean()
 
-class SAM:
-    def __init__(self, base_optimizer, rho=0.05):
-        if rho < 0.0:
-            raise ValueError(f"Invalid rho: {rho}")
 
-        self.base_optimizer = base_optimizer
-        self.rho = rho
+class BalancedSoftmaxLoss(nn.Module):
+    def __init__(self, class_counts):
+        super().__init__()
 
-        self.param_groups = base_optimizer.param_groups
-        self.state = {}
-
-    @torch.no_grad()
-    def first_step(self, amp_scale=1.0, zero_grad=False):
-        grad_norm = torch.norm(
-            torch.stack([
-                (p.grad / amp_scale).norm(p=2)
-                for group in self.param_groups
-                for p in group["params"]
-                if p.grad is not None
-            ]),
-            p=2
+        counts = torch.as_tensor(
+            class_counts, dtype=torch.float32
         )
 
-        for group in self.param_groups:
-            for p in group["params"]:
-                if p.grad is None:
-                    continue
+        if counts.shape != (7,) or not torch.all(counts > 0):
+            raise ValueError("Invalid class counts")
 
-                grad = p.grad / amp_scale
+        self.register_buffer("log_counts", counts.log())
 
-                e_w = grad * (
-                    self.rho / (grad_norm + 1e-12)
-                )
-
-                self.state[p] = {"e_w": e_w}
-
-                # w -> w + epsilon
-                p.add_(e_w)
-
-        if zero_grad:
-            self.zero_grad()
-
-    @torch.no_grad()
-    def restore(self, zero_grad=False):
-        for group in self.param_groups:
-            for p in group["params"]:
-                if p not in self.state:
-                    continue
-
-                # w + epsilon -> w
-                p.sub_(self.state[p]["e_w"])
-
-        self.state.clear()
-
-        if zero_grad:
-            self.zero_grad()
-
-    def zero_grad(self):
-        self.base_optimizer.zero_grad()
-
-    def state_dict(self):
-        return self.base_optimizer.state_dict()
-
-    def load_state_dict(self, state_dict):
-        self.base_optimizer.load_state_dict(state_dict)
+    def forward(self, logits, targets):
+        adjusted_logits = logits.float() + self.log_counts
+        return F.cross_entropy(adjusted_logits, targets)
 
 
 TRAIN_SEED = 123
 EMA_DECAY = 0.999
+BASE_LR = 1e-4
+WARMUP_START_FACTOR = 0.1
+RUN_NAME = "convnext_tiny_natural_balsoftmax_seed123"
+CLASS_NAMES = ("akiec", "bcc", "bkl", "df", "mel", "nv", "vasc")
+
 
 def update_ema(ema_model, model, decay):
     with torch.no_grad():
@@ -119,6 +76,7 @@ def update_ema(ema_model, model, decay):
                 alpha=1.0 - decay
             )
 
+
 def set_training_seed(seed):
     random.seed(seed)
     np.random.seed(seed)
@@ -126,6 +84,7 @@ def set_training_seed(seed):
 
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
+
 
 TRAINABLE_FEATURE_MODULES = 5
 
@@ -137,6 +96,7 @@ print(f"Using device: {DEVICE}")
 
 if torch.cuda.is_available():
     print(torch.cuda.get_device_name(0))
+
 
 def run_validation_epoch_with_macro_f1(
     model,
@@ -158,9 +118,13 @@ def run_validation_epoch_with_macro_f1(
             images = images.to(device)
             labels = labels.to(device)
 
-            with torch.amp.autocast("cuda"):
+            with torch.amp.autocast(
+                "cuda",
+                enabled=(device.type == "cuda")
+            ):
                 logits = model(images)
                 loss = loss_function(logits, labels)
+
             losses.append(loss.item())
 
             predictions = logits.argmax(dim=1)
@@ -191,11 +155,15 @@ def run_validation_epoch_with_macro_f1(
 
     return val_loss, val_accuracy, val_macro_f1
 
+
 def apply_cutmix(images, labels, alpha=1.0):
     lam = np.random.beta(alpha, alpha)
 
     batch_size = images.size(0)
-    index = torch.randperm(batch_size, device=images.device)
+    index = torch.randperm(
+        batch_size,
+        device=images.device
+    )
 
     labels_a = labels
     labels_b = labels[index]
@@ -215,8 +183,10 @@ def apply_cutmix(images, labels, alpha=1.0):
     y2 = np.clip(cy + cut_h // 2, 0, height)
 
     mixed_images = images.clone()
-    mixed_images[:, :, y1:y2, x1:x2] = \
+
+    mixed_images[:, :, y1:y2, x1:x2] = (
         images[index, :, y1:y2, x1:x2]
+    )
 
     lam = 1.0 - (
         (x2 - x1) * (y2 - y1)
@@ -226,50 +196,14 @@ def apply_cutmix(images, labels, alpha=1.0):
     return mixed_images, labels_a, labels_b, lam
 
 
-def run_convnext_train_epoch(
-    model,
-    ema_model,
-    train_loader,
-    loss_function,
-    optimizer,
-    device
-):
-    
-    model.eval()
-
-    model.features[-TRAINABLE_FEATURE_MODULES:].train()
-    model.classifier.train()
-
-    losses = []
-
-    for images, labels in train_loader:
-        images = images.to(device)
-        labels = labels.to(device)
-
-        loss = run_training_step(
-            model,
-            images,
-            labels,
-            loss_function,
-            optimizer
-        )
-
-        update_ema(
-            ema_model,
-            model,
-            EMA_DECAY
-        )
-
-        losses.append(loss)
-
-    return sum(losses) / len(losses)
-
-def run_training_step(
+def run_training_step_amp(
     model,
     images,
     labels,
     loss_function,
     optimizer,
+    scaler,
+    device,
     cutmix_alpha=1.0,
     cutmix_prob=0.5,
 ):
@@ -284,39 +218,83 @@ def run_training_step(
             alpha=cutmix_alpha,
         )
 
-    def compute_loss():
+    with torch.amp.autocast(
+        "cuda",
+        enabled=(device.type == "cuda")
+    ):
         logits = model(images)
 
         if use_cutmix:
-            return (
+            loss = (
                 lam * loss_function(logits, labels_a)
                 + (1.0 - lam) * loss_function(logits, labels_b)
             )
+        else:
+            loss = loss_function(logits, labels)
 
-        return loss_function(logits, labels)
-
-    # SAM pass 1
-    loss = compute_loss()
-    loss.backward()
-
-    optimizer.first_step(
-        amp_scale=1.0,
-        zero_grad=True
-    )
-
-    # SAM pass 2
-    second_loss = compute_loss()
-    second_loss.backward()
-
-    # Return from w + epsilon -> w
-    optimizer.restore(zero_grad=False)
-
-    # One real Adam update
-    optimizer.base_optimizer.step()
-
-    optimizer.zero_grad()
+    scaler.scale(loss).backward()
+    scaler.step(optimizer)
+    scaler.update()
 
     return loss.item()
+
+
+def run_convnext_train_epoch(
+    model,
+    ema_model,
+    train_loader,
+    loss_function,
+    optimizer,
+    scaler,
+    device,
+    warmup=False,
+):
+    # Keep frozen modules in eval mode while training only
+    # the last feature modules and classifier.
+    model.eval()
+
+    model.features[-TRAINABLE_FEATURE_MODULES:].train()
+    model.classifier.train()
+
+    losses = []
+
+    for batch_idx, (images, labels) in enumerate(train_loader):
+        # v17: only during epoch 1, gradually increase LR from
+        # 0.1 * BASE_LR to BASE_LR across the training batches.
+        # The existing epoch-level cosine scheduler remains unchanged.
+        if warmup:
+            warmup_progress = batch_idx / max(len(train_loader) - 1, 1)
+            batch_lr = BASE_LR * (
+                WARMUP_START_FACTOR
+                + (1.0 - WARMUP_START_FACTOR) * warmup_progress
+            )
+            for group in optimizer.param_groups:
+                group["lr"] = batch_lr
+
+        images = images.to(device)
+        labels = labels.to(device)
+
+        loss = run_training_step_amp(
+            model,
+            images,
+            labels,
+            loss_function,
+            optimizer,
+            scaler,
+            device
+        )
+
+        # v13: update EMA after the real Adam optimizer step.
+        update_ema(
+            ema_model,
+            model,
+            EMA_DECAY
+        )
+
+        losses.append(loss)
+
+    return sum(losses) / len(losses)
+
 
 def run_fold(fold_number, num_epochs=15):
     set_training_seed(TRAIN_SEED)
@@ -324,7 +302,9 @@ def run_fold(fold_number, num_epochs=15):
     weights = ConvNeXt_Tiny_Weights.DEFAULT
     transform = weights.transforms()
 
-    train_metadata, val_metadata = get_fold_metadata(fold_number)
+    train_metadata, val_metadata = get_fold_metadata(
+        fold_number
+    )
 
     train_dataset = CrossValidationDataset(
         train_metadata,
@@ -338,20 +318,24 @@ def run_fold(fold_number, num_epochs=15):
         transform=transform
     )
 
-    class_counts = count_images_per_class(train_dataset)
-    class_weights = build_class_weights(class_counts)
-    sample_weights = class_weights[train_dataset.targets]
 
-    train_sampler = WeightedRandomSampler(
-        weights=sample_weights,
-        num_samples=len(sample_weights),
-        replacement=True
+    class_counts = np.asarray(
+        [(train_metadata["dx"] == name).sum()
+        for name in CLASS_NAMES],
+        dtype=np.int64
     )
+
+    if class_counts.sum() != len(train_dataset) or np.any(class_counts <= 0):
+        raise ValueError(f"Invalid training class counts: {class_counts}")
+
+    print(f"Fold {fold_number} class counts: {class_counts}")
+
+
 
     train_loader = DataLoader(
         train_dataset,
         batch_size=8,
-        sampler=train_sampler
+        shuffle=True
     )
 
     val_loader = DataLoader(
@@ -365,7 +349,9 @@ def run_fold(fold_number, num_epochs=15):
     for parameter in model.parameters():
         parameter.requires_grad = False
 
-    for parameter in model.features[-TRAINABLE_FEATURE_MODULES:].parameters():
+    for parameter in model.features[
+        -TRAINABLE_FEATURE_MODULES:
+    ].parameters():
         parameter.requires_grad = True
 
     in_features = model.classifier[2].in_features
@@ -385,7 +371,9 @@ def run_fold(fold_number, num_epochs=15):
     for parameter in ema_model.parameters():
         parameter.requires_grad = False
 
-    loss_function = FocalLoss(gamma=2.0)
+
+    loss_function = BalancedSoftmaxLoss(class_counts).to(DEVICE)
+    val_loss_function = nn.CrossEntropyLoss()
 
 
     trainable_params = [
@@ -393,20 +381,20 @@ def run_fold(fold_number, num_epochs=15):
         if p.requires_grad
     ]
 
-    base_optimizer = torch.optim.Adam(
-    trainable_params,
-    lr=1e-4
-)
-
-    optimizer = SAM(
-        base_optimizer,
-        rho=0.05
+    optimizer = torch.optim.Adam(
+        trainable_params,
+        lr=BASE_LR
     )
 
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-        base_optimizer,
+        optimizer,
         T_max=num_epochs,
         eta_min=1e-6
+    )
+
+    scaler = torch.amp.GradScaler(
+        "cuda",
+        enabled=(DEVICE.type == "cuda")
     )
 
     history = []
@@ -417,8 +405,6 @@ def run_fold(fold_number, num_epochs=15):
     patience = 4
     epochs_without_improvement = 0
 
-    
-
     for epoch in range(1, num_epochs + 1):
         train_loss = run_convnext_train_epoch(
             model,
@@ -426,14 +412,16 @@ def run_fold(fold_number, num_epochs=15):
             train_loader,
             loss_function,
             optimizer,
-            DEVICE
+            scaler,
+            DEVICE,
+            warmup=(epoch == 1),
         )
 
         val_loss, val_accuracy, val_macro_f1 = (
             run_validation_epoch_with_macro_f1(
                 ema_model,
                 val_loader,
-                loss_function,
+                val_loss_function,
                 DEVICE
             )
         )
@@ -449,8 +437,18 @@ def run_fold(fold_number, num_epochs=15):
 
         epoch_report["val_macro_f1"] = val_macro_f1
         epoch_report["learning_rate"] = current_lr
+        if epoch == 1:
+            epoch_report["warmup_start_lr"] = BASE_LR * WARMUP_START_FACTOR
+            epoch_report["warmup_end_lr"] = BASE_LR
+            epoch_report["warmup_batches"] = len(train_loader)
 
         history.append(epoch_report)
+
+        if epoch == 1:
+            print(
+                f"  -> Warmup: {BASE_LR * WARMUP_START_FACTOR:.1e} "
+                f"-> {BASE_LR:.1e} over {len(train_loader)} batches"
+            )
 
         print(
             f"Fold {fold_number}: "
@@ -461,11 +459,9 @@ def run_fold(fold_number, num_epochs=15):
             f"val_macro_f1={val_macro_f1:.4f}, "
         )
 
-        
         save_json(
             epoch_report,
-            f"reports/convnext_tiny_finetune_v14_sam_ema_seed123_"
-            f"fold{fold_number}_epoch_{epoch}_report.json"
+            f"reports/{RUN_NAME}_fold{fold_number}_epoch_{epoch}_report.json"
         )
 
         if val_macro_f1 > best_macro_f1:
@@ -473,21 +469,20 @@ def run_fold(fold_number, num_epochs=15):
             best_epoch = epoch
             epochs_without_improvement = 0
 
+            # v17 checkpoint contains EMA weights (as in v13).
             save_checkpoint(
                 ema_model,
                 optimizer,
                 epoch,
                 epoch_report,
-                f"checkpoints/convnext_tiny_finetune_v14_sam_ema_seed123_"
-                f"fold{fold_number}_best.pt"
+                f"checkpoints/{RUN_NAME}_fold{fold_number}_best.pt"
             )
 
             print(
                 f"  -> New best checkpoint: "
                 f"macro F1={best_macro_f1:.4f}"
             )
-        
-        
+
         else:
             epochs_without_improvement += 1
 
@@ -495,6 +490,9 @@ def run_fold(fold_number, num_epochs=15):
                 f"  -> No improvement "
                 f"({epochs_without_improvement}/{patience})"
             )
+
+        # Warmup reaches BASE_LR at the end of epoch 1.
+        # From epoch 2 onward, the LR matches the original v13 cosine schedule.
         scheduler.step()
 
         if epochs_without_improvement >= patience:
@@ -507,27 +505,26 @@ def run_fold(fold_number, num_epochs=15):
 
     save_json(
         history,
-        f"reports/convnext_tiny_finetune_v14_sam_ema_seed123_"
-        f"fold{fold_number}_training_history.json"
+        f"reports/{RUN_NAME}_fold{fold_number}_training_history.json"
     )
 
     best_summary = {
         "fold": fold_number,
         "train_seed": TRAIN_SEED,
         "ema_decay": EMA_DECAY,
+        "warmup_start_factor": WARMUP_START_FACTOR,
+        "warmup_epochs": 1,
         "best_epoch": best_epoch,
         "best_macro_f1": best_macro_f1,
-        "sam_rho": 0.05,
-        "optimizer": "SAM(Adam)",
     }
 
     save_json(
         best_summary,
-        f"reports/convnext_tiny_finetune_v14_sam_ema_seed123_"
-        f"fold{fold_number}_best_summary.json"
+        f"reports/{RUN_NAME}_fold{fold_number}_best_summary.json"
     )
 
     return history
+
 
 if __name__ == "__main__":
     start_time = time.perf_counter()
@@ -539,6 +536,6 @@ if __name__ == "__main__":
     elapsed = time.perf_counter() - start_time
 
     print(
-        f"\nV14 sanity-check time: "
+        f"\nExperiment elapsed time: "
         f"{elapsed / 60:.1f} minutes"
     )

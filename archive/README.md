@@ -15,4 +15,4 @@ Some archived scripts have module-level execution, legacy relative paths or impo
 
 Shared code now lives in `core/`, `evaluation/` and `preprocessing/`, **not at the repository root**. Historical checkpoints from the original ConvNeXt and PanDerm environments can have different numerical fold assignments despite identical seed/configuration; preserve and verify the actual validation image and lesion IDs.
 
-See `Diploma_Experiment_History.md` (project research record) and `reports/README.md` for detailed decisions and metric evidence. Reports with `reference_check_passed: false` are retained as error evidence and must not be used as valid metrics.
+See `docs/research/Diploma_Experiment_History.md` (project research record) and `reports/README.md` for detailed decisions and metric evidence. Reports with `reference_check_passed: false` are retained as error evidence and must not be used as valid metrics.
