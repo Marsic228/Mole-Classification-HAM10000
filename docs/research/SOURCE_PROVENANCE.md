@@ -1,7 +1,7 @@
 # Research source and reproducibility provenance
 
-**Updated:** 2026-10-15  
-**Repository:** `Marsic228/Mole-Classification`  
+**Updated:** 2026-10-19
+**Repository:** `Marsic228/Mole-Classification-HAM10000`
 **Evidence boundary:** checkpoint *inference* is reproduced within stated tolerances; training has **not** been reproduced from scratch. These are development-set evaluations, not clinical or independent external validation.
 
 ## Current tracked source provenance
@@ -10,6 +10,8 @@
 |---|---|---|
 | ConvNeXt v17 EMA, warmup | `experiments/convnext/convnext_tiny_cv_train_reference.py` | Tracked training implementation; inference replay 5/5 PASS |
 | ConvNeXt natural sampling + Cross-Entropy | `experiments/convnext/convnext_tiny_cv_train_natural_ce.py` | Tracked training implementation; inference replay 5/5 PASS (saved metrics exact) |
+| ConvNeXt natural sampling + Balanced Softmax | `experiments/convnext/convnext_tiny_cv_train_natural_balsoftmax.py` | Controlled CE comparison; five best-checkpoint replay checks PASS, but lower macro F1 (0.7295 vs 0.7386); rejected as CE replacement |
+| Paired natural CE / Balanced Softmax evaluator | `evaluation/convnext_natural_ce_vs_balsoftmax.py` | Loads 10 fold-specific checkpoints with canonical held-out folds; summary in `reports/convnext_natural_ce_vs_balsoftmax_summary.json` |
 | PanDerm Base partial4 EMA | `experiments/panderm/panderm_cv_train.py` | Tracked training implementation; inference replay 5/5 PASS |
 | ConvNeXt v13 / v14 SAM | `archive/legacy_experiments/convnext_tiny_cv_train_v13.py` and `...v14_sam.py` | Historical source preserved, not part of the 15 replays |
 
@@ -26,7 +28,8 @@ The **recovered sources** below are historical VS Code editor snapshots, not exe
 
 ## Inference reproducibility evidence
 
-- 15/15 checkpoint replays **PASS** at macro F1 and accuracy tolerance 0.003, with strict state-dict loading and best-epoch match. All 15 checkpoint SHA-256 hashes are recorded separately.
+- The original 15/15 priority checkpoint replays **PASS** at macro F1 and accuracy tolerance 0.003, with strict state-dict loading and best-epoch match. All 15 checkpoint SHA-256 hashes are recorded separately.
+- On 2026-10-19, an additional paired evaluation of the five natural CE and five Balanced Softmax selected checkpoints passed 10/10 replay checks (macro F1 differences at most 0.000026 against saved best summaries). The new report files do not establish end-to-end retraining reproducibility, independent testing or SHA-256 verification for the additional Balanced Softmax checkpoints.
 - ConvNeXt v17 five-fold macro F1 from replay: **0.743064 ± 0.014585** (sample SD); Fold 3 differed from its independent evaluation by one image prediction, though within tolerance.
 - PanDerm partial4 five-fold macro F1 from replay: **0.736796 ± 0.023202**.
 - ConvNeXt natural CE five-fold macro F1 from replay: **0.738647 ± 0.017843**; matches saved best-summary and epoch accuracy metrics exactly.
@@ -49,5 +52,5 @@ Full *observed* environment inventories exist in `reports/repro_audit/{convnext,
 
 - **INVALID:** `reports/convnext_v17_panderm_partial4_ensemble_summary.json` and its fold1 companion have explicit failed reference checks. Do **not** claim macro F1 0.9323 as a valid result. Correct matched OOF *development* ensemble result is 0.762088 in `reports/oof_convnext_panderm_ensemble_results.json`.
 - **UNRESOLVED:** independent evaluation versus training best-summary differences for ConvNeXt v11 CutMix folds 1, 2, and 5. Preserve both records until explained.
-- **RUN NAME SAFETY:** verify the editable `experiments/convnext/convnext_tiny_cv_train.py` has a unique nonempty `RUN_NAME` before executing it. Never overwrite natural-CE outputs.
+- **RUN NAME SAFETY:** the former generic ConvNeXt trainer was removed from active experiments as a duplicate of the archived v14 SAM source. Future experiments must use distinct, versioned scripts and unique `RUN_NAME` values; never overwrite the natural-CE or Balanced Softmax outputs.
 - **NOT VERIFIED:** deterministic full retraining, exact original checkpoint-source attribution for the recovered historical snapshots, restored backup images/weights, rebuilt locked environments, and independent or clinical generalization.

@@ -2,7 +2,22 @@
 
 **Canonical experiment archive**  
 **Reconstructed:** 2026-10-07; **evidence reconciliation + local static and preflight audits:** 2026-10-14 (GitHub `4088b9d`; bulk audit 16:50:35Z; reproducibility preflight 17:14:34Z)  
+**Most recent experiment entry:** 2026-10-19 (natural CE vs Balanced Softmax; D20).
 **Repository:** `Marsic228/Mole-Classification`
+
+## Quick navigation
+
+These links point to entries in this registry; they do not duplicate model status or metrics. For current decisions, check dated revisions and later supplements in the linked sections.
+
+- [[#D17. ConvNeXt v17 — one-epoch LR warmup — GITHUB-VERIFIED INDEPENDENT FIVE-FOLD EVALUATION — ACCEPTED STANDALONE REFERENCE|Standalone reference decision]]
+- [[#D20. Natural sampling + Balanced Softmax — CHAT-VERIFIED FIVE-FOLD TRAINING AND PAIRED REPLAY — REJECTED AS CE REPLACEMENT|2026-10-19 controlled Balanced Softmax vs CE result]]
+- [[#E3. ConvNeXt v17 + PanDerm partial4 equal-probability soft voting — GITHUB-VERIFIED OOF DEVELOPMENT RESULT — LEADING ENSEMBLE CANDIDATE|Ensemble candidate and fold-identity correction]]
+- [[#D9. ConvNeXt v9 — full unfreezing, Adam lr=1e-4 — GITHUB-VERIFIED — REJECTED|Full-unfreezing counterexample (v9; v10 follows)]]
+- [[#F2. PanDerm Base partial8 — GITHUB-VERIFIED REPORTS — COMPLETE / REJECTED AS NEW REFERENCE|Deeper PanDerm fine-tuning]]
+- [[#B4. Confusion-aware Focal Loss, λ = 0.10 — GITHUB-VERIFIED — REJECTED|Recall versus global balance]]
+- [[#Confirmed seven-stage research roadmap — 2026-10-15 (current execution order)|Current research-roadmap section]]
+- [[#12c. 2026-10-14 complete five-fold checkpoint replays: 15/15 PASS|Checkpoint replay and remaining reproducibility limits]]
+- [[#12. Items still to verify before diploma finalization|Items still to verify]]
 
 ## Purpose
 
@@ -892,7 +907,7 @@ Mean per-class independent v18 F1 (computed from rounded fold values): `akiec .6
 
 ## D19. Natural sampling + ordinary CrossEntropy control — GITHUB-VERIFIED FIVE-FOLD BEST-CHECKPOINT RESULTS — COMPLETED CONTROL
 
-**Date:** 2026-10-14. **Evidence:** `experiments/convnext/convnext_tiny_cv_train_natural_ce.py`; `reports/convnext_tiny_natural_ce_seed123_fold{fold}_best_summary.json` for folds 1–5, plus 75 tracked reports for this run (epoch reports, training histories and best summaries). The implementation and best summaries are committed; an independently reloaded five-fold evaluation specifically for this run has **not** been verified. Original run prefix: `convnext_tiny_natural_ce_seed123`.
+**Date:** 2026-10-14. **Evidence:** `experiments/convnext/convnext_tiny_cv_train_natural_ce.py`; `reports/convnext_tiny_natural_ce_seed123_fold{fold}_best_summary.json` for folds 1–5, plus 75 tracked reports for this run (epoch reports, training histories and best summaries). The implementation and best summaries were committed by 2026-10-14. **Later 2026-10-14** checkpoint replays (§12c) confirmed all five CE folds; the subsequent paired **2026-10-19** evaluation reproduced the CE checkpoints again alongside Balanced Softmax (D20). The original D19 status sentence was written before those replays. Original run prefix: `convnext_tiny_natural_ce_seed123`.
 
 **Reason for control:** establish a natural-sampling + ordinary-CE baseline for a subsequent **natural-sampling + Balanced Softmax** comparison. This is **not** an isolated loss comparison against v17: vs v17's WRS + Focal Loss, *both sampling and loss* change. The fixed canonical development folds were used for this new run; the older v17 evaluation uses historical folds, and exact ID-level comparability needs to be checked if claiming paired fold deltas.
 
@@ -909,6 +924,54 @@ Mean per-class independent v18 F1 (computed from rounded fold values): `akiec .6
 **Mean ± sample SD of five selected training/validation best summaries:** macro F1 **0.738647 ± 0.017843** (rounded **0.7386 ± 0.0178**). **Mean validation accuracy = 0.847828** (84.78%), recovered directly from the five selected-epoch JSON reports (`..._fold{fold}_epoch_{best_epoch}_report.json`); individual fold accuracies: `0.859988, 0.851700, 0.849355, 0.829912, 0.848183`. These are selected-validation results, **not independent checkpoint-reload evaluations**. For context, v17 independent mean F1 was **0.7430 ± 0.0144** under its historical folds; the raw mean difference is ~−0.0044 but **do not attribute this difference solely to the loss function** or claim significance.
 
 **Decision:** completed and retained as the **Balanced Softmax control**, not promoted to standalone reference. Next controlled test: keep natural sampling, folds and the remaining training recipe fixed, replace only ordinary CE with Balanced Softmax, then compare on the same validation identities. Model checkpoints and environment are not embedded in Git.
+
+---
+
+
+## D20. Natural sampling + Balanced Softmax — CHAT-VERIFIED FIVE-FOLD TRAINING AND PAIRED REPLAY — REJECTED AS CE REPLACEMENT
+
+**Date:** 2026-10-19. **Evidence:** user-provided local training logs for Balanced Softmax folds 1–5 and terminal output from `evaluation/convnext_natural_ce_vs_balsoftmax.py`. Local source scripts: `experiments/convnext/convnext_tiny_cv_train_natural_ce.py` and `experiments/convnext/convnext_tiny_cv_train_natural_balsoftmax.py`. **Saved evaluation artifact reported by the user:** `reports/convnext_natural_ce_vs_balsoftmax_summary.json`; per-fold reports: `reports/convnext_tiny_natural_{ce,balsoftmax}_seed123_fold{k}_evaluation.json`. These reports are **reported as saved locally**, not independently read from GitHub or confirmed committed. This entry is **CHAT-VERIFIED** rather than GitHub-verified.
+
+**Hypothesis:** replacing ordinary CE with class-aware Balanced Softmax under **natural sampling** might raise macro F1 and minority-class performance without changing the backbone or sampling method.
+
+**Matched controlled setup:** Same 8,530-image canonical five-fold, lesion-group-safe validation identities (via `core.canonical_cv`); ImageNet-pretrained ConvNeXt-Tiny with last five feature modules + classifier trainable; natural shuffled batches without WeightedRandomSampler; ImageNet transforms; CutMix (alpha 1, probability 0.5); EMA 0.999; Adam LR `1e-4`; first-epoch warmup; cosine scheduler; AMP; batch size 8; seed 123; max 15 epochs, patience 4, best EMA checkpoint selected by validation macro F1. **Major experimental change:** training `CrossEntropyLoss` → `BalancedSoftmaxLoss`, implemented as `cross_entropy(logits.float() + log(train_fold_class_counts), targets)`; training class counts come only from that training fold. Validation loss uses plain CE; evaluation/classification uses **raw logits** without adding counts. Independent run prefixes prevent checkpoint/report overwrites. Separate fold-1 and folds-2–5 invocations were reported; do not infer the final saved `__main__` loop from the locally uploaded copy alone.
+
+**Selected-best validation macro F1 and independently replayed fold results** (printed to four decimals; CE fold-selected original values are more precise in D19):
+
+| Canonical fold | CE best epoch / F1 | Balanced Softmax best epoch / F1 | BS−CE F1 (approx.) |
+|---|---:|---:|---:|
+| 1 | 7 / 0.7618 | 11 / 0.7549 | −0.0069 |
+| 2 | 11 / 0.7347 | 14 / 0.7348 | +0.0001 |
+| 3 | 12 / 0.7469 | 15 / 0.7277 | −0.0193 |
+| 4 | 9 / 0.7132 | 15 / 0.7072 | −0.0060 |
+| 5 | 7 / 0.7366 | 11 / 0.7228 | −0.0137 |
+
+**Paired five-fold aggregate** (mean ± **sample SD**, not pooled OOF; Δ = Balanced Softmax minus CE):
+
+| Metric | CE | Balanced Softmax | Paired Δ |
+|---|---:|---:|---:|
+| Accuracy | **0.8478 ± 0.0110** | 0.8408 ± 0.0086 | **−0.0070 ± 0.0070** |
+| Macro precision | **0.7725 ± 0.0233** | 0.7284 ± 0.0253 | **−0.0441 ± 0.0117** |
+| Macro recall | 0.7184 ± 0.0281 | **0.7390 ± 0.0318** | **+0.0206 ± 0.0051** |
+| **Macro F1 (selection metric)** | **0.7386 ± 0.0178** | 0.7295 ± 0.0175 | **−0.0092 ± 0.0075** |
+
+**Per-class mean validation F1** (means of five individual-fold class F1 scores; rounded user-reported values):
+
+| Class | CE F1 | Balanced Softmax F1 | BS−CE |
+|---|---:|---:|---:|
+| akiec | 0.6470 | 0.6317 | −0.0152 |
+| bcc | 0.7764 | 0.7816 | +0.0052 |
+| bkl | 0.6943 | 0.6925 | −0.0017 |
+| df | 0.6622 | 0.6628 | +0.0005 |
+| mel | **0.5962** | 0.5808 | **−0.0154** |
+| nv | 0.9269 | 0.9243 | −0.0026 |
+| vasc | **0.8676** | 0.8328 | **−0.0349** |
+
+**Replay integrity:** All **10 of 10** selected CE/BS checkpoints reloaded on their canonical validation folds and passed best-summary macro-F1 comparison. The printed absolute replay F1 discrepancies range from **0.000004 to 0.000026**, within the predeclared `0.003` replay tolerance. This supports selected-checkpoint evaluation reproducibility, **not** end-to-end retraining determinism or independent external validation.
+
+**Interpretation and decision:** BS increased **macro recall (+0.0206)** at the cost of substantially lower **macro precision (−0.0441)**; mean macro F1 decreased **0.0092**, and `mel` F1 declined **0.0154** (melanoma F1 lower in **4/5** folds). Fold 2 was essentially tied, while the others declined. Fold SD was similar; no defensible stability benefit. **Reject Balanced Softmax as a replacement for natural CE under this configuration**, while preserving the informative precision–recall trade-off as a negative research result. This is a **controlled loss comparison only against natural CE**, not a causal comparison with v17 (which also differs in sampler/loss and historical fold identities).
+
+**Next research action:** evaluate a separately controlled **LDAM** loss against the same natural CE baseline after validating its training-loss interaction with CutMix and class counts. No LDAM training result is yet claimed. The old exposed test cannot be used as a fresh independent test, and the research-only prototype has no clinical validation.
 
 ---
 
@@ -1136,17 +1199,20 @@ Selected order:
 
 ## Confirmed seven-stage research roadmap — 2026-10-15 (current execution order)
 
-**User-approved decision:** This is the current order of work, superseding earlier *pending-step ordering* without erasing completed experimental results, source qualifications, rejected methods, or provisional ideas. Collect comparable evidence continuously; make the comprehensive synthesis Stage 5.
+**Decision (user-confirmed):** Preserve the 2026-10-12 expanded-research direction but make the **execution order** explicit. This section supersedes older *pending-step ordering*, not completed measurements, rejected experiments or their source provenance. The early-stage reproducibility audit and existing matched OOF ensemble are evidence milestones, not proof of end-to-end training determinism or independent generalization.
 
-1. **Reproducibility audit — milestone achieved, broader checks open.** Canonical 8,530-image lesion-safe fold assignments and original model-specific fold exports are preserved. Fifteen of fifteen checkpoint-level inference replays passed the predefined macro-F1/accuracy tolerance of 0.003; this does **not** demonstrate full retraining reproducibility, clean-machine recreation, exact attribution of all recovered source candidates, or external generalization.
-2. **Long-tail methods — NEXT.** Run Balanced Softmax against the completed **natural-sampling ordinary Cross-Entropy control** (D19: selected-validation five-fold macro F1 **0.738647 ± 0.017843**). Keep canonical fold identities, natural sampling and other training settings fixed; confirm training-fold class-count order and CutMix loss behavior in a one-fold preflight, with a unique run name. **Balanced Softmax has not been trained.** Consider LDAM afterward with an appropriately controlled comparison.
-3. **ROI / segmentation — PLANNED.** Examine lesion-centered preprocessing, suitable annotations/masks, crop failures and changes in minority-class performance under lesion-safe evaluation.
-4. **Supervised Contrastive Learning — PLANNED.** Test representation separation for difficult diagnoses subject to sufficient positive pairs and RTX 2060 6-GB / batch-8 compute limits.
-5. **Systematic experiment analysis — PLANNED SYNTHESIS.** Accumulate exact fold/image/lesion IDs, reports, per-class measures and run costs throughout earlier stages; afterward compare controlled improvements and regressions, recurring patterns and complementary mistakes. Do **not** conflate fold-mean macro F1 with pooled OOF macro F1 or infer causation from uncontrolled cross-run comparisons.
-6. **Final ensemble selection — PLANNED.** Choose a defensible standalone model or ensemble on matched held-out examples, considering error diversity, minority performance, stability, inference cost and selection bias. Existing ConvNeXt v17 + PanDerm partial4 50/50 matched-development-OOF macro F1 **0.762088** (E3) is a candidate, **not** an externally validated final model.
-7. **Independent evaluation and application — PLANNED.** Seek non-overlapping external data if feasible; assess domain shift, calibration and unsupported/OOD inputs before presenting a **research-only** prototype. No clinical diagnostic claim.
+1. **Reproducibility audit — operational milestone reached; broader work remains.** Canonical group-safe folds and original-fold exports are frozen; two historical environments are recorded; 15/15 saved checkpoint replays met macro-F1 tolerance 0.003. This verifies checkpoint-level inference replay, **not** fresh-training replication, clean installation, exact linkage of every recovered historical script to its executed run or external validation. Preserve those open limitations while proceeding with controlled research.
+2. **Long-tail methods — NEXT.** First test Balanced Softmax against the completed **natural-sampling ordinary CE** five-fold control (D19), keeping folds, sampling and all other relevant training settings fixed. Preflight one fold and check CutMix/class-count handling before all five folds. Balanced Softmax has **not** been trained as of this decision. Evaluate LDAM **after** reviewing Balanced Softmax, with its own stated control and one-major-factor change where feasible.
+3. **ROI / segmentation — PLANNED.** Investigate lesion-centered preprocessing, annotation/mask sources, cropping failure modes and lesion-safe validation under a controlled comparison.
+4. **Supervised Contrastive Learning — PLANNED.** Test whether better representations help difficult classes; consider positives per class and the RTX 2060 6-GB / batch-8 compute constraints.
+5. **Systematic experiment analysis — PLANNED SYNTHESIS.** Collect comparable evidence from the beginning, but conduct the comprehensive, structured assessment **after Stages 2–4 where feasible**: match split/image/lesion IDs, separate fold-mean and pooled OOF macro F1, compare per-class changes, look for patterns, investigate complementary mistakes, and distinguish association from controlled causal findings.
+6. **Final ensemble selection — PLANNED.** Based on the synthesis, select a defensible standalone model or ensemble using matched-held-out samples, stable minority-class performance, error diversity, compute/inference cost and selection-bias safeguards. The pre-existing v17 + PanDerm partial4 50/50 pooled OOF macro F1 **0.7620876** is a **development candidate**, not an independently validated final choice.
+7. **Independent evaluation and application — PLANNED.** Evaluate on genuinely independent non-overlapping data as available; assess domain shift, calibration, uncertainty and unsupported/OOD inputs before a **research-only** prototype. Do not claim clinical validity or autonomous diagnosis.
 
-**Next executable action:** Prepare the distinct natural-sampling Balanced Softmax experiment, run a one-fold preflight, then proceed to five-fold CV if checks pass. Accepting the roadmap generated **no new training data, metrics or clinical evidence**. Optional extra backbones or checkpoint averaging remain conditional ideas, not mandatory additional stages.
+**Research boundaries:** Keep the original ensemble hypothesis and all negative results. No model training or new accuracy/F1 measurements are implied by accepting this roadmap. Existing optional directions (such as another specialized backbone or compatible-checkpoint averaging) are **conditional ideas, not additional mandatory stages**. The next executable action is the separate natural-sampling Balanced Softmax trainer plus a safe one-fold preflight, not the application or the final ensemble.
+
+
+**2026-10-19 execution update (supersedes only the next-action status above):** The natural-sampling CE control (D19) and the matched five-fold Balanced Softmax experiment (D20) are now complete; Balanced Softmax was **rejected as a CE replacement** after paired checkpoint evaluation. Stage 2 continues with **LDAM as the next planned controlled comparison**. All seven strategic stages and the earlier historical decisions remain unchanged.
 
 ### Additional research objective: cross-experiment patterns and complementary-error ensembles — PLANNED (2026-10-12)
 
@@ -1164,8 +1230,6 @@ Selected order:
 
 **Existing preliminary evidence:** E3 ConvNeXt v17 + PanDerm partial4 50/50 ensemble increased **pooled** OOF macro F1 from **0.744418** (ConvNeXt) to **0.762088**, and improved seven of seven pooled class F1 values. Gains were not uniform across ConvNeXt fold groups (3/5 improved). This motivates the planned analysis but does not establish general success or clinical validity. **Status: planned**; no additional model training or new ensemble measurements are claimed by this entry.
 
-**Lesson continuity:** The next conceptual programming lesson resumes at **Block 6: loss → gradient → optimizer/parameter update** in the actual PyTorch training step. It is not an ML experiment and does not require new code.
-
 **2026-10-14 archival correction:** the v17/v18 independent evaluation JSONs, PanDerm partial4/partial8/AdamW evaluation JSONs, `reports/repro_audit/*` environment exports, immutable split CSV/JSON, and matched OOF JSON/NPZ artifacts are now tracked. v16c `vasc` F1 is recovered as **0.8612**. Remaining tasks: pin missing exact training-script variants (v18 and PanDerm partial8/AdamW), audit historical `aux02`, validate full source/report integrity, verify environment recreatability and hash local checkpoint backups.
 
 ---
@@ -1181,6 +1245,7 @@ Selected order:
 - mel-specific Focal alpha=1.25
 - confusion-aware Focal λ=.10
 - confusion-aware Focal λ=.05
+- Balanced Softmax with natural sampling (D20; five-fold controlled test, rejected vs natural CE)
 - auxiliary-loss (`aux02`) experiment
 - hard-example sampling
 
@@ -1370,13 +1435,3 @@ For the final thesis:
 - main thesis tables should emphasize controlled, scientifically comparable experiments under the lesion-safe 5-fold protocol;
 - use Era A only to explain how the methodology matured (imbalance, leakage awareness, transfer learning);
 - use Era B for formal model comparison and conclusions.
-
----
-
-# 12e. 2026-10-15 archival checkpoint after source recovery
-
-**Repository confirmation:** GitHub `main` commit `2a50d1f7f0affb18fa92aa7e6a00398254272a68` preserves 22 VS Code Local History snapshots in `archive/recovered_sources/` plus their SHA-256 provenance file and README. These files were archived unchanged and are **candidate historical training sources**, not a record of confirmed checkpoint-source cryptographic linkage. The archive README was corrected in commit `4ec340ff5af16da52f318fb42cd10c30fbf4b24a`.
-
-**Documentation closeout:** The 15-fold replay audit and 15 full checkpoint hashes are organized in `docs/research/`, alongside the source-recovery findings. The replay code must be committed separately as `evaluation/replay_checkpoint_fold.py` for a future investigator to repeat the inference checks. The `local_audit/` directory is local execution output, not the canonical archive.
-
-**Remaining limits and next research gate:** Keep the training-source candidates marked as *probable historical implementations* pending exact checkpoint attribution. A successful 15-fold inference replay is not proof of retraining determinism or independent medical generalization. External dataset/checkpoint backups and their integrity hashes, environment rebuilds, and the unresolved v11 CutMix discrepancies remain on the reproducibility checklist. Before any new training, confirm that the editable ConvNeXt workspace has a nonempty, unique `RUN_NAME`, and use canonical new-experiment folds.

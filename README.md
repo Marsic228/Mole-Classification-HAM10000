@@ -12,18 +12,19 @@ Diploma research project for seven-class classification of dermatoscopic skin-le
 - **Primary metric:** macro F1. Also report accuracy, per-class precision/recall/F1, confusion matrices and fold variability.
 - **Test policy:** the old exposed test split is historical evidence only; do not use it to select models or claim independent final validation.
 
-### Development results (as of 15 October 2026)
+### Development results (as of 19 October 2026)
 
 | System | Metric type | Macro F1 | Accuracy |
 |---|---|---:|---:|
 | ConvNeXt-Tiny v17, warmup + CutMix + EMA | Mean of five folds ± sample SD | **0.7430 ± 0.0144** | 0.8450 ± 0.0091 |
 | PanDerm Base partial4 | Mean of five folds ± sample SD | **0.7368 ± 0.0232** | 0.8350 ± 0.0087 |
-| Natural-sampling ordinary CE (Balanced Softmax control) | Selected best checkpoints: five-fold mean ± sample SD | **0.7386 ± 0.0178** | 0.8478 (mean) |
+| Natural-sampling ordinary CE (loss-ablation control) | Selected best checkpoints: five-fold mean ± sample SD | **0.7386 ± 0.0178** | 0.8478 (mean) |
+| Natural-sampling Balanced Softmax (rejected vs CE) | Same canonical folds; best-checkpoint mean ± sample SD | **0.7295 ± 0.0175** | 0.8408 (mean) |
 | ConvNeXt v17 | Pooled OOF, 8,530 images | **0.7444** | 0.8451 |
 | PanDerm partial4 | Pooled OOF, 8,530 images | **0.7379** | 0.8351 |
 | ConvNeXt v17 + PanDerm partial4, 50/50 probability averaging | Pooled matched OOF, 8,530 images | **0.7621** | 0.8570 |
 
-**Mean fold F1 and pooled out-of-fold (OOF) F1 are different measures.** The ensemble is a promising development result, **not external or clinical validation**. Balanced Softmax training has **not started**; the natural-sampling ordinary-CE control is complete. LDAM is planned after the Balanced Softmax comparison. Neither planned method is an established improvement.
+**Mean fold F1 and pooled out-of-fold (OOF) F1 are different measures.** The ensemble is a promising development result, **not external or clinical validation**. The natural-sampling CE and Balanced Softmax comparison is complete: Balanced Softmax reduced mean macro F1 by **0.0092** (five-fold mean), despite higher macro recall. Both methods remain **development-only** results; LDAM is the next planned controlled test.
 
 ## Approved seven-stage research roadmap (15 October 2026)
 
@@ -32,14 +33,14 @@ The following is the agreed **execution order**, not a claim that later methods 
 | Stage | Scope | Status and evidence boundary |
 |---|---|---|
 | **1. Reproducibility audit** | Freeze folds, environments, model/preprocessing details and evaluation | **Checkpoint-replay milestone reached:** 15/15 saved fold checkpoints reproduced metrics within the declared 0.003 tolerance. End-to-end retraining, a clean-machine rebuild and external validation remain unverified. |
-| **2. Long-tail methods** | Balanced Softmax, then LDAM | **Next.** Natural-sampling + ordinary CE control: macro F1 **0.7386 ± 0.0178** across five selected validation folds. Balanced Softmax training has not started. Keep sampling, canonical folds and recipe fixed for the loss comparison; perform a one-fold preflight first. |
+| **2. Long-tail methods** | Natural CE / Balanced Softmax; LDAM next | **In progress.** Five-fold natural CE control **0.7386 ± 0.0178**; matched Balanced Softmax **0.7295 ± 0.0175**, rejected as a CE replacement. All 10 selected-checkpoint CE/BS replays passed. Next: formulate an LDAM-only change with canonical folds, natural sampling, CutMix safeguards and a one-fold preflight. |
 | **3. ROI / segmentation** | Test lesion-centered preprocessing | **Planned.** Check masks/annotations, cropping errors and lesion-safe comparison. |
 | **4. Supervised Contrastive Learning** | Test improvements in learned representations | **Planned.** Account for positive pairs and RTX 2060 6-GB / batch-8 limits. |
 | **5. Systematic experiment analysis** | Compare comparable experiments, errors and complementarity | **Planned synthesis.** Gather per-fold, per-class and matched-ID OOF evidence throughout earlier stages; do the comprehensive analysis before final selection. Do not mix pooled OOF macro F1 with five-fold means. |
 | **6. Final ensemble selection** | Choose a defensible standalone or ensemble model | **Planned.** ConvNeXt v17 + PanDerm partial4, 50/50, has development-only pooled matched OOF macro F1 **0.7621**; it is a candidate, not an independently validated final model. Consider error diversity, minority classes and inference cost. |
 | **7. Independent evaluation and application** | Assess generalization and build a research prototype | **Planned.** Seek non-overlapping external data, study domain shift, calibration and unsupported/OOD inputs. No clinical diagnosis claim. |
 
-**Next executable step:** prepare a separate natural-sampling Balanced Softmax training script and unique run name, check loss/class counts and CutMix, then preflight one fold before full CV. Keep existing CE artifacts and experimental workspace untouched. Details belong in [the experiment history](docs/research/Diploma_Experiment_History.md).
+**Next executable step:** prepare a controlled natural-sampling **LDAM** training variant against the existing CE control. Validate training-fold class counts, the loss/CutMix interaction, canonical fold identities and a unique `RUN_NAME`; run a one-fold preflight before full CV. Preserve the CE and Balanced Softmax code/reports. Details belong in [the experiment history](docs/research/Diploma_Experiment_History.md).
 
 ## Project structure
 
@@ -56,7 +57,7 @@ Mole-Classification/
 ├── docs/
 │   └── research/         # Experiment history and reproducibility evidence
 ├── experiments/
-│   ├── convnext/          # Reference, workspace and completed experiments
+│   ├── convnext/          # Reference and versioned training experiments
 │   ├── panderm/           # PanDerm research scripts
 │   └── metadata/          # Metadata-fusion experiments
 ├── evaluation/            # Evaluations, OOF ensemble and CV audit
@@ -84,8 +85,8 @@ Historical scripts are retained for research traceability. Some require their or
 From a new workspace:
 
 ```powershell
-git clone https://github.com/Marsic228/Mole-Classification.git
-cd Mole-Classification
+git clone https://github.com/Marsic228/Mole-Classification-HAM10000.git
+cd Mole-Classification-HAM10000
 py -m venv venv
 .\venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
@@ -192,7 +193,9 @@ The intended application is a **research prototype**, not a medical diagnostic d
 ### Active research
 
 - `experiments/convnext/convnext_tiny_cv_train_reference.py` — stable ConvNeXt v17 reference using the original historical CV assignments.
-- `experiments/convnext/convnext_tiny_cv_train.py` — editable experimental workspace (local, uncommitted experiment changes are deliberately kept outside documentation commits).
+- `experiments/convnext/convnext_tiny_cv_train_natural_balsoftmax.py` — completed controlled Balanced Softmax experiment (rejected versus natural CE).
+- `evaluation/convnext_natural_ce_vs_balsoftmax.py` — paired 10-checkpoint evaluation on the canonical development folds.
+- The former generic `convnext_tiny_cv_train.py` workspace was removed; its v14 SAM contents are already preserved as `archive/legacy_experiments/convnext_tiny_cv_train_v14_sam.py`.
 - `experiments/convnext/convnext_tiny_cv_train_natural_ce.py` — completed natural-sampling Cross-Entropy control (mean fold macro F1: 0.7386 ± 0.0178).
 - `core/canonical_cv.py` and `splits/` — frozen lesion-safe folds for new experiments.
 - `experiments/panderm/` and `experiments/metadata/` — model research scripts.
@@ -209,11 +212,11 @@ Run from the repository root:
 # Verify frozen development folds; does not train
 .\venv\Scripts\python.exe -m core.canonical_cv verify
 
-# Launch the experimental ConvNeXt workspace (starts training)
-.\venv\Scripts\python.exe -m experiments.convnext.convnext_tiny_cv_train
+# Replay the CE vs Balanced Softmax comparison (requires saved checkpoints and data; inference only)
+.\venv\Scripts\python.exe -m evaluation.convnext_natural_ce_vs_balsoftmax
 ```
 
-Do not run the second command until an experiment is configured and ready.
+The comparison command requires local images and all ten saved checkpoints; it does not retrain the models.
 
 ### Experiment management
 
