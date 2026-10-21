@@ -1,0 +1,77 @@
+[
+  {
+    "epoch": 1,
+    "train_loss": 5.739365357889268,
+    "val_loss": 1.7263959367698598,
+    "val_accuracy": 0.7008797653958945,
+    "val_macro_f1": 0.3454736654070768,
+    "learning_rate": 0.0001,
+    "warmup_start_lr": 1e-05,
+    "warmup_end_lr": 0.0001,
+    "warmup_batches": 854
+  },
+  {
+    "epoch": 2,
+    "train_loss": 4.388538837563726,
+    "val_loss": 1.6191834066515771,
+    "val_accuracy": 0.7941348973607039,
+    "val_macro_f1": 0.5675822363798536,
+    "learning_rate": 9.891830623632339e-05
+  },
+  {
+    "epoch": 3,
+    "train_loss": 3.585251829946018,
+    "val_loss": 1.590251031323014,
+    "val_accuracy": 0.8175953079178886,
+    "val_macro_f1": 0.6471133008872668,
+    "learning_rate": 9.572050015330874e-05
+  },
+  {
+    "epoch": 4,
+    "train_loss": 2.974046151251364,
+    "val_loss": 1.5493406491858936,
+    "val_accuracy": 0.8281524926686217,
+    "val_macro_f1": 0.6805161110607455,
+    "learning_rate": 9.05463412215599e-05
+  },
+  {
+    "epoch": 5,
+    "train_loss": 2.1853796696763275,
+    "val_loss": 1.5249502591997663,
+    "val_accuracy": 0.836950146627566,
+    "val_macro_f1": 0.704838490991761,
+    "learning_rate": 8.362196501476348e-05
+  },
+  {
+    "epoch": 6,
+    "train_loss": 1.909887998641348,
+    "val_loss": 1.5082310471579292,
+    "val_accuracy": 0.829325513196481,
+    "val_macro_f1": 0.6903633755034082,
+    "learning_rate": 7.525e-05
+  },
+  {
+    "epoch": 7,
+    "train_loss": 1.7878312869973596,
+    "val_loss": 1.4924113906432535,
+    "val_accuracy": 0.8287390029325513,
+    "val_macro_f1": 0.6888692909485181,
+    "learning_rate": 6.57963412215599e-05
+  },
+  {
+    "epoch": 8,
+    "train_loss": 1.5684470510823538,
+    "val_loss": 1.4828572496075496,
+    "val_accuracy": 0.8328445747800587,
+    "val_macro_f1": 0.6936261883588485,
+    "learning_rate": 5.567415893174885e-05
+  },
+  {
+    "epoch": 9,
+    "train_loss": 1.561773461998898,
+    "val_loss": 1.476531982421875,
+    "val_accuracy": 0.836950146627566,
+    "val_macro_f1": 0.6857866521095438,
+    "learning_rate": 4.532584106825116e-05
+  }
+]

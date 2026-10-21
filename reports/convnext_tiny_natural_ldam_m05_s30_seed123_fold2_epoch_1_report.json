@@ -1,0 +1,11 @@
+{
+  "epoch": 1,
+  "train_loss": 5.7179914140049695,
+  "val_loss": 1.7218593704366238,
+  "val_accuracy": 0.7116060961313013,
+  "val_macro_f1": 0.35734905342612316,
+  "learning_rate": 0.0001,
+  "warmup_start_lr": 1e-05,
+  "warmup_end_lr": 0.0001,
+  "warmup_batches": 853
+}

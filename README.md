@@ -12,7 +12,7 @@ Diploma research project for seven-class classification of dermatoscopic skin-le
 - **Primary metric:** macro F1. Also report accuracy, per-class precision/recall/F1, confusion matrices and fold variability.
 - **Test policy:** the old exposed test split is historical evidence only; do not use it to select models or claim independent final validation.
 
-### Development results (as of 19 October 2026)
+### Development results (as of 21 October 2026)
 
 | System | Metric type | Macro F1 | Accuracy |
 |---|---|---:|---:|
@@ -20,11 +20,12 @@ Diploma research project for seven-class classification of dermatoscopic skin-le
 | PanDerm Base partial4 | Mean of five folds ± sample SD | **0.7368 ± 0.0232** | 0.8350 ± 0.0087 |
 | Natural-sampling ordinary CE (loss-ablation control) | Selected best checkpoints: five-fold mean ± sample SD | **0.7386 ± 0.0178** | 0.8478 (mean) |
 | Natural-sampling Balanced Softmax (rejected vs CE) | Same canonical folds; best-checkpoint mean ± sample SD | **0.7295 ± 0.0175** | 0.8408 (mean) |
+| Natural-sampling LDAM (rejected vs CE) | Same canonical folds; best-checkpoint mean ± sample SD | **0.7308 ± 0.0202** | 0.8423 (mean) |
 | ConvNeXt v17 | Pooled OOF, 8,530 images | **0.7444** | 0.8451 |
 | PanDerm partial4 | Pooled OOF, 8,530 images | **0.7379** | 0.8351 |
 | ConvNeXt v17 + PanDerm partial4, 50/50 probability averaging | Pooled matched OOF, 8,530 images | **0.7621** | 0.8570 |
 
-**Mean fold F1 and pooled out-of-fold (OOF) F1 are different measures.** The ensemble is a promising development result, **not external or clinical validation**. The natural-sampling CE and Balanced Softmax comparison is complete: Balanced Softmax reduced mean macro F1 by **0.0092** (five-fold mean), despite higher macro recall. Both methods remain **development-only** results; LDAM is the next planned controlled test.
+**Mean fold F1 and pooled out-of-fold (OOF) F1 are different measures.** The ensemble is a promising development result, **not external or clinical validation**. The natural-sampling loss comparisons are complete: ordinary CE achieved mean macro F1 **0.7386 ± 0.0178**, Balanced Softmax **0.7295 ± 0.0175**, and LDAM **0.7308 ± 0.0202**. Both class-aware losses were rejected as replacements for CE under their tested configurations. The local paired CE/LDAM evaluation passed **10/10 selected-checkpoint inference replay checks**; this does not establish retraining reproducibility or external validity.
 
 ## Approved seven-stage research roadmap (15 October 2026)
 
@@ -33,14 +34,14 @@ The following is the agreed **execution order**, not a claim that later methods 
 | Stage | Scope | Status and evidence boundary |
 |---|---|---|
 | **1. Reproducibility audit** | Freeze folds, environments, model/preprocessing details and evaluation | **Checkpoint-replay milestone reached:** 15/15 saved fold checkpoints reproduced metrics within the declared 0.003 tolerance. End-to-end retraining, a clean-machine rebuild and external validation remain unverified. |
-| **2. Long-tail methods** | Natural CE / Balanced Softmax; LDAM next | **In progress.** Five-fold natural CE control **0.7386 ± 0.0178**; matched Balanced Softmax **0.7295 ± 0.0175**, rejected as a CE replacement. All 10 selected-checkpoint CE/BS replays passed. Next: formulate an LDAM-only change with canonical folds, natural sampling, CutMix safeguards and a one-fold preflight. |
+| **2. Long-tail methods** | Natural CE, Balanced Softmax, LDAM | **Initial comparisons complete.** CE remains the control. Balanced Softmax and LDAM were rejected as replacements under their tested configurations. See D19–D21 in the experiment history. |
 | **3. ROI / segmentation** | Test lesion-centered preprocessing | **Planned.** Check masks/annotations, cropping errors and lesion-safe comparison. |
 | **4. Supervised Contrastive Learning** | Test improvements in learned representations | **Planned.** Account for positive pairs and RTX 2060 6-GB / batch-8 limits. |
 | **5. Systematic experiment analysis** | Compare comparable experiments, errors and complementarity | **Planned synthesis.** Gather per-fold, per-class and matched-ID OOF evidence throughout earlier stages; do the comprehensive analysis before final selection. Do not mix pooled OOF macro F1 with five-fold means. |
 | **6. Final ensemble selection** | Choose a defensible standalone or ensemble model | **Planned.** ConvNeXt v17 + PanDerm partial4, 50/50, has development-only pooled matched OOF macro F1 **0.7621**; it is a candidate, not an independently validated final model. Consider error diversity, minority classes and inference cost. |
 | **7. Independent evaluation and application** | Assess generalization and build a research prototype | **Planned.** Seek non-overlapping external data, study domain shift, calibration and unsupported/OOD inputs. No clinical diagnosis claim. |
 
-**Next executable step:** prepare a controlled natural-sampling **LDAM** training variant against the existing CE control. Validate training-fold class counts, the loss/CutMix interaction, canonical fold identities and a unique `RUN_NAME`; run a one-fold preflight before full CV. Preserve the CE and Balanced Softmax code/reports. Details belong in [the experiment history](docs/research/Diploma_Experiment_History.md).
+**Next executable step:** Begin Stage 3 — ROI/segmentation feasibility research. Investigate available lesion masks and cropping approaches, evaluate the risk of removing useful context, and select one controlled experiment against a matched full-image baseline. Preserve the completed loss experiments and their reports. Details belong in [the experiment history](docs/research/Diploma_Experiment_History.md).
 
 ## Project structure
 
@@ -61,7 +62,7 @@ Mole-Classification/
 │   ├── panderm/           # PanDerm research scripts
 │   └── metadata/          # Metadata-fusion experiments
 ├── evaluation/            # Evaluations, OOF ensemble and CV audit
-├── preprocessing/         # Dataset preparation and validation
+├── preprocessing/            # Dataset preparation and validation
 ├── archive/
 │   ├── diagnostics/
 │   ├── legacy_experiments/

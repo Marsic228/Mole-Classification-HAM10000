@@ -1,0 +1,408 @@
+{
+  "evaluation_type": "selected-best checkpoint / canonical 5-fold development validation",
+  "warning": "Not external test. Fold means and SDs are not pooled OOF scores.",
+  "class_names": [
+    "akiec",
+    "bcc",
+    "bkl",
+    "df",
+    "mel",
+    "nv",
+    "vasc"
+  ],
+  "folds": {
+    "1": {
+      "ce_macro_f1": 0.7618142857142857,
+      "ldam_macro_f1": 0.7610571428571429,
+      "delta_ldam_minus_ce": -0.0007571428571427896
+    },
+    "2": {
+      "ce_macro_f1": 0.7347428571428571,
+      "ldam_macro_f1": 0.7297285714285715,
+      "delta_ldam_minus_ce": -0.005014285714285638
+    },
+    "3": {
+      "ce_macro_f1": 0.7469428571428571,
+      "ldam_macro_f1": 0.7335285714285715,
+      "delta_ldam_minus_ce": -0.013414285714285601
+    },
+    "4": {
+      "ce_macro_f1": 0.7131714285714287,
+      "ldam_macro_f1": 0.7048285714285714,
+      "delta_ldam_minus_ce": -0.008342857142857318
+    },
+    "5": {
+      "ce_macro_f1": 0.7365714285714285,
+      "ldam_macro_f1": 0.7247142857142856,
+      "delta_ldam_minus_ce": -0.0118571428571429
+    }
+  },
+  "aggregate": {
+    "overall_accuracy": {
+      "ce": {
+        "mean": 0.8478276581172242,
+        "sample_sd": 0.011026156636482777
+      },
+      "ldam": {
+        "mean": 0.8423198232710007,
+        "sample_sd": 0.004673822444531822
+      },
+      "paired_delta_ldam_minus_ce": {
+        "mean": -0.0055078348462234365,
+        "sample_sd": 0.007234394010845948
+      }
+    },
+    "macro_precision": {
+      "ce": {
+        "mean": 0.7724628571428571,
+        "sample_sd": 0.023264948233910385
+      },
+      "ldam": {
+        "mean": 0.7634085714285714,
+        "sample_sd": 0.018509166510082494
+      },
+      "paired_delta_ldam_minus_ce": {
+        "mean": -0.009054285714285727,
+        "sample_sd": 0.030849361452723992
+      }
+    },
+    "macro_recall": {
+      "ce": {
+        "mean": 0.7184085714285714,
+        "sample_sd": 0.02809075416196146
+      },
+      "ldam": {
+        "mean": 0.7175828571428572,
+        "sample_sd": 0.03067087862970942
+      },
+      "paired_delta_ldam_minus_ce": {
+        "mean": -0.0008257142857142519,
+        "sample_sd": 0.015041481418573924
+      }
+    },
+    "macro_f1": {
+      "ce": {
+        "mean": 0.7386485714285714,
+        "sample_sd": 0.017847264696385697
+      },
+      "ldam": {
+        "mean": 0.7307714285714286,
+        "sample_sd": 0.020221490386946983
+      },
+      "paired_delta_ldam_minus_ce": {
+        "mean": -0.00787714285714285,
+        "sample_sd": 0.005138277723049216
+      }
+    }
+  },
+  "per_class": {
+    "akiec": {
+      "precision": {
+        "ce": {
+          "mean": 0.68238,
+          "sample_sd": 0.05789565614102668
+        },
+        "ldam": {
+          "mean": 0.7227,
+          "sample_sd": 0.09405027910644391
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": 0.04032000000000004,
+          "sample_sd": 0.06945147226661218
+        }
+      },
+      "recall": {
+        "ce": {
+          "mean": 0.61874,
+          "sample_sd": 0.0512638078960196
+        },
+        "ldam": {
+          "mean": 0.60836,
+          "sample_sd": 0.06884938634439672
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": -0.010379999999999967,
+          "sample_sd": 0.04565032310948082
+        }
+      },
+      "f1": {
+        "ce": {
+          "mean": 0.64696,
+          "sample_sd": 0.03612025747416538
+        },
+        "ldam": {
+          "mean": 0.6582,
+          "sample_sd": 0.06581690512322802
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": 0.011239999999999983,
+          "sample_sd": 0.046594559768281946
+        }
+      }
+    },
+    "bcc": {
+      "precision": {
+        "ce": {
+          "mean": 0.75864,
+          "sample_sd": 0.05957674042778777
+        },
+        "ldam": {
+          "mean": 0.73856,
+          "sample_sd": 0.03207378992261439
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": -0.020079999999999987,
+          "sample_sd": 0.05249139929550364
+        }
+      },
+      "recall": {
+        "ce": {
+          "mean": 0.79694,
+          "sample_sd": 0.05029063531115908
+        },
+        "ldam": {
+          "mean": 0.82714,
+          "sample_sd": 0.051376385626083126
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": 0.030199999999999984,
+          "sample_sd": 0.05051470083055029
+        }
+      },
+      "f1": {
+        "ce": {
+          "mean": 0.77636,
+          "sample_sd": 0.04670313693961036
+        },
+        "ldam": {
+          "mean": 0.77946,
+          "sample_sd": 0.029497508369352176
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": 0.0030999999999999917,
+          "sample_sd": 0.03713724545520303
+        }
+      }
+    },
+    "bkl": {
+      "precision": {
+        "ce": {
+          "mean": 0.71332,
+          "sample_sd": 0.034379019764967086
+        },
+        "ldam": {
+          "mean": 0.68338,
+          "sample_sd": 0.029089981093153014
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": -0.029940000000000012,
+          "sample_sd": 0.03971250432798212
+        }
+      },
+      "recall": {
+        "ce": {
+          "mean": 0.6803,
+          "sample_sd": 0.09480435116596708
+        },
+        "ldam": {
+          "mean": 0.6792,
+          "sample_sd": 0.061742327458559586
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": -0.0010999999999999678,
+          "sample_sd": 0.04862648455317331
+        }
+      },
+      "f1": {
+        "ce": {
+          "mean": 0.69426,
+          "sample_sd": 0.0618706149961353
+        },
+        "ldam": {
+          "mean": 0.67942,
+          "sample_sd": 0.02846887774395051
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": -0.014839999999999987,
+          "sample_sd": 0.04454602114667483
+        }
+      }
+    },
+    "df": {
+      "precision": {
+        "ce": {
+          "mean": 0.78864,
+          "sample_sd": 0.07976761874344754
+        },
+        "ldam": {
+          "mean": 0.82758,
+          "sample_sd": 0.14583813630186035
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": 0.038939999999999975,
+          "sample_sd": 0.1609673196645829
+        }
+      },
+      "recall": {
+        "ce": {
+          "mean": 0.58158,
+          "sample_sd": 0.11349335663376954
+        },
+        "ldam": {
+          "mean": 0.53158,
+          "sample_sd": 0.08370150536280696
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": -0.04999999999999997,
+          "sample_sd": 0.09635102490373416
+        }
+      },
+      "f1": {
+        "ce": {
+          "mean": 0.66222,
+          "sample_sd": 0.07609636653612313
+        },
+        "ldam": {
+          "mean": 0.63654,
+          "sample_sd": 0.060020188270281175
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": -0.02567999999999999,
+          "sample_sd": 0.03375599206066979
+        }
+      }
+    },
+    "mel": {
+      "precision": {
+        "ce": {
+          "mean": 0.66194,
+          "sample_sd": 0.035998930539670196
+        },
+        "ldam": {
+          "mean": 0.6483,
+          "sample_sd": 0.007761765263134425
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": -0.013639999999999985,
+          "sample_sd": 0.03325038345643551
+        }
+      },
+      "recall": {
+        "ce": {
+          "mean": 0.54266,
+          "sample_sd": 0.029971453084560302
+        },
+        "ldam": {
+          "mean": 0.55708,
+          "sample_sd": 0.02867816242369792
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": 0.014420000000000033,
+          "sample_sd": 0.03932679747958125
+        }
+      },
+      "f1": {
+        "ce": {
+          "mean": 0.59622,
+          "sample_sd": 0.030631225897766498
+        },
+        "ldam": {
+          "mean": 0.59896,
+          "sample_sd": 0.018497783651021525
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": 0.002740000000000009,
+          "sample_sd": 0.03676299770149329
+        }
+      }
+    },
+    "nv": {
+      "precision": {
+        "ce": {
+          "mean": 0.9076,
+          "sample_sd": 0.010381955499808308
+        },
+        "ldam": {
+          "mean": 0.91118,
+          "sample_sd": 0.009409941551359385
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": 0.0035799999999999834,
+          "sample_sd": 0.00527513033014354
+        }
+      },
+      "recall": {
+        "ce": {
+          "mean": 0.9470999999999999,
+          "sample_sd": 0.006213694553162436
+        },
+        "ldam": {
+          "mean": 0.9351,
+          "sample_sd": 0.00525119034124648
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": -0.011999999999999966,
+          "sample_sd": 0.007772387020729272
+        }
+      },
+      "f1": {
+        "ce": {
+          "mean": 0.92688,
+          "sample_sd": 0.006565972890592822
+        },
+        "ldam": {
+          "mean": 0.92294,
+          "sample_sd": 0.0026254523419784338
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": -0.00394000000000001,
+          "sample_sd": 0.005424758059121156
+        }
+      }
+    },
+    "vasc": {
+      "precision": {
+        "ce": {
+          "mean": 0.89472,
+          "sample_sd": 0.10248256924960457
+        },
+        "ldam": {
+          "mean": 0.81216,
+          "sample_sd": 0.08211097977737203
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": -0.08256000000000001,
+          "sample_sd": 0.07551296577409736
+        }
+      },
+      "recall": {
+        "ce": {
+          "mean": 0.86154,
+          "sample_sd": 0.11407630341135709
+        },
+        "ldam": {
+          "mean": 0.88462,
+          "sample_sd": 0.094203301428347
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": 0.02307999999999999,
+          "sample_sd": 0.06438697073166275
+        }
+      },
+      "f1": {
+        "ce": {
+          "mean": 0.86764,
+          "sample_sd": 0.025853877852268125
+        },
+        "ldam": {
+          "mean": 0.83988,
+          "sample_sd": 0.024080012458468518
+        },
+        "paired_delta_ldam_minus_ce": {
+          "mean": -0.027759999999999962,
+          "sample_sd": 0.03459469612527328
+        }
+      }
+    }
+  }
+}
