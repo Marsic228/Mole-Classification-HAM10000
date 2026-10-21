@@ -2,8 +2,8 @@
 
 **Canonical experiment archive**  
 **Reconstructed:** 2026-10-07; **evidence reconciliation + local static and preflight audits:** 2026-10-14 (GitHub `4088b9d`; bulk audit 16:50:35Z; reproducibility preflight 17:14:34Z)  
-**Most recent experiment entry:** 2026-10-19 (natural CE vs Balanced Softmax; D20).
-**Repository:** `Marsic228/Mole-Classification`
+**Most recent experiment entry:** 2026-10-21 (natural CE vs LDAM; D21).
+**Repository:** `Marsic228/Mole-Classification-HAM10000`
 
 ## Quick navigation
 
@@ -11,6 +11,7 @@ These links point to entries in this registry; they do not duplicate model statu
 
 - [[#D17. ConvNeXt v17 — one-epoch LR warmup — GITHUB-VERIFIED INDEPENDENT FIVE-FOLD EVALUATION — ACCEPTED STANDALONE REFERENCE|Standalone reference decision]]
 - [[#D20. Natural sampling + Balanced Softmax — CHAT-VERIFIED FIVE-FOLD TRAINING AND PAIRED REPLAY — REJECTED AS CE REPLACEMENT|2026-10-19 controlled Balanced Softmax vs CE result]]
+- [[#D21. Natural sampling + LDAM — CHAT-VERIFIED FIVE-FOLD TRAINING AND PAIRED REPLAY — REJECTED AS CE REPLACEMENT|2026-10-21 controlled LDAM vs CE result]]
 - [[#E3. ConvNeXt v17 + PanDerm partial4 equal-probability soft voting — GITHUB-VERIFIED OOF DEVELOPMENT RESULT — LEADING ENSEMBLE CANDIDATE|Ensemble candidate and fold-identity correction]]
 - [[#D9. ConvNeXt v9 — full unfreezing, Adam lr=1e-4 — GITHUB-VERIFIED — REJECTED|Full-unfreezing counterexample (v9; v10 follows)]]
 - [[#F2. PanDerm Base partial8 — GITHUB-VERIFIED REPORTS — COMPLETE / REJECTED AS NEW REFERENCE|Deeper PanDerm fine-tuning]]
@@ -975,6 +976,53 @@ Mean per-class independent v18 F1 (computed from rounded fold values): `akiec .6
 
 ---
 
+## D21. Natural sampling + LDAM — CHAT-VERIFIED FIVE-FOLD TRAINING AND PAIRED REPLAY — REJECTED AS CE REPLACEMENT
+
+**Date:** 2026-10-21. **Evidence:** user-supplied Fold 1 and Folds 2–5 GPU training logs plus paired independent selected-checkpoint evaluation terminal output for natural CE and LDAM. **Reported locally saved** `reports/convnext_natural_ce_vs_ldam_summary.json`; exact evaluated checkpoints identified by run prefixes `convnext_tiny_natural_ce_seed123` and `convnext_tiny_natural_ldam_m05_s30_seed123`. The actual locally edited LDAM source and evaluator commit/paths **must be confirmed before claiming GitHub verification**. This is **CHAT-VERIFIED**, not independently confirmed in GitHub.
+
+**Hypothesis:** under natural sampling, class-frequency-dependent LDAM margins might improve seven-class macro F1 and minority-class classification relative to natural-sampling ordinary Cross-Entropy (D19). **Scientific boundary:** LDAM's classification-margin mechanism and scaling come from Cao et al., *Learning Imbalanced Datasets with Label-Distribution-Aware Margin Loss* (NeurIPS 2019), but this experiment tests **unweighted LDAM without Deferred Re-Weighting (DRW)**, not the full LDAM-DRW recipe.
+
+**Controlled configuration:** Same 8,530-image canonical lesion-group-safe development folds and seven-class order `akiec,bcc,bkl,df,mel,nv,vasc`; natural shuffled training batches (no WRS); ImageNet-pretrained ConvNeXt-Tiny, last five feature modules and classifier trainable; same transforms; CutMix (alpha 1, p=0.5, area-adjusted mixing weight), EMA 0.999, Adam lr `1e-4`, first-epoch 0.1→1.0 LR warmup, cosine schedule, AMP, batch 8, seed 123, at most 15 epochs, early stopping patience 4, best EMA checkpoint by validation macro F1. **Deliberate loss-method change:** CE → LDAM with class margin `m_j = 0.5 * n_j^(-1/4) / max_k(n_k^(-1/4))`, logit scale `s=30`, fold-**training-only** class counts. CutMix training loss = area-weighted combination of the LDAM losses for both labels. Validation loss uses plain CE, and classification/replay uses **raw unadjusted logits**. Compared with CE, this loss-method change includes both target-logit margin **and scaling**; it does not isolate the margin's standalone effect. Do **not** compare the numerical training-loss magnitudes of LDAM and CE as though the functions had the same scale.
+
+**Fold-level selected checkpoints and independently replayed macro F1** (printed four decimals):
+
+| Canonical fold | CE best epoch / macro F1 | LDAM best epoch / macro F1 | LDAM − CE F1 |
+|---|---:|---:|---:|
+| 1 | 7 / 0.7618 | 13 / 0.7611 | −0.0007 |
+| 2 | 11 / 0.7347 | 11 / 0.7297 | −0.0050 |
+| 3 | 12 / 0.7469 | 9 / 0.7335 | −0.0134 |
+| 4 | 9 / 0.7132 | 5 / 0.7048 | −0.0084 |
+| 5 | 7 / 0.7366 | 7 / 0.7247 | −0.0119 |
+
+**Paired 5-fold summary** (user-reported means ± **sample SD** across folds, not pooled OOF; Δ = LDAM minus CE; paired Δ SD is the SD of per-fold differences, not a difference of SDs):
+
+| Metric | CE | LDAM | Paired Δ |
+|---|---:|---:|---:|
+| Accuracy | 0.8478 ± 0.0110 | 0.8423 ± 0.0047 | −0.0055 ± 0.0072 |
+| Macro precision | 0.7725 ± 0.0233 | 0.7634 ± 0.0185 | −0.0091 ± 0.0308 |
+| Macro recall | 0.7184 ± 0.0281 | 0.7176 ± 0.0307 | −0.0008 ± 0.0150 |
+| **Macro F1** | **0.7386 ± 0.0178** | 0.7308 ± 0.0202 | **−0.0079 ± 0.0051** |
+
+**Per-class mean validation F1** (reported means of class-specific scores on the five folds; displayed numbers rounded independently):
+
+| Class | CE F1 | LDAM F1 | LDAM − CE |
+|---|---:|---:|---:|
+| akiec | 0.6470 | 0.6582 | +0.0112 |
+| bcc | 0.7764 | 0.7795 | +0.0031 |
+| bkl | 0.6943 | 0.6794 | −0.0148 |
+| df | 0.6622 | 0.6365 | −0.0257 |
+| mel | 0.5962 | 0.5990 | +0.0027 |
+| nv | 0.9269 | 0.9229 | −0.0039 |
+| vasc | 0.8676 | 0.8399 | −0.0278 |
+
+**Replay integrity:** All **10/10** CE/LDAM selected checkpoints passed the local paired evaluation check, with reported absolute macro F1 differences ranging approximately `0.000001`–`0.000026`, below the predeclared `0.003` checkpoint replay tolerance. This supports **selected-checkpoint inference replay on development validation folds**, not identical fresh retraining, external testing, or clinical validity.
+
+**Interpretation:** LDAM decreased macro F1 in **all 5 folds**; mean macro precision and accuracy declined, while macro recall was nearly unchanged. `mel` mean F1 improved by only ~0.0027 (positive in 3/5 folds), too small and inconsistent to justify a replacement; `df`, `vasc`, and `bkl` declined more notably. Fold-to-fold F1 SD did not improve. **Decision: reject LDAM (`m_max=0.5`, `s=30`, without DRW) as a replacement for the natural CE control.** Do not generalize this conclusion to all LDAM recipes, DRW variants, or datasets. It is not a paired causal comparison with v17, which differs in loss, sampler, and historical split membership.
+
+**Research priority after D21:** the initial planned long-tail loss series is complete (CE D19, Balanced Softmax D20, LDAM D21). Shift to Stage 3 ROI/segmentation *feasibility* and one controlled lesion-focused input hypothesis; performance improvement remains unproven. Do not exhaustively tune LDAM parameters without new evidence. Preserve the original article's limitations and this negative result for diploma synthesis.
+
+---
+
 # 7. Inference / stability experiments
 
 ## E1. Horizontal-flip TTA — CLOSED
@@ -1214,6 +1262,8 @@ Selected order:
 
 **2026-10-19 execution update (supersedes only the next-action status above):** The natural-sampling CE control (D19) and the matched five-fold Balanced Softmax experiment (D20) are now complete; Balanced Softmax was **rejected as a CE replacement** after paired checkpoint evaluation. Stage 2 continues with **LDAM as the next planned controlled comparison**. All seven strategic stages and the earlier historical decisions remain unchanged.
 
+**2026-10-21 execution update (supersedes only the pending next-action status above):** LDAM (D21) completed matched five-fold training and 10/10 selected CE/LDAM replay checks; it was **rejected as a CE replacement**. Initial Stage 2 long-tail comparisons are complete; **Stage 3 ROI/segmentation feasibility** is the next research step. The Stage 2 methods are not claimed to exhaust all long-tail approaches, and previously recorded results remain unchanged.
+
 ### Additional research objective: cross-experiment patterns and complementary-error ensembles — PLANNED (2026-10-12)
 
 **User hypothesis (not yet systematically tested):** Comparing the accumulated methods, their evaluation metrics, and failure patterns may expose regularities and lead to an ensemble of models with complementary errors that improves macro F1 over individual classifiers. This is a **research synthesis/analysis project**, not a new architecture or a completed experimental result.
@@ -1246,6 +1296,7 @@ Selected order:
 - confusion-aware Focal λ=.10
 - confusion-aware Focal λ=.05
 - Balanced Softmax with natural sampling (D20; five-fold controlled test, rejected vs natural CE)
+- LDAM with natural sampling, max margin 0.5 / scale 30 / no DRW (D21; five-fold controlled test, rejected vs natural CE)
 - auxiliary-loss (`aux02`) experiment
 - hard-example sampling
 
@@ -1311,6 +1362,7 @@ Selected order:
 - **2026-10-10** — ConvNeXt v17 warmup five-fold training and independent per-class EMA-checkpoint evaluation complete; accepted as new standalone development reference.
 - **2026-10-12** — v18 LLRD independent five-fold evaluation complete/rejected; corrected cross-environment OOF v17+PanDerm ensemble yields pooled macro F1 `0.7621`, development-only; package/fold reproducibility issue discovered.
 - **2026-10-14** — report archival/index (`reports/README.md`, `reports/MANIFEST.csv`) and source reorganizations across `core/`, `experiments/`, `evaluation/`, `preprocessing/`, `archive/` completed. Natural-sampling CrossEntropy five-fold control summaries recovered. Targeted evidence reconciliation in section 12a; full local bulk audit later completed; see section 12a.
+- **2026-10-21** — natural-sampling LDAM five-fold experiment and selected CE/LDAM paired checkpoint evaluation completed locally (10/10 replay checks; rejected as CE replacement, D21). GitHub commit status unverified.
 
 ---
 

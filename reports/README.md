@@ -1,6 +1,6 @@
 # Research Report Index
 
-Automatically indexed **2,209 Git-tracked report artifacts** across **50 experiment/report groups**.
+Automatically indexed **2,288 Git-tracked report artifacts** across **52 experiment/report groups**.
 
 **The files are still stored at their original paths.** This index does not rename, move, or delete them. The [CSV manifest](MANIFEST.csv) lists every file and can be filtered by experiment, fold, or report type.
 
@@ -10,7 +10,7 @@ Important: reported metrics use different validation protocols. Do not compare f
 
 ## Browse by model family
 
-- [ConvNeXt](#convnext) — 27 groups
+- [ConvNeXt](#convnext) — 29 groups
 - [PanDerm](#panderm) — 3 groups
 - [Ensembles and OOF](#ensembles-and-oof) — 2 groups
 - [ResNet](#resnet) — 11 groups
@@ -23,6 +23,7 @@ Important: reported metrics use different validation protocols. Do not compare f
 | Run / report group | Files | Folds | Best-checkpoint macro F1 (5 folds) | Starting points |
 |---|---:|---:|---:|---|
 | `convnext_natural_ce_vs_balsoftmax` | 1 | — | — | [convnext_natural_ce_vs_balsoftmax_summary.json](convnext_natural_ce_vs_balsoftmax_summary.json) |
+| `convnext_natural_ce_vs_ldam` | 1 | — | — | [convnext_natural_ce_vs_ldam_summary.json](convnext_natural_ce_vs_ldam_summary.json) |
 | `convnext_tiny` | 43 | 1, 2, 3, 4, 5 | — | [CV summary](convnext_tiny_epoch_1_cv_summary.json) · [CV summary](convnext_tiny_epoch_1_per_class_cv_summary.json) |
 | `convnext_tiny_finetune_v1` | 66 | 1, 2, 3, 4, 5 | 0.6880 ± 0.0273 | [CV summary](convnext_tiny_finetune_v1_cv_summary.json) · [CV summary](convnext_tiny_finetune_v1_per_class_cv_summary.json) |
 | `convnext_tiny_finetune_v10` | 72 | 1, 2, 3, 4, 5 | 0.6993 ± 0.0236 | [CV summary](convnext_tiny_finetune_v10_full_unfreeze_cv_summary.json) · [CV summary](convnext_tiny_finetune_v10_full_unfreeze_per_class_cv_summary.json) |
@@ -47,6 +48,7 @@ Important: reported metrics use different validation protocols. Do not compare f
 | `convnext_tiny_finetune_v9_full_unfreeze` | 70 | 1, 2, 3, 4, 5 | 0.7049 ± 0.0197 | [CV summary](convnext_tiny_finetune_v9_full_unfreeze_cv_summary.json) · [CV summary](convnext_tiny_finetune_v9_full_unfreeze_per_class_cv_summary.json) |
 | `convnext_tiny_natural_balsoftmax_seed123` | 90 | 1, 2, 3, 4, 5 | 0.7295 ± 0.0175 | [convnext_tiny_natural_balsoftmax_seed123_fold1_best_summary.json](convnext_tiny_natural_balsoftmax_seed123_fold1_best_summary.json) · [convnext_tiny_natural_balsoftmax_seed123_fold1_training_history.json](convnext_tiny_natural_balsoftmax_seed123_fold1_training_history.json) |
 | `convnext_tiny_natural_ce_seed123` | 80 | 1, 2, 3, 4, 5 | 0.7386 ± 0.0178 | [convnext_tiny_natural_ce_seed123_fold1_best_summary.json](convnext_tiny_natural_ce_seed123_fold1_best_summary.json) · [convnext_tiny_natural_ce_seed123_fold1_training_history.json](convnext_tiny_natural_ce_seed123_fold1_training_history.json) |
+| `convnext_tiny_natural_ldam_m05_s30_seed123` | 78 | 1, 2, 3, 4, 5 | 0.7308 ± 0.0202 | [convnext_tiny_natural_ldam_m05_s30_seed123_fold1_best_summary.json](convnext_tiny_natural_ldam_m05_s30_seed123_fold1_best_summary.json) · [convnext_tiny_natural_ldam_m05_s30_seed123_fold1_training_history.json](convnext_tiny_natural_ldam_m05_s30_seed123_fold1_training_history.json) |
 | `convnext_tiny_v4_tta_flip` | 7 | 1, 2, 3, 4, 5 | — | [CV summary](convnext_tiny_v4_tta_flip_per_class_cv_summary.json) · [convnext_tiny_v4_tta_flip_summary.json](convnext_tiny_v4_tta_flip_summary.json) |
 | `convnext_tiny_v4_tta_flip_rot90` | 5 | 1, 2, 3, 4, 5 | — | [convnext_tiny_v4_tta_flip_rot90_fold1_evaluation.json](convnext_tiny_v4_tta_flip_rot90_fold1_evaluation.json) · [convnext_tiny_v4_tta_flip_rot90_fold2_evaluation.json](convnext_tiny_v4_tta_flip_rot90_fold2_evaluation.json) |
 

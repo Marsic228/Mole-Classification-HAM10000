@@ -1,0 +1,31 @@
+{
+  "fold": 5,
+  "train_seed": 123,
+  "ema_decay": 0.999,
+  "warmup_start_factor": 0.1,
+  "warmup_epochs": 1,
+  "best_epoch": 7,
+  "best_macro_f1": 0.7247132972216234,
+  "training_loss": "LDAM_unweighted",
+  "validation_loss": "CrossEntropy_raw_logits",
+  "class_order": [
+    "akiec",
+    "bcc",
+    "bkl",
+    "df",
+    "mel",
+    "nv",
+    "vasc"
+  ],
+  "train_fold_class_counts": [
+    229,
+    342,
+    744,
+    78,
+    778,
+    4549,
+    104
+  ],
+  "ldam_max_m": 0.5,
+  "ldam_scale": 30.0
+}
