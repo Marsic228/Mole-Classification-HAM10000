@@ -31,3 +31,6 @@ checkpoints/
 
 # Jupyter temporary files
 **/.ipynb_checkpoints/
+
+# External segmentation masks
+/Masks.zip

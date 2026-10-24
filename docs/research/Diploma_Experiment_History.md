@@ -2,7 +2,7 @@
 
 **Canonical experiment archive**  
 **Reconstructed:** 2026-10-07; **evidence reconciliation + local static and preflight audits:** 2026-10-14 (GitHub `4088b9d`; bulk audit 16:50:35Z; reproducibility preflight 17:14:34Z)  
-**Most recent experiment entry:** 2026-10-21 (natural CE vs LDAM; D21).
+**Most recent experiment entry:** 2026-10-24 (mask-assisted ROI vs natural CE; D22).
 **Repository:** `Marsic228/Mole-Classification-HAM10000`
 
 ## Quick navigation
@@ -12,6 +12,7 @@ These links point to entries in this registry; they do not duplicate model statu
 - [[#D17. ConvNeXt v17 — one-epoch LR warmup — GITHUB-VERIFIED INDEPENDENT FIVE-FOLD EVALUATION — ACCEPTED STANDALONE REFERENCE|Standalone reference decision]]
 - [[#D20. Natural sampling + Balanced Softmax — CHAT-VERIFIED FIVE-FOLD TRAINING AND PAIRED REPLAY — REJECTED AS CE REPLACEMENT|2026-10-19 controlled Balanced Softmax vs CE result]]
 - [[#D21. Natural sampling + LDAM — CHAT-VERIFIED FIVE-FOLD TRAINING AND PAIRED REPLAY — REJECTED AS CE REPLACEMENT|2026-10-21 controlled LDAM vs CE result]]
+- [[#D22. Mask-assisted ROI cropping — CHAT-VERIFIED FIVE-FOLD DEVELOPMENT CV — PROMISING|2026-10-24 ROI cropping vs CE; five-fold checkpoint replay]]
 - [[#E3. ConvNeXt v17 + PanDerm partial4 equal-probability soft voting — GITHUB-VERIFIED OOF DEVELOPMENT RESULT — LEADING ENSEMBLE CANDIDATE|Ensemble candidate and fold-identity correction]]
 - [[#D9. ConvNeXt v9 — full unfreezing, Adam lr=1e-4 — GITHUB-VERIFIED — REJECTED|Full-unfreezing counterexample (v9; v10 follows)]]
 - [[#F2. PanDerm Base partial8 — GITHUB-VERIFIED REPORTS — COMPLETE / REJECTED AS NEW REFERENCE|Deeper PanDerm fine-tuning]]
@@ -1023,6 +1024,63 @@ Mean per-class independent v18 F1 (computed from rounded fold values): `akiec .6
 
 ---
 
+## D22. Mask-assisted ROI cropping — CHAT-VERIFIED FIVE-FOLD DEVELOPMENT CV — PROMISING
+
+**Date:** 2026-10-24. **Evidence:** the user's CUDA training and independent replay terminal logs for all five ROI folds; locally generated and staged training/evaluation JSON, `reports/convnext_tiny_natural_ce_roi_margin15_seed123_vs_natural_ce_5fold_summary.json`; the baseline's committed per-fold `reports/convnext_tiny_natural_ce_seed123_fold{1..5}_evaluation.json`. At writing time the ROI code/reports were **staged locally but the commit/push had not been verified**. Evidence label is **CHAT-VERIFIED** until committed files are independently inspected.
+
+**Hypothesis:** mask-assisted lesion-centered cropping may increase the lesion's effective resolution in ConvNeXt's fixed-size input and reduce irrelevant background, improving classification macro F1. Potential downside: lost perilesional context and segmentation-mask errors. This experiment changes **input preprocessing only** against the canonical natural-sampling CE control (D19); it does not compare directly and causally against historical v17, whose training recipe and fold provenance differ.
+
+**Data and input preprocessing:** 8,530 HAM10000 development images from 6,349 lesions. Every development `image_id` matched a `Masks_to_IsicId_mapping.csv` row and a local PNG lesion mask in `Masks.zip`; original image and mask both 600×450 in inspected examples. `preprocessing/roi_crop.py` uses binary mask threshold >127, a lesion bounding box, margin=0.15 per side, `min_fraction=0.35`, `max_area=0.60`, original aspect-ratio preservation, and a whole-image fallback if the mask is empty, mask area >60%, the mask touches a frame boundary, or the expanded crop cannot fit. Outputs are resized to 224×224 and saved separately under `data/processed_roi_margin15_v1/{source_split}/{dx}/{image_id}_224x224.jpg`; original `data/processed` is preserved.
+
+**Dataset-wide preprocessing audit:** 8,530/8,530 exported; no missing image/mask files in the development pool. Crop statuses: `roi` **6,232 (73.1%)**, `fallback_large_crop` **1,749 (20.5%)**, `fallback_large_area` **359 (4.2%)**, `fallback_edge` **190 (2.2%)**, `fallback_empty` **0**. Total fallback: **2,298 (26.9%)**. ROI rates differed by class (akiec 57.3%, bcc 82.7%, bkl 65.4%, df 68.4%, mel 59.4%, nv 76.5%, vasc 86.9%); rules were class-agnostic, but their effects were not class-uniform. The fallback thresholds are **exploratory heuristics**, not validated segmentation-quality rules.
+
+**Controlled training protocol:** ConvNeXt-Tiny with ImageNet pretrained weights; last five feature modules and classifier trainable; seven-class order `akiec,bcc,bkl,df,mel,nv,vasc`; canonical lesion-group-safe frozen folds `splits/ham10000_dev_cv_v1.csv`; natural shuffled training sampling; ordinary CE; CutMix (p=0.5, alpha=1.0); EMA 0.999; Adam lr 1e-4; LR warmup (first epoch 0.1× → 1×) and cosine scheduling; batch size 8; seed 123; maximum 15 epochs and early stopping patience 4; selected EMA checkpoints by held-out macro F1. Both original- and ROI-image variants use the same model transforms and fold assignments. Unique ROI prefix: `convnext_tiny_natural_ce_roi_margin15_seed123`.
+
+**Selected checkpoints and independent replay macro F1** (precision from final 5-fold JSON summary; all scores are *per-fold* validation scores, not pooled OOF):
+
+| Canonical fold | Natural CE macro F1 | ROI macro F1 | ROI − CE | ROI best epoch |
+|---|---:|---:|---:|---:|
+| 1 | 0.761814 | 0.777217 | +0.015403 | 14 |
+| 2 | 0.734743 | 0.734088 | −0.000655 | 5 |
+| 3 | 0.746943 | 0.756871 | +0.009928 | 7 |
+| 4 | 0.713171 | 0.736785 | +0.023614 | 8 |
+| 5 | 0.736571 | 0.751009 | +0.014438 | 12 |
+
+**Matched five-fold summary** (mean ± **sample SD**; Δ is the fold-paired difference, not the difference of standard deviations):
+
+| Metric | Natural CE | ROI + CE | ROI − CE |
+|---|---:|---:|---:|
+| Accuracy | 0.8478 ± 0.0110 | **0.8548 ± 0.0057** | +0.0070 (approx.) |
+| Macro precision | 0.7725 ± 0.0233 | **0.7894 ± 0.0212** | +0.0170 (approx.) |
+| Macro recall | 0.7184 ± 0.0281 | **0.7288 ± 0.0348** | +0.0103 (approx.) |
+| **Macro F1** | 0.7386 ± 0.0178 | **0.7512 ± 0.0174** | **+0.01255 ± 0.00888** |
+
+**Per-class mean F1** (five-fold means; independently rounded in terminal below; for precise data use the saved JSON summary):
+
+| Class | CE F1 | ROI F1 | ROI − CE |
+|---|---:|---:|---:|
+| akiec | 0.6470 | 0.6804 | +0.0334 |
+| bcc | 0.7764 | 0.7809 | +0.0045 |
+| bkl | 0.6943 | 0.7185 | +0.0243 |
+| df | 0.6622 | 0.6817 | +0.0195 |
+| mel | 0.5962 | 0.6145 | +0.0182 |
+| nv | 0.9269 | 0.9285 | +0.0016 |
+| vasc | **0.8676** | 0.8539 | **−0.0137** |
+
+**Melanoma:** mean recall increased 0.5427 → 0.5612 and F1 increased 0.5962 → 0.6145; this is a development improvement, but recall remains limited. The `vasc` regression must be preserved in later interpretation. Improvements appeared in **four out of five folds**, and the overall fold SD was similar, so this does not prove improved stability or statistical significance.
+
+**Independent inference replay:** `evaluation/roi_fold_check.py` reloaded all five ROI selected EMA checkpoints on the canonical held-out folds; **5/5 replay F1 values matched the saved best-epoch scores exactly** to the shown precision (absolute difference 0.000000). Each replay saved exact per-fold per-class precision/recall/F1 and the evaluator generated the five-fold paired comparison JSON automatically. Checkpoint replay is **not** reproducible retraining from scratch.
+
+**Artifacts / paths:** `preprocessing/roi_crop.py`, `preprocessing/preview_roi.py`, `experiments/convnext/convnext_tiny_cv_train_roi_margin15.py`, `evaluation/roi_fold_check.py`, `Masks_to_IsicId_mapping.csv`, `roi_mask_quality_check.csv`, five ROI fold evaluations/histories/best summaries, and `reports/convnext_tiny_natural_ce_roi_margin15_seed123_vs_natural_ce_5fold_summary.json`. Raw masks in local `Masks.zip`, generated processed ROI images, and `checkpoints/` must remain outside ordinary Git; reliable reproduction requires obtaining those data artifacts separately.
+
+**Causal and deployment boundaries:** The experiment establishes an **association under a controlled preprocessing comparison** using provided (mask-assisted/oracle) lesion boundaries. It does **not** validate mask generation on unseen inputs, segmentation quality (Dice/IoU), inference cost of an automatic segmenter, error propagation, independent external generalization, clinical performance, or statistical significance. Externally produced masks may have their own training/data provenance; this should be checked before stronger claims.
+
+**Decision:** **PROMISING / RETAIN AS ROI DEVELOPMENT CANDIDATE**, not a new universally accepted image-only standalone reference. Preserve original CE and historical v17 references; proceed with Stage 3 segmentation feasibility rather than treating the 0.7512 result as a deployable model.
+
+**Next research action:** audit mask shapes/components and quality, investigate confidence/uncertainty of **predicted** masks, define improved fallback rules, and design a segmentation evaluation using independent mask predictions (Dice/IoU) before measuring actual end-to-end classification and inference cost. One-major-factor controlled comparisons should be maintained.
+
+---
+
 # 7. Inference / stability experiments
 
 ## E1. Horizontal-flip TTA — CLOSED
@@ -1264,6 +1322,8 @@ Selected order:
 
 **2026-10-21 execution update (supersedes only the pending next-action status above):** LDAM (D21) completed matched five-fold training and 10/10 selected CE/LDAM replay checks; it was **rejected as a CE replacement**. Initial Stage 2 long-tail comparisons are complete; **Stage 3 ROI/segmentation feasibility** is the next research step. The Stage 2 methods are not claimed to exhaust all long-tail approaches, and previously recorded results remain unchanged.
 
+**2026-10-24 execution update (supersedes only the pending Stage 3 status above):** Mask-assisted ROI cropping (D22) completed a controlled canonical five-fold comparison against natural CE. Mean macro F1 increased **0.7386 ± 0.0178 → 0.7512 ± 0.0174**; paired mean difference **+0.01255 ± 0.00888**, six of seven classes improved, five checkpoint replays matched training scores. **Stage 3 remains in progress:** mask quality, predicted-mask reliability, Dice/IoU, end-to-end computation and external evaluation are unresolved. Preserve historical Stage 1/2 outcomes and all prior roadmap decisions.
+
 ### Additional research objective: cross-experiment patterns and complementary-error ensembles — PLANNED (2026-10-12)
 
 **User hypothesis (not yet systematically tested):** Comparing the accumulated methods, their evaluation metrics, and failure patterns may expose regularities and lead to an ensemble of models with complementary errors that improves macro F1 over individual classifiers. This is a **research synthesis/analysis project**, not a new architecture or a completed experimental result.
@@ -1363,6 +1423,7 @@ Selected order:
 - **2026-10-12** — v18 LLRD independent five-fold evaluation complete/rejected; corrected cross-environment OOF v17+PanDerm ensemble yields pooled macro F1 `0.7621`, development-only; package/fold reproducibility issue discovered.
 - **2026-10-14** — report archival/index (`reports/README.md`, `reports/MANIFEST.csv`) and source reorganizations across `core/`, `experiments/`, `evaluation/`, `preprocessing/`, `archive/` completed. Natural-sampling CrossEntropy five-fold control summaries recovered. Targeted evidence reconciliation in section 12a; full local bulk audit later completed; see section 12a.
 - **2026-10-21** — natural-sampling LDAM five-fold experiment and selected CE/LDAM paired checkpoint evaluation completed locally (10/10 replay checks; rejected as CE replacement, D21). GitHub commit status unverified.
+- **2026-10-24** — mask-assisted ROI preprocessing applied to 8,530 development images; five-fold canonical CE comparison completed; mean macro F1 0.7512 ± 0.0174, paired gain +0.01255 ± 0.00888; 5/5 ROI checkpoint replays passed; local results staged for GitHub, push unverified (D22).
 
 ---
 
