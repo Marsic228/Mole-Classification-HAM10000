@@ -12,13 +12,14 @@ Diploma research project for seven-class classification of dermatoscopic skin-le
 - **Primary metric:** macro F1. Also report accuracy, per-class precision/recall/F1, confusion matrices and fold variability.
 - **Test policy:** the old exposed test split is historical evidence only; do not use it to select models or claim independent final validation.
 
-### Development results (as of 21 October 2026)
+### Development results (as of 24 October 2026)
 
 | System | Metric type | Macro F1 | Accuracy |
 |---|---|---:|---:|
 | ConvNeXt-Tiny v17, warmup + CutMix + EMA | Mean of five folds ± sample SD | **0.7430 ± 0.0144** | 0.8450 ± 0.0091 |
 | PanDerm Base partial4 | Mean of five folds ± sample SD | **0.7368 ± 0.0232** | 0.8350 ± 0.0087 |
 | Natural-sampling ordinary CE (loss-ablation control) | Selected best checkpoints: five-fold mean ± sample SD | **0.7386 ± 0.0178** | 0.8478 (mean) |
+| Mask-assisted ROI (15% margin) + natural-sampling CE | Same canonical folds; selected best checkpoints: five-fold mean ± sample SD | **0.7512 ± 0.0174** | 0.8548 ± 0.0057 |
 | Natural-sampling Balanced Softmax (rejected vs CE) | Same canonical folds; best-checkpoint mean ± sample SD | **0.7295 ± 0.0175** | 0.8408 (mean) |
 | Natural-sampling LDAM (rejected vs CE) | Same canonical folds; best-checkpoint mean ± sample SD | **0.7308 ± 0.0202** | 0.8423 (mean) |
 | ConvNeXt v17 | Pooled OOF, 8,530 images | **0.7444** | 0.8451 |
@@ -35,13 +36,30 @@ The following is the agreed **execution order**, not a claim that later methods 
 |---|---|---|
 | **1. Reproducibility audit** | Freeze folds, environments, model/preprocessing details and evaluation | **Checkpoint-replay milestone reached:** 15/15 saved fold checkpoints reproduced metrics within the declared 0.003 tolerance. End-to-end retraining, a clean-machine rebuild and external validation remain unverified. |
 | **2. Long-tail methods** | Natural CE, Balanced Softmax, LDAM | **Initial comparisons complete.** CE remains the control. Balanced Softmax and LDAM were rejected as replacements under their tested configurations. See D19–D21 in the experiment history. |
-| **3. ROI / segmentation** | Test lesion-centered preprocessing | **Planned.** Check masks/annotations, cropping errors and lesion-safe comparison. |
+| **3. ROI / segmentation** | Test lesion-centered preprocessing | **Initial controlled ROI experiment complete (D22):** mask-assisted cropping improved canonical-fold mean macro F1 from 0.7386 to 0.7512. Automatic segmentation, mask reliability, deployment cost and external validation remain untested. |
 | **4. Supervised Contrastive Learning** | Test improvements in learned representations | **Planned.** Account for positive pairs and RTX 2060 6-GB / batch-8 limits. |
 | **5. Systematic experiment analysis** | Compare comparable experiments, errors and complementarity | **Planned synthesis.** Gather per-fold, per-class and matched-ID OOF evidence throughout earlier stages; do the comprehensive analysis before final selection. Do not mix pooled OOF macro F1 with five-fold means. |
 | **6. Final ensemble selection** | Choose a defensible standalone or ensemble model | **Planned.** ConvNeXt v17 + PanDerm partial4, 50/50, has development-only pooled matched OOF macro F1 **0.7621**; it is a candidate, not an independently validated final model. Consider error diversity, minority classes and inference cost. |
 | **7. Independent evaluation and application** | Assess generalization and build a research prototype | **Planned.** Seek non-overlapping external data, study domain shift, calibration and unsupported/OOD inputs. No clinical diagnosis claim. |
 
-**Next executable step:** Begin Stage 3 — ROI/segmentation feasibility research. Investigate available lesion masks and cropping approaches, evaluate the risk of removing useful context, and select one controlled experiment against a matched full-image baseline. Preserve the completed loss experiments and their reports. Details belong in [the experiment history](docs/research/Diploma_Experiment_History.md).
+**Next executable step:** Continue Stage 3 — assess mask quality and failure modes, then study automatic segmentation, Dice/IoU, confidence-aware fallback, and additional inference cost. Preserve the completed mask-assisted ROI experiment as a development-stage candidate and retain the natural-CE control. See [D22 in the experiment history](docs/research/Diploma_Experiment_History.md).
+
+## Stage 3 — Mask-assisted ROI feasibility (24 October 2026)
+
+**Hypothesis:** lesion-centered cropping may improve macro F1 by increasing the lesion's effective resolution and reducing irrelevant background. Cropping could also remove useful context. **This is a controlled input-preprocessing experiment, not automatic segmentation.**
+
+- **Masks:** external ISIC lesion masks with a `Masks_to_IsicId_mapping.csv` lookup; all 8,530 development images matched to existing mask files. The masks are supplied to preprocessing, including for validation images. Their real-world availability and mask-generation provenance are separate deployment/validity questions.
+- **Crop:** mask bounding box, 15% margin per side; each crop dimension at least 35% of the original; preserve the original image aspect ratio; resize result to 224×224.
+- **Fallback:** keep the whole image for empty masks, mask area >60%, masks touching an image edge, or crops too large to fit. Of 8,530 images, **6,232 (73.1%)** were ROI-cropped; **2,298 (26.9%)** used fallback (1,749 large crop; 359 large area; 190 edge; zero empty masks).
+- **Controlled model comparison:** ConvNeXt-Tiny + natural-sampling CE, CutMix, EMA, first-epoch warmup, cosine scheduler, seed 123, and identical frozen `lesion_id`-safe canonical folds (`splits/ham10000_dev_cv_v1.csv`). Only the input images were changed.
+- **Five-fold results:** ordinary CE **0.7386 ± 0.0178** macro F1; ROI + CE **0.7512 ± 0.0174**; paired mean difference **+0.01255 ± 0.00888** (sample SD). Mean ROI accuracy **0.8548 ± 0.0057**. Four of five folds improved; the remaining fold was essentially unchanged.
+- **Per-class:** mean F1 improved in six of seven classes; `vasc` declined (0.8676 → 0.8539). Melanoma F1 improved from **0.5962 → 0.6145** and recall from **0.5427 → 0.5612**. All five ROI selected checkpoints passed independent inference replay against saved best-epoch scores.
+
+**Code:** `preprocessing/roi_crop.py`, `preprocessing/preview_roi.py`, `experiments/convnext/convnext_tiny_cv_train_roi_margin15.py`, `evaluation/roi_fold_check.py`.
+
+**Data paths:** raw JPGs in `data/images/`; local mask archive `Masks.zip`; tracked mapping `Masks_to_IsicId_mapping.csv`; generated 224×224 crops in `data/processed_roi_margin15_v1/` (ignored by Git). The local mask archive and generated crops are not committed. The results are in [`reports/convnext_tiny_natural_ce_roi_margin15_seed123_vs_natural_ce_5fold_summary.json`](reports/convnext_tiny_natural_ce_roi_margin15_seed123_vs_natural_ce_5fold_summary.json), with five per-fold evaluation JSON files and saved training histories.
+
+**Evidence boundary:** scores are **selected-best-checkpoint development CV fold means**, not pooled OOF scores or independent external validation. Improved classification with provided masks does **not** prove an end-to-end automatically segmented workflow improves performance; predicted masks, segmentation errors and inference cost are untested. Historical v17 folds are not a directly paired comparison.
 
 ## Project structure
 
@@ -198,6 +216,9 @@ The intended application is a **research prototype**, not a medical diagnostic d
 - `evaluation/convnext_natural_ce_vs_balsoftmax.py` — paired 10-checkpoint evaluation on the canonical development folds.
 - The former generic `convnext_tiny_cv_train.py` workspace was removed; its v14 SAM contents are already preserved as `archive/legacy_experiments/convnext_tiny_cv_train_v14_sam.py`.
 - `experiments/convnext/convnext_tiny_cv_train_natural_ce.py` — completed natural-sampling Cross-Entropy control (mean fold macro F1: 0.7386 ± 0.0178).
+- `experiments/convnext/convnext_tiny_cv_train_roi_margin15.py` — completed mask-assisted ROI experiment (canonical mean macro F1: 0.7512 ± 0.0174).
+- `preprocessing/roi_crop.py` and `preprocessing/preview_roi.py` — conservative mask-based cropping and visual/quality preview.
+- `evaluation/roi_fold_check.py` — independently replay ROI fold checkpoints and build the paired CE–ROI five-fold summary.
 - `core/canonical_cv.py` and `splits/` — frozen lesion-safe folds for new experiments.
 - `experiments/panderm/` and `experiments/metadata/` — model research scripts.
 - `evaluation/` — independent evaluation, OOF aggregation and CV audit.

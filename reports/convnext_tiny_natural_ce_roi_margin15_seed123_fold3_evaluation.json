@@ -1,0 +1,63 @@
+{
+  "fold": 3,
+  "run_name": "convnext_tiny_natural_ce_roi_margin15_seed123",
+  "checkpoint_epoch": 7,
+  "total_checked": 1706,
+  "class_names": [
+    "akiec",
+    "bcc",
+    "bkl",
+    "df",
+    "mel",
+    "nv",
+    "vasc"
+  ],
+  "overall_accuracy": 0.8558030480656507,
+  "macro_precision": 0.7660228805595405,
+  "macro_recall": 0.7488852155246343,
+  "macro_f1": 0.7568708344215451,
+  "class_metrics": {
+    "akiec": {
+      "precision": 0.6610169491525424,
+      "recall": 0.6842105263157895,
+      "f1": 0.6724137931034483,
+      "support": 57
+    },
+    "bcc": {
+      "precision": 0.7586206896551724,
+      "recall": 0.7674418604651163,
+      "f1": 0.7630057803468208,
+      "support": 86
+    },
+    "bkl": {
+      "precision": 0.732620320855615,
+      "recall": 0.7365591397849462,
+      "f1": 0.7345844504021448,
+      "support": 186
+    },
+    "df": {
+      "precision": 0.7222222222222222,
+      "recall": 0.6842105263157895,
+      "f1": 0.7027027027027027,
+      "support": 19
+    },
+    "mel": {
+      "precision": 0.6455026455026455,
+      "recall": 0.6288659793814433,
+      "f1": 0.6370757180156658,
+      "support": 194
+    },
+    "nv": {
+      "precision": 0.9291338582677166,
+      "recall": 0.9332161687170475,
+      "f1": 0.9311705392371766,
+      "support": 1138
+    },
+    "vasc": {
+      "precision": 0.9130434782608695,
+      "recall": 0.8076923076923077,
+      "f1": 0.8571428571428571,
+      "support": 26
+    }
+  }
+}
