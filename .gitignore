@@ -34,3 +34,13 @@ checkpoints/
 
 # External segmentation masks
 /Masks.zip
+
+# Local mask archive and session-specific diagnostic transport/image packages
+# Keep the corresponding Python, CSV, JSON and Markdown evidence visible.
+/ISIC2018_Task1_Training_GroundTruth.zip
+/roi_5fold_diagnostics.zip
+/roi_5fold_diagnostics_results_2026-11-05.zip
+/roi_fold5_geometry_analysis_package.zip
+/roi_fold5_geometry_results.zip
+/roi_diagnostics/roi_fold5_visual_review.zip
+/roi_fold5_visual_review.zip
