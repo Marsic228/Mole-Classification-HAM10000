@@ -1,12 +1,14 @@
 # Research Report Index
 
-Automatically indexed **2,366 Git-tracked report artifacts** across **53 experiment/report groups**.
+Automatically indexed **2,405 Git-tracked report artifacts** across **62 experiment/report groups**.
 
 **The files are still stored at their original paths.** This index does not rename, move, or delete them. The [CSV manifest](MANIFEST.csv) lists every file and can be filtered by experiment, fold, or report type.
 
 Important: reported metrics use different validation protocols. Do not compare fold means with pooled OOF or independent-test results as if they were identical.
 
 **Known invalid historical report:** [`convnext_v17_panderm_partial4_ensemble_summary.json`](convnext_v17_panderm_partial4_ensemble_summary.json) has `all_reference_checks_passed: false` and must **not** be cited as a valid ensemble result. The separately verified pooled OOF comparison is in [`oof_convnext_panderm_ensemble_results.json`](oof_convnext_panderm_ensemble_results.json).
+
+**Segmentation evidence:** [guide](segmentation/README.md), [Phase 2 verification](segmentation/phase2_verification/README.md), and [diagnostic source and numerical evidence](../roi_diagnostics/). Private verification bundles stay local and are not indexed.
 
 ## Browse by model family
 
@@ -16,6 +18,8 @@ Important: reported metrics use different validation protocols. Do not compare f
 - [ResNet](#resnet) — 11 groups
 - [EfficientNet](#efficientnet) — 2 groups
 - [MobileNet](#mobilenet) — 1 groups
+- [Segmentation and automatic ROI](#segmentation-and-automatic-roi) — 7 groups
+- [Provenance and verification](#provenance-and-verification) — 2 groups
 - [Other](#other) — 4 groups
 
 ## ConvNeXt
@@ -96,6 +100,25 @@ Important: reported metrics use different validation protocols. Do not compare f
 | Run / report group | Files | Folds | Best-checkpoint macro F1 (5 folds) | Starting points |
 |---|---:|---:|---:|---|
 | `mobilenet_v3_large` | 41 | 1, 2, 3, 4, 5 | — | [CV summary](mobilenet_v3_large_epoch_1_cv_summary.json) · [CV summary](mobilenet_v3_large_epoch_1_per_class_cv_summary.json) |
+
+## Segmentation and automatic ROI
+
+| Run / report group | Files | Folds | Best-checkpoint macro F1 (5 folds) | Starting points |
+|---|---:|---:|---:|---|
+| `automatic_roi_reference_vs_predicted` | 6 | 1, 2, 3, 4, 5 | — | [automatic_roi_5fold_summary.json](segmentation/automatic_roi_5fold_summary.json) · [classifier_predicted_vs_reference_fold1.csv](segmentation/small_unet_fold1_seed123/classifier_predicted_vs_reference_fold1.csv) |
+| `largest_component_roi` | 11 | 1, 2, 3, 4, 5 | — | [largest_component_roi_5fold_summary.json](segmentation/largest_component_roi_5fold_summary.json) · [largest_component_roi_comparison_fold1_summary.json](segmentation/small_unet_fold1_seed123/largest_component_roi_comparison_fold1_summary.json) |
+| `mask_component_audit` | 2 | 5 | — | [mask_component_audit_fold5_summary.json](segmentation/small_unet_fold5_seed123/mask_component_audit_fold5_summary.json) · [mask_component_audit_fold5.csv](segmentation/small_unet_fold5_seed123/mask_component_audit_fold5.csv) |
+| `roi_geometry_diagnostic` | 4 | 5 | — | [roi_geometry_diagnostic_fold5_summary.json](segmentation/small_unet_fold5_seed123/roi_geometry_diagnostic_fold5_summary.json) · [fold5_regressions_ranked_by_geometry.csv](segmentation/fold5_regressions_ranked_by_geometry.csv) |
+| `roi_retention_audit` | 2 | 1 | — | [roi_retention_audit.csv](segmentation/small_unet_fold1_seed123/roi_retention_audit.csv) · [roi_retention_audit_original_resolution.csv](segmentation/small_unet_fold1_seed123/roi_retention_audit_original_resolution.csv) |
+| `segmentation_documentation` | 1 | — | — | [README.md](segmentation/README.md) |
+| `small_unet_seed123` | 10 | 1, 2, 3, 4, 5 | — | [best_validation_per_image.csv](segmentation/small_unet_fold1_seed123/best_validation_per_image.csv) · [best_validation_per_image.csv](segmentation/small_unet_fold2_seed123/best_validation_per_image.csv) |
+
+## Provenance and verification
+
+| Run / report group | Files | Folds | Best-checkpoint macro F1 (5 folds) | Starting points |
+|---|---:|---:|---:|---|
+| `phase2_verification` | 2 | — | — | [README.md](segmentation/phase2_verification/README.md) · [retention_manifest.json](segmentation/phase2_verification/retention_manifest.json) |
+| `segmentation_provenance` | 1 | — | — | [phase1_artifact_manifest.json](segmentation/phase1_artifact_manifest.json) |
 
 ## Other
 

@@ -45,8 +45,75 @@ def tracked_reports() -> list[Path]:
     return sorted(paths, key=lambda p: p.as_posix().casefold())
 
 
+def segmentation_report_for(path: Path) -> tuple[str, str, str] | None:
+    """Classify the reviewed segmentation evidence using its directory context."""
+    try:
+        relative = path.relative_to(REPORTS / "segmentation")
+    except ValueError:
+        return None
+
+    root_reports = {
+        "README.md": ("segmentation_documentation", "", "evidence guide"),
+        "automatic_roi_5fold_summary.json": (
+            "automatic_roi_reference_vs_predicted", "", "five-fold research summary"),
+        "largest_component_roi_5fold_summary.json": (
+            "largest_component_roi", "", "five-fold comparison summary"),
+        "phase1_artifact_manifest.json": (
+            "segmentation_provenance", "", "artifact fingerprint manifest"),
+        "fold5_regressions_ranked_by_geometry.csv": (
+            "roi_geometry_diagnostic", "5", "ranked regressions"),
+        "roi_fold5_geometry_analysis_report.md": (
+            "roi_geometry_diagnostic", "5", "historical geometry narrative"),
+        "phase2_verification/README.md": (
+            "phase2_verification", "", "verification documentation"),
+        "phase2_verification/retention_manifest.json": (
+            "phase2_verification", "", "retention inventory"),
+    }
+    if relative.as_posix() in root_reports:
+        return root_reports[relative.as_posix()]
+
+    parent = re.fullmatch(r"small_unet_fold([1-5])_seed123", relative.parent.as_posix())
+    if not parent:
+        raise ValueError(f"Unrecognized segmentation report: {relative}")
+    fold = parent.group(1)
+    named_fold = re.search(r"(?:^|_)fold(\d+)(?=_|$)", path.stem)
+    if named_fold and named_fold.group(1) != fold:
+        raise ValueError(f"Conflicting directory/filename folds: {relative}")
+
+    fold_reports = {
+        "history.json": ("small_unet_seed123", "segmentation training history"),
+        "best_validation_per_image.csv": (
+            "small_unet_seed123", "selected-validation Dice/IoU"),
+        f"classifier_predicted_vs_reference_fold{fold}.csv": (
+            "automatic_roi_reference_vs_predicted", "paired classification predictions"),
+        f"largest_component_roi_comparison_fold{fold}.csv": (
+            "largest_component_roi", "paired LCC classification predictions"),
+        f"largest_component_roi_comparison_fold{fold}_summary.json": (
+            "largest_component_roi", "fold LCC comparison summary"),
+        "roi_retention_audit.csv": (
+            "roi_retention_audit", "retention audit (256x192)"),
+        "roi_retention_audit_original_resolution.csv": (
+            "roi_retention_audit", "retention audit (original-resolution crop geometry)"),
+        f"roi_geometry_diagnostic_fold{fold}.csv": (
+            "roi_geometry_diagnostic", "per-image original-resolution geometry"),
+        f"roi_geometry_diagnostic_fold{fold}_summary.json": (
+            "roi_geometry_diagnostic", "fold geometry summary"),
+        f"mask_component_audit_fold{fold}.csv": (
+            "mask_component_audit", "per-image connected-component audit"),
+        f"mask_component_audit_fold{fold}_summary.json": (
+            "mask_component_audit", "fold connected-component summary"),
+    }
+    if path.name not in fold_reports:
+        raise ValueError(f"Unrecognized segmentation report: {relative}")
+    run, kind = fold_reports[path.name]
+    return run, fold, kind
+
+
 def run_for(path: Path, known_runs: list[str]) -> tuple[str, str, str]:
     """Return experiment/run, fold number, and report kind."""
+    segmentation = segmentation_report_for(path)
+    if segmentation is not None:
+        return segmentation
     stem = path.stem
     match = FOLD_RE.search(stem)
     if match:
@@ -88,6 +155,15 @@ def run_for(path: Path, known_runs: list[str]) -> tuple[str, str, str]:
 
 
 def category(run: str) -> str:
+    if run in {"segmentation_provenance", "phase2_verification"}:
+        return "Provenance and verification"
+    if run in {
+        "small_unet_seed123", "automatic_roi_reference_vs_predicted",
+        "largest_component_roi", "roi_retention_audit",
+        "roi_geometry_diagnostic", "mask_component_audit",
+        "segmentation_documentation",
+    }:
+        return "Segmentation and automatic ROI"
     low = run.lower()
     if "convnext" in low and "panderm" in low or "ensemble" in low or low.startswith("oof_"):
         return "Ensembles and OOF"
@@ -163,14 +239,18 @@ def main() -> None:
     known_runs = sorted({
         p.stem[:m.start()]
         for p in paths
-        if (m := FOLD_RE.search(p.stem))
+        if not p.is_relative_to(REPORTS / "segmentation")
+        and (m := FOLD_RE.search(p.stem))
     }, key=len, reverse=True)
 
     groups: dict[str, list[Path]] = defaultdict(list)
+    folds_by_run: dict[str, set[int]] = defaultdict(set)
     manifest = []
     for path in paths:
         run, fold, kind = run_for(path, known_runs)
         groups[run].append(path)
+        if fold:
+            folds_by_run[run].add(int(fold))
         manifest.append({
             "file": path.relative_to(ROOT).as_posix(),
             "run": run,
@@ -213,10 +293,15 @@ def main() -> None:
         "[`oof_convnext_panderm_ensemble_results.json`]"
         "(oof_convnext_panderm_ensemble_results.json).",
         "",
+        "**Segmentation evidence:** [guide](segmentation/README.md), "
+        "[Phase 2 verification](segmentation/phase2_verification/README.md), and "
+        "[diagnostic source and numerical evidence](../roi_diagnostics/). "
+        "Private verification bundles stay local and are not indexed.",
+        "",
         "## Browse by model family",
         "",
     ]
-    cat_order = ["ConvNeXt", "PanDerm", "Ensembles and OOF", "ResNet", "EfficientNet", "MobileNet", "Metadata", "Other"]
+    cat_order = ["ConvNeXt", "PanDerm", "Ensembles and OOF", "ResNet", "EfficientNet", "MobileNet", "Metadata", "Segmentation and automatic ROI", "Provenance and verification", "Other"]
     for cat in cat_order:
         if cat in cats:
             anchor = cat.lower().replace(" ", "-")
@@ -227,7 +312,7 @@ def main() -> None:
             continue
         lines += [f"## {cat}", "", "| Run / report group | Files | Folds | Best-checkpoint macro F1 (5 folds) | Starting points |", "|---|---:|---:|---:|---|"]
         for run, gpaths in sorted(cats[cat], key=lambda x: x[0].casefold()):
-            fold_ids = {int(m.group(1)) for p in gpaths if (m := FOLD_RE.search(p.stem))}
+            fold_ids = folds_by_run[run]
             fold_str = ", ".join(str(i) for i in sorted(fold_ids)) if fold_ids else "—"
             run_md = run.replace("|", "\\|")
             lines.append(f"| `{run_md}` | {len(gpaths)} | {fold_str} | {best_fold_f1(gpaths)} | {choose_links(gpaths)} |")
@@ -249,7 +334,7 @@ def main() -> None:
     OUTPUT_README.write_text("\n".join(lines), encoding="utf-8", newline="\n")
     print(f"Indexed {len(paths)} tracked report files in {len(groups)} groups.")
     print("Created reports/README.md and reports/MANIFEST.csv.")
-    print("No existing report files were modified or moved.")
+    print("Only reports/README.md and reports/MANIFEST.csv were regenerated; evidence files were unchanged.")
 
 
 if __name__ == "__main__":

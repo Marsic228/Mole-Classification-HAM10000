@@ -12,7 +12,7 @@ Diploma research project for seven-class classification of dermatoscopic skin-le
 - **Primary metric:** macro F1. Also report accuracy, per-class precision/recall/F1, confusion matrices and fold variability.
 - **Test policy:** the old exposed test split is historical evidence only; do not use it to select models or claim independent final validation.
 
-### Development results (as of 24 October 2026)
+### Development results (as of 5 November 2026)
 
 | System | Metric type | Macro F1 | Accuracy |
 |---|---|---:|---:|
@@ -36,13 +36,13 @@ The following is the agreed **execution order**, not a claim that later methods 
 |---|---|---|
 | **1. Reproducibility audit** | Freeze folds, environments, model/preprocessing details and evaluation | **Checkpoint-replay milestone reached:** 15/15 saved fold checkpoints reproduced metrics within the declared 0.003 tolerance. End-to-end retraining, a clean-machine rebuild and external validation remain unverified. |
 | **2. Long-tail methods** | Natural CE, Balanced Softmax, LDAM | **Initial comparisons complete.** CE remains the control. Balanced Softmax and LDAM were rejected as replacements under their tested configurations. See D19–D21 in the experiment history. |
-| **3. ROI / segmentation** | Test lesion-centered preprocessing | **Initial controlled ROI experiment complete (D22):** mask-assisted cropping improved canonical-fold mean macro F1 from 0.7386 to 0.7512. Automatic segmentation, mask reliability, deployment cost and external validation remain untested. |
+| **3. ROI / segmentation** | Test lesion-centered preprocessing | **Reference and automatic ROI evaluated (D22–D25):** SmallUNet Dice 0.913393 ± 0.003422; predicted ROI macro F1 0.742623 ± 0.027058 versus reference ROI 0.751194 ± 0.017390. LCC filtering rejected as default. Inference cost, confidence and external validation remain unresolved. |
 | **4. Supervised Contrastive Learning** | Test improvements in learned representations | **Planned.** Account for positive pairs and RTX 2060 6-GB / batch-8 limits. |
 | **5. Systematic experiment analysis** | Compare comparable experiments, errors and complementarity | **Planned synthesis.** Gather per-fold, per-class and matched-ID OOF evidence throughout earlier stages; do the comprehensive analysis before final selection. Do not mix pooled OOF macro F1 with five-fold means. |
 | **6. Final ensemble selection** | Choose a defensible standalone or ensemble model | **Planned.** ConvNeXt v17 + PanDerm partial4, 50/50, has development-only pooled matched OOF macro F1 **0.7621**; it is a candidate, not an independently validated final model. Consider error diversity, minority classes and inference cost. |
 | **7. Independent evaluation and application** | Assess generalization and build a research prototype | **Planned.** Seek non-overlapping external data, study domain shift, calibration and unsupported/OOD inputs. No clinical diagnosis claim. |
 
-**Next executable step:** Continue Stage 3 — assess mask quality and failure modes, then study automatic segmentation, Dice/IoU, confidence-aware fallback, and additional inference cost. Preserve the completed mask-assisted ROI experiment as a development-stage candidate and retain the natural-CE control. See [D22 in the experiment history](docs/research/Diploma_Experiment_History.md).
+**Current decision:** retain the original predicted-mask preprocessing; reject largest-connected-component (LCC) filtering as default. Preserve the natural-CE control, D22 ROI development candidate, historical v17 standalone reference and existing ensemble-candidate status. **Next untested hypothesis:** training ConvNeXt with controlled crop-scale and crop-position variation might improve robustness to predicted-mask inputs. This is neither an approved training experiment nor a demonstrated improvement. See [D23–D25 in the canonical history](docs/research/Diploma_Experiment_History.md#d23-automatic-smallunet-to-roi-to-convnext--local-evidence-verified).
 
 ## Stage 3 — Mask-assisted ROI feasibility (24 October 2026)
 
@@ -59,7 +59,28 @@ The following is the agreed **execution order**, not a claim that later methods 
 
 **Data paths:** raw JPGs in `data/images/`; local mask archive `Masks.zip`; tracked mapping `Masks_to_IsicId_mapping.csv`; generated 224×224 crops in `data/processed_roi_margin15_v1/` (ignored by Git). The local mask archive and generated crops are not committed. The results are in [`reports/convnext_tiny_natural_ce_roi_margin15_seed123_vs_natural_ce_5fold_summary.json`](reports/convnext_tiny_natural_ce_roi_margin15_seed123_vs_natural_ce_5fold_summary.json), with five per-fold evaluation JSON files and saved training histories.
 
-**Evidence boundary:** scores are **selected-best-checkpoint development CV fold means**, not pooled OOF scores or independent external validation. Improved classification with provided masks does **not** prove an end-to-end automatically segmented workflow improves performance; predicted masks, segmentation errors and inference cost are untested. Historical v17 folds are not a directly paired comparison.
+**Historical D22 evidence boundary:** these are selected-best-checkpoint development CV fold means. The 24 October experiment used reference masks; the subsequent automatic-input evaluation is recorded below. Historical v17 is not a directly paired comparison.
+
+## Stage 3 — Automatic ROI evaluation (5 November 2026)
+
+The same fold-specific reference-ROI-trained ConvNeXt checkpoints were evaluated with reference-mask crops and SmallUNet-predicted-mask crops on the five canonical held-out folds (8,530 images). No classifier retraining was involved in this comparison. SmallUNet was trained against the available reference masks, whose provenance is not fully established.
+
+| Confirmed result | Five-fold mean ± sample SD, unless stated otherwise |
+|---|---:|
+| Selected SmallUNet validation Dice at 256×192 | 0.913393 ± 0.003422 |
+| Reference ROI macro F1 | 0.751194 ± 0.017390 |
+| Predicted ROI macro F1 | 0.742623 ± 0.027058 |
+| Paired difference, predicted minus reference | −0.008571 ± 0.015487 |
+| Predicted ROI coverage | 6,103 / 8,530 (71.5%); remaining images use whole-image fallback |
+| LCC minus original predicted ROI macro F1 | +0.000752 ± 0.008047; improved 2/5 folds |
+
+**Aggregation:** SD is the sample SD across five folds. Separately, pooled development OOF macro F1 is **0.752872 reference / 0.743661 predicted**; these are not fold means.
+
+**Geometry evidence:** Fold 5 had 44 classification regressions; 36 involved ROI→ROI crops and all 36 retained the reference-mask foreground pixels. Among reference-correct ROI→ROI cases, regression frequency was 22/282 for absolute crop-area differences ≥5 percentage points of original image area, versus 14/732 below that post-hoc threshold. Geometry differences are associated with errors. Changes in lesion scale, position and surrounding context are plausible explanations; causation is not established and foreground retention does not guarantee preservation of all useful information.
+
+**Decision and limits:** LCC filtering does not consistently improve classification and is rejected as default preprocessing. These are development-fold, selected-checkpoint results; detailed geometry diagnostics concentrate on Fold 5 and LCC was investigated post hoc. Dice measures agreement with available reference masks, not independent clinical ground truth. Inference cost and classifier confidence were not measured; no external or clinical validation is established. The crop-robustness hypothesis above remains untested and requires a leakage-safe design before any separately approved training.
+
+Evidence: [verified five-fold JSON](reports/segmentation/automatic_roi_5fold_summary.json), [segmentation evidence guide](reports/segmentation/README.md), [artifact fingerprints](reports/segmentation/phase1_artifact_manifest.json), and [canonical experiment history](docs/research/Diploma_Experiment_History.md#d23-automatic-smallunet-to-roi-to-convnext--local-evidence-verified). Phase 1 recalculated saved evidence without neural-network inference or retraining.
 
 ## Project structure
 
