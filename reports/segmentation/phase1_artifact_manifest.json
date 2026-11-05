@@ -1,0 +1,1536 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-11-05",
+  "captured_at_utc": "2026-11-05T09:57:23.352Z",
+  "path_base": "repository root; all artifact paths are repository-relative",
+  "hash_algorithm": "SHA-256",
+  "hashing_method": "Read-only streamed bytes, with size and modification-time checks before/after each read.",
+  "scope": "Pre-edit critical experiment artifact fingerprints; data/crop trees and environments were not exhaustively hashed. No artifact is modified by fingerprinting.",
+  "availability_policy": "Missing requested artifacts would be listed with availability=missing and null size/hash.",
+  "missing_artifacts": [],
+  "artifacts": [
+    {
+      "path": "HAM10000_metadata.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 690218,
+      "sha256": "de17ec44cb25ea9c3f6378ba18d69224c740afd62e86ec2edc6a894d6aa663d3"
+    },
+    {
+      "path": "ISIC2018_Task1_Training_GroundTruth.zip",
+      "role": "expert-mask archive available locally; not evidence of independent evaluation",
+      "availability": "available",
+      "size_bytes": 27402895,
+      "sha256": "99f8b2bb3c4d6af483362010715f7e7d5d122d9f6c02cac0e0d15bef77c7604c"
+    },
+    {
+      "path": "Masks.zip",
+      "role": "reference-mask archive used by segmentation",
+      "availability": "available",
+      "size_bytes": 20042990,
+      "sha256": "701be78117e1373d9318b2f92ba8e1db99b9d390738f818724797b00b5a781b4"
+    },
+    {
+      "path": "Masks_to_IsicId_mapping.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 421938,
+      "sha256": "87fc4e2844d5f24b8e6a7962fc6e3363b37c866edf2b9c667aeb0e49de15358e"
+    },
+    {
+      "path": "archive/diagnostics/baseline_cnn_forward_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1170,
+      "sha256": "e0b9c56246d055d98c5c43cf2a05e14659441205e9a0fe555bc42d2fdd665a24"
+    },
+    {
+      "path": "archive/diagnostics/baseline_train_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1530,
+      "sha256": "a5d1d4beaa25f10134761438d0f9ae3469c6ebcbedf45d585cdf7a12235c5556"
+    },
+    {
+      "path": "archive/diagnostics/class_metrics_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1105,
+      "sha256": "e338e72286f8e06896f641360daca55c68cc295b0ff102e2e2087258dc712301"
+    },
+    {
+      "path": "archive/diagnostics/dataset_config.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2745,
+      "sha256": "1d9127d83740969260ccb34fb21809cd8bd972b8523b4ef1d8c228ea45738e59"
+    },
+    {
+      "path": "archive/diagnostics/dataset_loader_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 5487,
+      "sha256": "89c58986d6fb62b57f173d3912d85bc4b6dc9d4548adcd2c5c9b179ddcf6367e"
+    },
+    {
+      "path": "archive/diagnostics/dataset_summary.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2498,
+      "sha256": "b6a928b9af8924336df88dbdc5b217d557cc4fc9732987766a7f68141fe799f6"
+    },
+    {
+      "path": "archive/diagnostics/efficientnet_cv_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2630,
+      "sha256": "362834973d8e1a8f4513a247ea53c14a0adaf0b0b6bdebdcee870ced6690bf46"
+    },
+    {
+      "path": "archive/diagnostics/evaluation_summary.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1534,
+      "sha256": "e8639cce0e13b3c593c2f870e9fe66b8f494de7129b53e659ffe06184a84be3d"
+    },
+    {
+      "path": "archive/diagnostics/experiment_run.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2861,
+      "sha256": "ceaf700940a4b30fba4226782f9457cba988873a5187c8f5887f29c0c205e823"
+    },
+    {
+      "path": "archive/diagnostics/filter_records.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1078,
+      "sha256": "4cce9f0e29f6e2da15c1b4da52adf27043640309a70446481ba7b73c64de880a"
+    },
+    {
+      "path": "archive/diagnostics/lesion_id_report.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1022,
+      "sha256": "f7a778bb822efbd60601355d9bd1651331e4258c968c5694783bcbd3fd333606"
+    },
+    {
+      "path": "archive/diagnostics/model_forward_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1186,
+      "sha256": "cce10a8d57f630184d183b552a78b76107d2cac29d80c021f71dbc6814608a59"
+    },
+    {
+      "path": "archive/diagnostics/one_epoch_training_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3376,
+      "sha256": "cb30faf99a53baee0011485d5a7995928c54a8aa2cff47b0ac19c5c4cf964dd0"
+    },
+    {
+      "path": "archive/diagnostics/preprocessing_report.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1580,
+      "sha256": "288372e8fbf6014cedaca0c84fd0fff46a1fefe0ebad0f55b9b2f9be0fd702b1"
+    },
+    {
+      "path": "archive/diagnostics/records.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1756,
+      "sha256": "7f8599d61ab3555bc794e75765f79d1239cef4c1c055a63b6613975501d5fc5d"
+    },
+    {
+      "path": "archive/diagnostics/resize_sample.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1121,
+      "sha256": "90877eb8d6557a17e8e6720ebbb222f31f37fd8f1354abd2338d885978189ea4"
+    },
+    {
+      "path": "archive/diagnostics/resnet18_forward_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1134,
+      "sha256": "49414cc588986e11f544be0492a1c393c6f33201e4fb76ad15627b7b803e7dbd"
+    },
+    {
+      "path": "archive/diagnostics/split_balance_report.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1924,
+      "sha256": "39555432195011859e97f3a6ae4af30aa543b4a5c7a5dd5fb72932f5d9d9779d"
+    },
+    {
+      "path": "archive/diagnostics/summarize_experiment.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 574,
+      "sha256": "7c87a77f3023db717d7afd083c7796d45c600b94de6a1c2d42bd5df6f16a94d0"
+    },
+    {
+      "path": "archive/diagnostics/tiny_training_loop_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1216,
+      "sha256": "41511c748548677b62c5cd0cede862c616bd9aa63566f3557b3931e1956369dc"
+    },
+    {
+      "path": "archive/diagnostics/training_step_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1262,
+      "sha256": "b8e36d5217cfdca512a9d1b978f1af2e622fa9c1af2677834e6b25298dedad5b"
+    },
+    {
+      "path": "archive/legacy_experiments/augmented_sampler_model_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3429,
+      "sha256": "c792cbb030451cdd100b7aa1cea60b9999d4cf7a4c06d4024f6ad80de1d3bf17"
+    },
+    {
+      "path": "archive/legacy_experiments/augmented_sampler_train.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2186,
+      "sha256": "c3de8f62c291db4e9ff6a2504f76db030a3c93b0613db6fc2c3b337d8d7bfb7d"
+    },
+    {
+      "path": "archive/legacy_experiments/baseline_experiment.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3403,
+      "sha256": "ff1961c0aaeb41a0e70529a5f9c4e8b2dc6db8884ff039a11b2e05fdcd3e8258"
+    },
+    {
+      "path": "archive/legacy_experiments/convnext_tiny_cv_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4113,
+      "sha256": "bbfecb6c5a0b160c15c30e01dc6ade387494d5d5708addec236df11eaa05ef8b"
+    },
+    {
+      "path": "archive/legacy_experiments/convnext_tiny_cv_evaluation_tta.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3779,
+      "sha256": "22a30c2c2356a4df81ef631bae19c31159be0803dce4888d925b94ba05996f63"
+    },
+    {
+      "path": "archive/legacy_experiments/convnext_tiny_cv_summary.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2306,
+      "sha256": "e7e589b3c0b321d6255f5c969aad33a83829f1d466f7d6a2680c9f2c00aab2f8"
+    },
+    {
+      "path": "archive/legacy_experiments/convnext_tiny_cv_train_v13.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 11160,
+      "sha256": "ade929a0b05420284fcd8da67f10672a6c18ac176a9951c16ffc46367f7ce4b4"
+    },
+    {
+      "path": "archive/legacy_experiments/convnext_tiny_cv_train_v14_sam.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 12643,
+      "sha256": "b8ec57ab472123bc9787abbc31fe3d52a47b5b9b306122d6bce0b9c0a8f37a40"
+    },
+    {
+      "path": "archive/legacy_experiments/convnext_tiny_inference.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1968,
+      "sha256": "1b5453234b416fc60bc20da350d7963117fa2ce16ddde1e1e305c7a34b3cdc6d"
+    },
+    {
+      "path": "archive/legacy_experiments/efficientnet_b0_cv_summary.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2599,
+      "sha256": "d01c565260ca61e0f4518e9cd07de772917be891e0c51c13673e389445ffdf64"
+    },
+    {
+      "path": "archive/legacy_experiments/efficientnet_cv_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3275,
+      "sha256": "b470b7455bd1b8920487d4ed420e03867a6f943fba879d4b81c70e1e0632ee7f"
+    },
+    {
+      "path": "archive/legacy_experiments/efficientnet_cv_train.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4563,
+      "sha256": "7a31a2319129f22e3ba61c3d680a282922689e81a73893b3f3491772d739bde4"
+    },
+    {
+      "path": "archive/legacy_experiments/final_test_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4773,
+      "sha256": "29c6fe3c2a9b6b28acbc0f3c4ee2bdd340c36d63c9c19f82616ab2316ddf7a55"
+    },
+    {
+      "path": "archive/legacy_experiments/mobilenet_v3_large_cv_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3295,
+      "sha256": "1b7a55261595501bbe7b9bffc587868306b3c5485163a1bf309a3f41e760ac1a"
+    },
+    {
+      "path": "archive/legacy_experiments/mobilenet_v3_large_cv_summary.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2596,
+      "sha256": "0d124497697614f1c6e76e7dbccaeb360620aa408d1036f1baa8440bbe259295"
+    },
+    {
+      "path": "archive/legacy_experiments/mobilenet_v3_large_cv_train.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4638,
+      "sha256": "c798b53abf2aed3f19cc9cfb0a38f4a1cf1bd51f5291d7238b3e94fbe9341541"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_cv_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4041,
+      "sha256": "2097749e6a26d750c73321cde9986d669c0f944a3278dcbde4e19be3bf16c44b"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_cv_train.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3955,
+      "sha256": "4e7174638f9be6cc92ba6b731ee0fe8f68e7e2f16cc3bd7f5c9433555490390d"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_focal_confusion_summary.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1299,
+      "sha256": "4ca6085c8c2bd341767e283a7fa70c0df5813afdb2f87b2ab876fd2dac6d6bb0"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_focal_cv_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 5569,
+      "sha256": "c46b806303ac53f5c4c574145f9b454956fe50bf1c16344f1e2695f80b294635"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_focal_cv_train.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 8593,
+      "sha256": "14925f9a9719440bc9409d84675f4defc252f90f20cd21c61ac19f79290f476c"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_focal_oof_hard_examples.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3676,
+      "sha256": "17dc55531715ca4c4389db19350cd28f8a5e49aea607f425426e627b02f0177b"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_focal_per_class_cv_summary.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2332,
+      "sha256": "65da1bdfee089bbe70630a92eb6345c51c6e0273737809579bc941263320cc64"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_focal_specialist_cascade_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 5491,
+      "sha256": "244b17c7f7e62ac7e729a8aba3a677c714bbe7381b0a201bbaec61ea625dd701"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_focal_specialist_cv_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4483,
+      "sha256": "54fc9d0c98ae1e67bf55fbbdff7f95646e41fca6f410b8d14c638e19c3891393"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_focal_specialist_cv_train.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 5381,
+      "sha256": "4391b056d28a4cd0941581062acbb3d9c009f7b04dfdaaa7d1e94b27cd89c6b7"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_model_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4191,
+      "sha256": "c17ddf5cdc9d30b6dc4bbd69114be5ee8b51429f0c447b18788c2a0d362cb6e2"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_per_class_cv_summary.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2298,
+      "sha256": "9e2ea6dbbbb1a8de539953c0a2b8dddfb546a693e31fafcae58d62fad840c6e2"
+    },
+    {
+      "path": "archive/legacy_experiments/resnet18_train.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 5056,
+      "sha256": "c2000212baa3814866c0d68a21f8a3bc4e55b3ddc8b6f28508469a00f4a67fff"
+    },
+    {
+      "path": "archive/legacy_experiments/weighted_model_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3368,
+      "sha256": "6d601b5fd3bd55bc6e440732f46b6c52adf29ed2c81e81ffe506bceda34d632e"
+    },
+    {
+      "path": "archive/legacy_experiments/weighted_train.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3058,
+      "sha256": "0d3047ab03ea48ba36cf3bbc656146a5ed001c18e0cb5484784c1ed41a53ee4a"
+    },
+    {
+      "path": "archive/legacy_experiments/weighted_training_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2266,
+      "sha256": "ea991b439c2598f8e980b6cf8faef5ce2298e7a0d4b4070bfedeaa0446d16332"
+    },
+    {
+      "path": "checkpoints/convnext_tiny_natural_ce_roi_margin15_seed123_fold1_best.pt",
+      "role": "local checkpoint",
+      "availability": "available",
+      "size_bytes": 331593158,
+      "sha256": "d922c1743c39d93e90612101c4d06b6126bab7b3d956bbe6e6f97e145ff777ce"
+    },
+    {
+      "path": "checkpoints/convnext_tiny_natural_ce_roi_margin15_seed123_fold2_best.pt",
+      "role": "local checkpoint",
+      "availability": "available",
+      "size_bytes": 331593158,
+      "sha256": "28a93330daa3938156221fa02589a2b48bd8a34a92d6b8764efa0fef0385c81b"
+    },
+    {
+      "path": "checkpoints/convnext_tiny_natural_ce_roi_margin15_seed123_fold3_best.pt",
+      "role": "local checkpoint",
+      "availability": "available",
+      "size_bytes": 331593158,
+      "sha256": "8b3a76cb0efb3a95ee34ce6efd6a50048f9bb21af27f074654a609cc1aac2b35"
+    },
+    {
+      "path": "checkpoints/convnext_tiny_natural_ce_roi_margin15_seed123_fold4_best.pt",
+      "role": "local checkpoint",
+      "availability": "available",
+      "size_bytes": 331593158,
+      "sha256": "9f0266fee2ebe0b166fb01d240ba68c0df48dc971ac81ffcbe3e7c2b1ec4a63d"
+    },
+    {
+      "path": "checkpoints/convnext_tiny_natural_ce_roi_margin15_seed123_fold5_best.pt",
+      "role": "local checkpoint",
+      "availability": "available",
+      "size_bytes": 331593158,
+      "sha256": "875092aff5ccd647080daca2ee4f82d16ebc96681b2bb3c3782bc745b0e8a090"
+    },
+    {
+      "path": "checkpoints/segmentation/small_unet_fold1_seed123_best.pt",
+      "role": "local checkpoint",
+      "availability": "available",
+      "size_bytes": 5887203,
+      "sha256": "aaa2c90bb918056ee12ab706a5c58fd0def9191a1d832562f2f86e7237ca2fcf"
+    },
+    {
+      "path": "checkpoints/segmentation/small_unet_fold2_seed123_best.pt",
+      "role": "local checkpoint",
+      "availability": "available",
+      "size_bytes": 5887203,
+      "sha256": "7a5dd0dae6df763e6a76926ddd9d8e25f6e79c182db28bbb1ff2fc6abf1fffde"
+    },
+    {
+      "path": "checkpoints/segmentation/small_unet_fold3_seed123_best.pt",
+      "role": "local checkpoint",
+      "availability": "available",
+      "size_bytes": 5887203,
+      "sha256": "e757dc60268d3411e9ff69220999821b98397925cff27638062d206c4898f809"
+    },
+    {
+      "path": "checkpoints/segmentation/small_unet_fold4_seed123_best.pt",
+      "role": "local checkpoint",
+      "availability": "available",
+      "size_bytes": 5887203,
+      "sha256": "77b442c84124e86ee9aa22c24f7930566ee8f26f9941832a870f77a958d8c233"
+    },
+    {
+      "path": "checkpoints/segmentation/small_unet_fold5_seed123_best.pt",
+      "role": "local checkpoint",
+      "availability": "available",
+      "size_bytes": 5887203,
+      "sha256": "bf5bfbbf87dd340324b9e7fc8cf720bfd92fcf66e9f1c94204e75721d7c64195"
+    },
+    {
+      "path": "core/__init__.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "core/canonical_cv.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 10757,
+      "sha256": "7c0c06aaf496640ea24c256d934e49d42af06c378db2f9c27dbce42244d97cae"
+    },
+    {
+      "path": "core/cross_validation_dataset.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4193,
+      "sha256": "d1ecda80941d108722ea64f248e98d9194d9402f61a6b704f49ce1e18bd8d1e0"
+    },
+    {
+      "path": "core/cross_validation_split.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4652,
+      "sha256": "d0a1565f93752671acde9b31377da2c488a9fae964e42b8a207d8c185a78c418"
+    },
+    {
+      "path": "core/segmentation_losses.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 681,
+      "sha256": "ea1067c0a253a095e8f0377355322aa6b1470963ee8a2ec693715e35361d2062"
+    },
+    {
+      "path": "core/segmentation_unet.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1528,
+      "sha256": "b7ffa975d78b478dc6762867e5993963b572ee7ececb2b9bc74f18cd116a9b49"
+    },
+    {
+      "path": "core/train.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2969,
+      "sha256": "f20b7da53c8e05d6248a88b94224087a2a1179d785d83b2c35afbe952713f63e"
+    },
+    {
+      "path": "core/utils.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 721,
+      "sha256": "553ac54429b1754d6d468d441d8384cdb4fef3d1d540c8981e9455822751475c"
+    },
+    {
+      "path": "evaluation/__init__.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evaluation/analyze_predicted_roi_classification_fold1.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3304,
+      "sha256": "5756555410f37969d81e19a490fa67055971ac837b689fc262ab82aa2200dfd2"
+    },
+    {
+      "path": "evaluation/analyze_segmentation_fold1.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1059,
+      "sha256": "5b30dfd8e5c8738e91834d287ae329b957c764b04e018779c259be2a1c5633eb"
+    },
+    {
+      "path": "evaluation/audit_cv_folds.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 9305,
+      "sha256": "4c94cc97dc55873f4929537b17b1624d553775d4b8c01efb49c44bdfb6718603"
+    },
+    {
+      "path": "evaluation/audit_segmentation_roi_fold1.py.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3610,
+      "sha256": "9fec78bbdfcf511587846c5f1a2565663bc1757575f2de8d9682d8a8a83b1811"
+    },
+    {
+      "path": "evaluation/audit_segmentation_roi_fold1_original.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4653,
+      "sha256": "55e0141602284fa634a99c5a19e557da66adf8365502cff6cbe0fafcdb52224e"
+    },
+    {
+      "path": "evaluation/build_reports_index.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 9373,
+      "sha256": "800fba66481ad3fde79868b6be4e977fad40f1d68db705597f1d1dd788a0ea8e"
+    },
+    {
+      "path": "evaluation/compare_predicted_roi_fold1.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4570,
+      "sha256": "e13bad1d0c546a11b03bd3a3081f4a30842b7dd424d1e69e910f347de00852d8"
+    },
+    {
+      "path": "evaluation/compare_predicted_roi_fold2.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4378,
+      "sha256": "754c8555be06b868b4cd897827cc366ff9668ca7f25dc8551882fc70ea6cc7fb"
+    },
+    {
+      "path": "evaluation/compare_predicted_roi_fold3.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4378,
+      "sha256": "197c1721b832b475b3deed5b68f1055741110825cf2fc10f5e9d2c6863c65f9b"
+    },
+    {
+      "path": "evaluation/compare_predicted_roi_fold4.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4383,
+      "sha256": "dc9101d4657e5e0b61ea38362ae2cb52189e4752054cdbffbb2390b786078232"
+    },
+    {
+      "path": "evaluation/compare_predicted_roi_fold5.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4383,
+      "sha256": "a67900fdcc964efb97675538189586ac4720ef05ddbb93d2006ea13961df4d68"
+    },
+    {
+      "path": "evaluation/confusion_matrix_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2675,
+      "sha256": "f4f00f50ceea6e7bc33a330d592f8f9276d1005a952f3ac09f78a7755bec8c6f"
+    },
+    {
+      "path": "evaluation/convnext_natural_ce_vs_balsoftmax.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 9681,
+      "sha256": "b7d12ffe41aa6fa90444792ac4b4e6cbc802159632dba2432eb44dbf655966af"
+    },
+    {
+      "path": "evaluation/convnext_natural_ce_vs_ldam.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 8947,
+      "sha256": "febfc673a61e0f9fb263d8b8985915e64c03f61f26d4a2fc886b84cc0ede6d25"
+    },
+    {
+      "path": "evaluation/evaluate_largest_component_roi.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 14784,
+      "sha256": "859b323901db97641fbe37b7d4001763c3dc5e77b095079ebb452a2f79ea94bd"
+    },
+    {
+      "path": "evaluation/export_model_oof_predictions.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 7903,
+      "sha256": "f25a174e0c43b015febafbba0fd56cbb6a921148c773fbc8265ec9b0df11e637"
+    },
+    {
+      "path": "evaluation/export_predicted_roi_fold1.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2217,
+      "sha256": "735449765148e14d5d3d75f818f579fe1b1d438890b36f663f0ce0f19186e91c"
+    },
+    {
+      "path": "evaluation/export_predicted_roi_fold2.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2217,
+      "sha256": "5d0158b4fd9351dab42f6b2537a85d1c7b841df5f21265e47fc1381ce3ba4484"
+    },
+    {
+      "path": "evaluation/export_predicted_roi_fold3.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2217,
+      "sha256": "2cf8348f810099aaa00b1b2afc4e1e9f0da576125091dc10f70f9cf8b50875e6"
+    },
+    {
+      "path": "evaluation/export_predicted_roi_fold4.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2221,
+      "sha256": "4208568c1b63466424fe1139d58288a2e7a4ac5296875663a820734b364c1e96"
+    },
+    {
+      "path": "evaluation/export_predicted_roi_fold5.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2221,
+      "sha256": "6556939093fcb0ce67dc6f8847ed09ced85b17d48ed7e918a0040954a2fce677"
+    },
+    {
+      "path": "evaluation/mask_component_audit.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 8062,
+      "sha256": "e33bf6cb3a36420a63aeaf9e938c33283413743ddd4d165cf13c1699aeecbf3d"
+    },
+    {
+      "path": "evaluation/merge_model_oof_ensemble.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 5109,
+      "sha256": "c4ff448a69ed83dc8e488d7de496b33798661f2d4f2d4d5f344635eae4e7dd9d"
+    },
+    {
+      "path": "evaluation/metrics.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1482,
+      "sha256": "879249bb8f1f217b81ddc75deb9d779af72d5e771929c1582f47bfba9859ec6e"
+    },
+    {
+      "path": "evaluation/preview_segmentation_failures.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3634,
+      "sha256": "e7ebc503338978a67996a63883d8d8c08ac019851423c00776f3d3a1eafe9d08"
+    },
+    {
+      "path": "evaluation/replay_checkpoint_fold.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 12061,
+      "sha256": "32b416d44ddcb4adfbbd6ffb6cfed37485b1a455b91fba9585fb45f28906fe4d"
+    },
+    {
+      "path": "evaluation/roi_fold_check.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 7050,
+      "sha256": "163e2675c9be4c7654439cf8ba891bbfc2186ac8b975b05967afe089c57c3dff"
+    },
+    {
+      "path": "evaluation/roi_geometry_diagnostics.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 13632,
+      "sha256": "57d83cc261ecd36a9cfbd9b045050b3c17f9c24f391bb1908f212b6dcf05478d"
+    },
+    {
+      "path": "evaluation/segmentation_metrics.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 814,
+      "sha256": "01ea37e37ec1847bfd79334a03d2f4a6ac99704c5461bccecdf8d8a3432376cc"
+    },
+    {
+      "path": "evaluation/segmentation_validation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1549,
+      "sha256": "48e82f54a23a49603aa2fce66c5e23487e39e6cf2e3da805271ad36f7a004fd2"
+    },
+    {
+      "path": "evaluation/trained_model_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3763,
+      "sha256": "47f1e6bd8451ac438ff1e7a503feece174fb3f1b6382b89cf601f2b776a4270e"
+    },
+    {
+      "path": "experiments/__init__.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "experiments/convnext/__init__.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "experiments/convnext/convnext_tiny_cv_train_ldam.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 15046,
+      "sha256": "d7a76e7aeb4e438bf3fd0970ec9430a2f83072cbb6c0891b0bbf5a7fc4df6086"
+    },
+    {
+      "path": "experiments/convnext/convnext_tiny_cv_train_natural_balsoftmax.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 13425,
+      "sha256": "9967cba33c580b9e7a2eb194d5c576f0145697d326adcf219808cc9fa63aeebb"
+    },
+    {
+      "path": "experiments/convnext/convnext_tiny_cv_train_natural_ce.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 12478,
+      "sha256": "63ca67ec4366245493e5527f42763629a3779f7d4bd9ef61fc3c9a55fe768c0a"
+    },
+    {
+      "path": "experiments/convnext/convnext_tiny_cv_train_reference.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 12847,
+      "sha256": "435b54ba7a90728ee6dff4518512956124784e12e9565b59e30a06ca92c9fa1c"
+    },
+    {
+      "path": "experiments/convnext/convnext_tiny_cv_train_roi_margin15.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 12523,
+      "sha256": "8a09e83fbffeaaa0ff218b5ae324769527e54150d849833966c1159fabed6418"
+    },
+    {
+      "path": "experiments/metadata/__init__.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "experiments/metadata/convnext_tiny_metadata_cache.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3919,
+      "sha256": "41c5271a0a4613cc70e6071f004153d715ef7ee738421e63dc33becddc941e12"
+    },
+    {
+      "path": "experiments/metadata/convnext_tiny_metadata_fusion.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2786,
+      "sha256": "4927ad000f95eaa9829406825b1c8878c2301d54eaa3556987b2ecb32849a3a5"
+    },
+    {
+      "path": "experiments/metadata/convnext_tiny_metadata_fusion_cv_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 11386,
+      "sha256": "79e733e20396eaaf36ac0ba04db583c90da2883b4a620dc875865de422147299"
+    },
+    {
+      "path": "experiments/metadata/convnext_tiny_metadata_fusion_cv_train_v16c.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 15645,
+      "sha256": "14c8d831a84831816d91b77bcd7740cb9b89142e2659e3e2590687cc7e46af47"
+    },
+    {
+      "path": "experiments/metadata/metadata_features.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2516,
+      "sha256": "35a9ebb20063d15d42e473f4bfcf73cde83724613199c7dda7159f3b103729cf"
+    },
+    {
+      "path": "experiments/panderm/__init__.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "experiments/panderm/panderm_cv_evaluation.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4191,
+      "sha256": "dc1831077c35c55fa8fc39d49e6f5fe2f37b7dbb70374d7f7cede0734f0e7505"
+    },
+    {
+      "path": "experiments/panderm/panderm_cv_train.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 14528,
+      "sha256": "77328f71c7789448464dd55eb8a5c019837b48b7d6c580037e1784f503a7ab01"
+    },
+    {
+      "path": "experiments/panderm/panderm_partial4_diagnostic.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4660,
+      "sha256": "7a48974d6fb637f605d062bd067abf3caba32d056c2f737d9e7b7506ed281ab8"
+    },
+    {
+      "path": "experiments/segmentation/sanity_overfit.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1624,
+      "sha256": "f0ab869e947da22da307ea129e07e4f230e6f3e32792b3b3af33a6c777e1017d"
+    },
+    {
+      "path": "experiments/segmentation/train_fold1.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4718,
+      "sha256": "dfdb478f829fda75c3f77365f79bcba065b493f0a25c14747bed00e61ffc37b6"
+    },
+    {
+      "path": "experiments/segmentation/train_fold2.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4718,
+      "sha256": "af38b384f02aae2666723fb4871eab424c01a58e395332210e163272f09ba673"
+    },
+    {
+      "path": "experiments/segmentation/train_fold3.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4718,
+      "sha256": "8e2cd683112f3745ea6120eed9c43303c4bdc9cca2ffc5f4caa47dba1ed838ea"
+    },
+    {
+      "path": "experiments/segmentation/train_fold4.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4718,
+      "sha256": "128c2012ede8c59e5a3aa8ac970e74fb6fed8a42c5398ae5c723229aaf13e078"
+    },
+    {
+      "path": "experiments/segmentation/train_fold5.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 4718,
+      "sha256": "bdc4e84272b31a5d219ca979335c50b0dd97eb26273a32e1e7f892fb1b3c3d46"
+    },
+    {
+      "path": "fold5_regressions_ranked_by_geometry.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 8179,
+      "sha256": "03622d9320da86a6a9cfce970c32a2225c3da0d2bbcbd859a82c5ce3466d82d8"
+    },
+    {
+      "path": "preprocessing/__init__.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "preprocessing/check_segmentation_data.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 6481,
+      "sha256": "603f52e1b7f0f12b82d1ed2e31856825065dc360f48c5e57cb49e590ce9e42e3"
+    },
+    {
+      "path": "preprocessing/inspect_images.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2646,
+      "sha256": "17330f435db152ef3b54e6c9039dfb2a24f51a0bd168ea9aa66d19d7b23543b8"
+    },
+    {
+      "path": "preprocessing/preprocess_full.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2493,
+      "sha256": "6b97976ae883a9872a13c5b765f4704ae9ea657646d5f3739fbe909c75d9f852"
+    },
+    {
+      "path": "preprocessing/preprocess_split_sample.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 6799,
+      "sha256": "54b3357d048a854f081a1f5a1f8cef62b396ba977e119bd47f683713f8077c0b"
+    },
+    {
+      "path": "preprocessing/preprocessing_config.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1983,
+      "sha256": "dc48b8eb93d07a98c7a7357fe19728d96b5c26f319ff8f05dc8f1e5f091789c9"
+    },
+    {
+      "path": "preprocessing/preview_roi.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 7155,
+      "sha256": "6136f583163b0377f610041312782e620fc5300b0e99f5a3604ff17358c12b2c"
+    },
+    {
+      "path": "preprocessing/resize_preview.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 941,
+      "sha256": "4797062f10021f0b7125913d574889e8ff1e28971a3dd33eb05c4b1845402c31"
+    },
+    {
+      "path": "preprocessing/roi_crop.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3681,
+      "sha256": "1842ebc2783fdea2ed1542b6c4f2d64f31df9d401a2b3f81b156a4c7bd64c63e"
+    },
+    {
+      "path": "preprocessing/split_config.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 976,
+      "sha256": "939e88fae38f3d9cdc3890b0feb532a919997d6913b875fad41fda3e2d7f98b0"
+    },
+    {
+      "path": "preprocessing/split_dataset.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 3394,
+      "sha256": "aec3d21075783e78730f65a76d2478e9754dc5309ecca65b95d50789b04b1dbe"
+    },
+    {
+      "path": "preprocessing/validate_full_preprocessing.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 2279,
+      "sha256": "e32d4506d75325712f962af1191d6403f38b3910f7e988f7ba31fedf51d8fd5c"
+    },
+    {
+      "path": "preprocessing/validate_image_paths.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 1555,
+      "sha256": "829aa9bcd1476bc3b80e6b3b5be182d2cecf5abccbb10004fd9fc45d48ebffb4"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold1_best_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 176,
+      "sha256": "68e9bcf1e3e0e43511180df70de5814d9276e8f997c5da328e26afbba8cafc35"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold1_evaluation.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 1489,
+      "sha256": "070ebd528b16fdb17e222a9fcea2023d77ceb8880190fa99c7289c5f8b05cfb7"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold1_training_history.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 3530,
+      "sha256": "1aec78f3ffb55c15952312d59c5d52083528f2a15c673b3ac5c96d08478a2ab6"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold2_best_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 176,
+      "sha256": "6b21305af5d03ef1872be91562439469413fee648d5cb9023bcd998630ef1429"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold2_evaluation.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 1474,
+      "sha256": "8e2eb2f9592660c88a5620d4b4c7339cf18cfe26ff6ee335da07c11e30f5621e"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold2_training_history.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2132,
+      "sha256": "9c88c1186da490f375da091ace68b6f02b0c1dcd3710d94a8a635f26aeb23462"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold3_best_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 176,
+      "sha256": "c133e213d98a4a9d0acd0e4b3405a7c360803e820a903b0dfcef8cd5c9e30aec"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold3_evaluation.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 1504,
+      "sha256": "9e4eef0f119a261efcba27a41d1168dac279e7ffa837e3ccd2ac4ee6c10782bc"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold3_training_history.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2599,
+      "sha256": "21faf4ca71cef09c209a960e6bdbd631bdd08a3cbc07c6edeee14c1eb2be068a"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold4_best_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 176,
+      "sha256": "7a0cc29e5cf90801bfc80a6d7886dc8dca5aba8b533ae6d4381ec42fbe40c12a"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold4_evaluation.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 1447,
+      "sha256": "17069edb07d606eb1263800c91ec03b1ba1c5dc32d8d60cac1d9bec90ca1af55"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold4_training_history.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2834,
+      "sha256": "f55344e02f6dc4ba296df6f3c13a67a20aa384d0a1676becbb99830cc440693b"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold5_best_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 177,
+      "sha256": "9bf35cd1a5aa1df5064d9faeea1fe34e54193ade45d4544418524698979bd766"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold5_evaluation.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 1490,
+      "sha256": "1dbfd7cfdae965eb78fb31012c0860de9d2556f586106a71b42541b7f9116ee7"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold5_training_history.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 3528,
+      "sha256": "6c651c852aa33fd5276329f9281eb022f0c7c7f6bf796c5111d93e5bdd70db08"
+    },
+    {
+      "path": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_vs_natural_ce_5fold_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 10562,
+      "sha256": "53587ce7cb42c483ca9437d3615b13387fc149ae921757d69db99606a4251661"
+    },
+    {
+      "path": "reports/segmentation/largest_component_roi_5fold_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 12731,
+      "sha256": "23e9bd4e95543667d4691cc8c6b41ec3797fbfc4eb791def63d02d9cdda46421"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold1_seed123/best_validation_per_image.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 98671,
+      "sha256": "a34a375fbf8ee72622e3a31098b03c5415400f6cb30ab38aba9c340d066fcbf6"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold1_seed123/classifier_predicted_vs_reference_fold1.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 40022,
+      "sha256": "e5e05fcae7df255831fdb1b37fed1d2d94f91952d33f67e59c821dcc9e1e4fbd"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold1_seed123/history.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2323,
+      "sha256": "18297fd25f915eeb6f424b232f1c1373bed372c9a5ac3340d008d0d217ea2991"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold1_seed123/largest_component_roi_comparison_fold1.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 190744,
+      "sha256": "3f613ff41e1ef17c2c86c214ec1f8e0b2dc308a1fc95764de9b86b0e025874e3"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold1_seed123/largest_component_roi_comparison_fold1_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2214,
+      "sha256": "c0443abc76b029aaf3852af771ae86ecc7f2dd90b7594da1d5dc6a400c24c0ef"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold1_seed123/roi_retention_audit.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 194818,
+      "sha256": "8eaa65931cb801b9cb588115fdaf949f00227da30a003a97b4df930f03832f22"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold1_seed123/roi_retention_audit_original_resolution.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 212775,
+      "sha256": "890f80c4070d86c41c8c1ad1684325c0892dd4c56f9994d570b06bd71a6ce80b"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold2_seed123/best_validation_per_image.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 98498,
+      "sha256": "f31ed5080048ccdc9300c0bc1a19ae562c06ea3ed0586f42d6aa5e48d3e37019"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold2_seed123/classifier_predicted_vs_reference_fold2.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 40001,
+      "sha256": "876c9af8b4000e128b07f8c54f7c154fdc4accefc64896f4043475b1205434c1"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold2_seed123/history.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2322,
+      "sha256": "56d8627b83fb7d08a0d333649565bd8dca6ef46c8b6f5b38dc50026d166d0b3b"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold2_seed123/largest_component_roi_comparison_fold2.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 187479,
+      "sha256": "9391d2b872ab3a4d3388ef410f993b4ee22f14d4878fcbfbb0752049b53ea24f"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold2_seed123/largest_component_roi_comparison_fold2_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2267,
+      "sha256": "c619661aafb59db242f7ed418a3de558eb26e626b214df249b2e65e9b5310248"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold3_seed123/best_validation_per_image.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 98595,
+      "sha256": "9c1e9aa8065030be8f543547f6390f71fa55ed818012ad79299a4758f4e9585c"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold3_seed123/classifier_predicted_vs_reference_fold3.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 39998,
+      "sha256": "f9a2373cb108c356af3803ec879d47fb535a3c2160f2c53981df6050e5966c37"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold3_seed123/history.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2322,
+      "sha256": "c8d3ffe7766c59e896a45ae57e78d80e06a342ccf40f12e10c36ee4deecca252"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold3_seed123/largest_component_roi_comparison_fold3.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 190458,
+      "sha256": "3e4b3a4414b045f73f2bb5fa5585aaabe9867db04a6b374f8eeeaa14b244c40f"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold3_seed123/largest_component_roi_comparison_fold3_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2222,
+      "sha256": "5c951437b3976b1c0053bce92e204fe0680ea2fc1fda1b856bf0ff47efd84585"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold4_seed123/best_validation_per_image.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 98564,
+      "sha256": "bea43aa8c423431d1c73f46d00e2a4a8a9540f5b2b4690233d55d96a412361b8"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold4_seed123/classifier_predicted_vs_reference_fold4.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 39974,
+      "sha256": "e78798e9d7eee54db0f3606b590c374fbb942535ffbb06c2e2bbff6e89186ddc"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold4_seed123/history.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2329,
+      "sha256": "94ba8b1966a5f548f266fd16b04584e6b7a4935feb04079f5c6d56af8c0b9f62"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold4_seed123/largest_component_roi_comparison_fold4.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 190752,
+      "sha256": "cb7223b582e67acce6d56ce12c84dc5a855284c2c52d89fe05fa5614a6a1cbad"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold4_seed123/largest_component_roi_comparison_fold4_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2174,
+      "sha256": "7f4ae19a1240b2a76ee9beecf1f15bf4747ae51036f9936a4f5aa4bd220bac21"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold5_seed123/best_validation_per_image.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 98631,
+      "sha256": "46c9fffc3807d9d0327aa29e5e7310d03dd2f882f0f44706b6368c4ab5c082a9"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold5_seed123/classifier_predicted_vs_reference_fold5.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 39998,
+      "sha256": "8db0409fb503007674dbc72e340aafa279a2586486a6a691c4ff22a7a444a6b9"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold5_seed123/history.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2324,
+      "sha256": "8d9348be178abdcbdcd5b0cc151f077bcc35de4245d941bba65008e1623996e1"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold5_seed123/largest_component_roi_comparison_fold5.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 187985,
+      "sha256": "9bf6369fe14c05b641f8ae97511f4da3794972a9d129ea457a5f8966e80c3f38"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold5_seed123/largest_component_roi_comparison_fold5_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2200,
+      "sha256": "52e25ea03e0b7b89726f930c407eaf700f9ac402bbb069b23438bba4c6414b87"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold5_seed123/mask_component_audit_fold5.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 295008,
+      "sha256": "28a4b9e1c3d0c125ff9b163def0fbc454aa0678ccc75e905cb7c57d59be615a3"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold5_seed123/mask_component_audit_fold5_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 1093,
+      "sha256": "c93e6be52ab730215b7449ccaa2136952f9305bb0d1874482fdc93e02982ec69"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold5_seed123/roi_geometry_diagnostic_fold5.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 748714,
+      "sha256": "24b63d615aa8a5ed2ee4aecb40f1d3ddef26b2444e8886b168724c922a38e6d3"
+    },
+    {
+      "path": "reports/segmentation/small_unet_fold5_seed123/roi_geometry_diagnostic_fold5_summary.json",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 2441,
+      "sha256": "d84a4b3a14d9a33b6faa80be8accb38138188846fe7d164632cf7c237f325fb5"
+    },
+    {
+      "path": "requirements.txt",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 1018,
+      "sha256": "2de019a17b7284171dd33e7546930c49f102f1ae248582ae907bc6fd3fdb795c"
+    },
+    {
+      "path": "roi_5fold_diagnostics.zip",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 34051,
+      "sha256": "87f88c9637fa37e920d23341c24100de0e6dca9fa6be30c5bc546d5566892afd"
+    },
+    {
+      "path": "roi_5fold_diagnostics_results_2026-11-05.zip",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 15741,
+      "sha256": "8fabc070323594a026bcc296a60939053106b298af59c626514a89fbce5aec5b"
+    },
+    {
+      "path": "roi_diagnostics/analyze_roi_5fold.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 7771,
+      "sha256": "1add474539aec1d1cdb5fb4250c0f590c8b0180864b8afbb94bf552bace49720"
+    },
+    {
+      "path": "roi_diagnostics/prepare_roi_visual_review.py",
+      "role": "original project Python source",
+      "availability": "available",
+      "size_bytes": 6081,
+      "sha256": "f2a0ffb6a82b2ed47c5e7bea457a525b6aa35d9a888c702355519c66738dc7d2"
+    },
+    {
+      "path": "roi_diagnostics/roi_5fold_changed_predictions.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 18686,
+      "sha256": "7ccecdff7245dd43402cc8ccf36c3a08b8a6f1f20b824837a3ab33505257e3b8"
+    },
+    {
+      "path": "roi_diagnostics/roi_5fold_diagnostic_report.md",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 7926,
+      "sha256": "03edd00f87b5d0c1f18c75c568f675adb1e3b2dd3f2a505aff9e3c7c39187878"
+    },
+    {
+      "path": "roi_diagnostics/roi_changed_transitions.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 5688,
+      "sha256": "ef3f655f21587ae1c79a726a04e3caa0b9d5d1b9a42c84d68c1b470410c89787"
+    },
+    {
+      "path": "roi_diagnostics/roi_fold5_priority_cases.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 968,
+      "sha256": "9bd88606ec49f269aeab6b84fd67e2ebb4dbc281b617a5413323b16d75183b89"
+    },
+    {
+      "path": "roi_diagnostics/roi_fold5_visual_review.zip",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 11048659,
+      "sha256": "d340d4d17cd252c32abb8aabed3251575bf033379e464ed93aebe00774e9de39"
+    },
+    {
+      "path": "roi_diagnostics/roi_fold_summary.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 835,
+      "sha256": "f0fb0010ddc6100f48129a523578344e0d0704bda3fcdda6ffe89a02595b5df6"
+    },
+    {
+      "path": "roi_diagnostics/roi_per_class_metrics.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 6181,
+      "sha256": "fcb14263cb2d15837d6b60b66b9ba0aa12e0c3ee26bf8f55683cf6a1ea11cb18"
+    },
+    {
+      "path": "roi_fold5_geometry_analysis_package.zip",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 8301,
+      "sha256": "88f116d3f6612e66111bfe92bcb2c52b6c01dcfb8ad41b0fdb8ab16e0dde679b"
+    },
+    {
+      "path": "roi_fold5_geometry_analysis_report.md",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 5281,
+      "sha256": "ab1a7edb62d51d9918692ef716f18b56f536e0d5feafbd67d928e92317736f48"
+    },
+    {
+      "path": "roi_fold5_geometry_results.zip",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 202631,
+      "sha256": "59361717ef1a1897576fd0af1ee2326e1e6d9f9e1d59d1d433669f981e7229fe"
+    },
+    {
+      "path": "roi_mask_quality_check.csv",
+      "role": "experiment evidence or reproducibility input",
+      "availability": "available",
+      "size_bytes": 413349,
+      "sha256": "0eba22b8bdcf598d20ec45ffff866f436f60c3eed5849ffb65d5e25b37d02790"
+    },
+    {
+      "path": "splits/ham10000_dev_cv_v1.csv",
+      "role": "frozen split evidence",
+      "availability": "available",
+      "size_bytes": 307544,
+      "sha256": "a55ff247594caa882a0cd3c45daabaa056fa864bdba850bfb172b6a3b0a67248"
+    },
+    {
+      "path": "splits/ham10000_dev_cv_v1.json",
+      "role": "frozen split evidence",
+      "availability": "available",
+      "size_bytes": 2535,
+      "sha256": "4af4f0ce512dccb717822647d4fc21bab200cf16735eb0818862e93ef06de050"
+    }
+  ],
+  "pre_edit_git": {
+    "head": "fc02311fc1cc4ef85f1435d059bef950c50d674d",
+    "status_porcelain_v1": " M core/cross_validation_dataset.py\n M preprocessing/preview_roi.py\n?? ISIC2018_Task1_Training_GroundTruth.zip\n?? core/segmentation_losses.py\n?? core/segmentation_unet.py\n?? evaluation/analyze_predicted_roi_classification_fold1.py\n?? evaluation/analyze_segmentation_fold1.py\n?? evaluation/audit_segmentation_roi_fold1.py.py\n?? evaluation/audit_segmentation_roi_fold1_original.py\n?? evaluation/compare_predicted_roi_fold1.py\n?? evaluation/compare_predicted_roi_fold2.py\n?? evaluation/compare_predicted_roi_fold3.py\n?? evaluation/compare_predicted_roi_fold4.py\n?? evaluation/compare_predicted_roi_fold5.py\n?? evaluation/evaluate_largest_component_roi.py\n?? evaluation/export_predicted_roi_fold1.py\n?? evaluation/export_predicted_roi_fold2.py\n?? evaluation/export_predicted_roi_fold3.py\n?? evaluation/export_predicted_roi_fold4.py\n?? evaluation/export_predicted_roi_fold5.py\n?? evaluation/mask_component_audit.py\n?? evaluation/preview_segmentation_failures.py\n?? evaluation/roi_geometry_diagnostics.py\n?? evaluation/segmentation_metrics.py\n?? evaluation/segmentation_validation.py\n?? experiments/segmentation/sanity_overfit.py\n?? experiments/segmentation/train_fold1.py\n?? experiments/segmentation/train_fold2.py\n?? experiments/segmentation/train_fold3.py\n?? experiments/segmentation/train_fold4.py\n?? experiments/segmentation/train_fold5.py\n?? fold5_regressions_ranked_by_geometry.csv\n?? preprocessing/check_segmentation_data.py\n?? reports/segmentation/largest_component_roi_5fold_summary.json\n?? reports/segmentation/small_unet_fold1_seed123/best_validation_per_image.csv\n?? reports/segmentation/small_unet_fold1_seed123/classifier_predicted_vs_reference_fold1.csv\n?? reports/segmentation/small_unet_fold1_seed123/history.json\n?? reports/segmentation/small_unet_fold1_seed123/largest_component_roi_comparison_fold1.csv\n?? reports/segmentation/small_unet_fold1_seed123/largest_component_roi_comparison_fold1_summary.json\n?? reports/segmentation/small_unet_fold1_seed123/roi_retention_audit.csv\n?? reports/segmentation/small_unet_fold1_seed123/roi_retention_audit_original_resolution.csv\n?? reports/segmentation/small_unet_fold2_seed123/best_validation_per_image.csv\n?? reports/segmentation/small_unet_fold2_seed123/classifier_predicted_vs_reference_fold2.csv\n?? reports/segmentation/small_unet_fold2_seed123/history.json\n?? reports/segmentation/small_unet_fold2_seed123/largest_component_roi_comparison_fold2.csv\n?? reports/segmentation/small_unet_fold2_seed123/largest_component_roi_comparison_fold2_summary.json\n?? reports/segmentation/small_unet_fold3_seed123/best_validation_per_image.csv\n?? reports/segmentation/small_unet_fold3_seed123/classifier_predicted_vs_reference_fold3.csv\n?? reports/segmentation/small_unet_fold3_seed123/history.json\n?? reports/segmentation/small_unet_fold3_seed123/largest_component_roi_comparison_fold3.csv\n?? reports/segmentation/small_unet_fold3_seed123/largest_component_roi_comparison_fold3_summary.json\n?? reports/segmentation/small_unet_fold4_seed123/best_validation_per_image.csv\n?? reports/segmentation/small_unet_fold4_seed123/classifier_predicted_vs_reference_fold4.csv\n?? reports/segmentation/small_unet_fold4_seed123/history.json\n?? reports/segmentation/small_unet_fold4_seed123/largest_component_roi_comparison_fold4.csv\n?? reports/segmentation/small_unet_fold4_seed123/largest_component_roi_comparison_fold4_summary.json\n?? reports/segmentation/small_unet_fold5_seed123/best_validation_per_image.csv\n?? reports/segmentation/small_unet_fold5_seed123/classifier_predicted_vs_reference_fold5.csv\n?? reports/segmentation/small_unet_fold5_seed123/history.json\n?? reports/segmentation/small_unet_fold5_seed123/largest_component_roi_comparison_fold5.csv\n?? reports/segmentation/small_unet_fold5_seed123/largest_component_roi_comparison_fold5_summary.json\n?? reports/segmentation/small_unet_fold5_seed123/mask_component_audit_fold5.csv\n?? reports/segmentation/small_unet_fold5_seed123/mask_component_audit_fold5_summary.json\n?? reports/segmentation/small_unet_fold5_seed123/roi_geometry_diagnostic_fold5.csv\n?? reports/segmentation/small_unet_fold5_seed123/roi_geometry_diagnostic_fold5_summary.json\n?? roi_5fold_diagnostics.zip\n?? roi_5fold_diagnostics_results_2026-11-05.zip\n?? roi_diagnostics/analyze_roi_5fold.py\n?? roi_diagnostics/prepare_roi_visual_review.py\n?? roi_diagnostics/roi_5fold_changed_predictions.csv\n?? roi_diagnostics/roi_5fold_diagnostic_report.md\n?? roi_diagnostics/roi_changed_transitions.csv\n?? roi_diagnostics/roi_fold5_priority_cases.csv\n?? roi_diagnostics/roi_fold5_visual_review.zip\n?? roi_diagnostics/roi_fold_summary.csv\n?? roi_diagnostics/roi_per_class_metrics.csv\n?? roi_fold5_geometry_analysis_package.zip\n?? roi_fold5_geometry_analysis_report.md\n?? roi_fold5_geometry_results.zip\n",
+    "tracked_diff": "diff --git a/core/cross_validation_dataset.py b/core/cross_validation_dataset.py\nindex d325476..9b9f5d2 100644\n--- a/core/cross_validation_dataset.py\n+++ b/core/cross_validation_dataset.py\n@@ -2,6 +2,11 @@ from pathlib import Path\n \n from PIL import Image\n from torch.utils.data import Dataset\n+from io import BytesIO\n+from zipfile import ZipFile\n+\n+import numpy as np\n+import torch\n \n \n class CrossValidationDataset(Dataset):\n@@ -66,4 +71,86 @@ class CrossValidationDataset(Dataset):\n         elif self.transform is not None:\n             image = self.transform(image)\n \n-        return image, label_index\n\\ No newline at end of file\n+        return image, label_index\n+\n+def prepare_segmentation_pair(image, mask):\n+    if image.size != mask.size:\n+        raise ValueError(\"Image and mask sizes differ\")\n+\n+    image = image.resize(\n+        (256, 192),\n+        Image.Resampling.BILINEAR\n+    )\n+\n+    mask = mask.resize(\n+        (256, 192),\n+        Image.Resampling.NEAREST\n+    )\n+\n+    image_array = (\n+        np.array(image, dtype=np.float32)\n+        .transpose(2, 0, 1) / 255.0\n+    )\n+\n+    mask_array = (\n+        np.array(mask) > 127\n+    ).astype(np.float32)[None, ...]\n+\n+    return (\n+        torch.from_numpy(image_array),\n+        torch.from_numpy(mask_array)\n+    )\n+\n+class SegmentationDataset(Dataset):\n+    def __init__(\n+        self,\n+        metadata,\n+        mask_mapping,\n+        image_root=\"data/images\",\n+        mask_archive=\"Masks.zip\",\n+    ):\n+        self.metadata = metadata.reset_index(drop=True)\n+        self.mask_mapping = mask_mapping\n+        self.image_root = Path(image_root)\n+        self.mask_archive = Path(mask_archive)\n+\n+        with ZipFile(self.mask_archive) as archive:\n+            self.mask_files = {\n+                Path(name).name: name\n+                for name in archive.namelist()\n+                if name.lower().endswith(\".png\")\n+            }\n+\n+        missing = (\n+            set(self.metadata[\"image_id\"])\n+            - set(self.mask_mapping.index)\n+        )\n+\n+        if missing:\n+            raise ValueError(\n+                f\"Missing mask mappings: {len(missing)}\"\n+            )\n+\n+    def __len__(self):\n+        return len(self.metadata)\n+\n+    def __getitem__(self, index):\n+        image_id = self.metadata.iloc[index][\"image_id\"]\n+\n+        image_path = self.image_root / f\"{image_id}.jpg\"\n+        mask_name = Path(self.mask_mapping.loc[image_id]).name\n+\n+        with Image.open(image_path) as source:\n+            image = source.convert(\"RGB\")\n+\n+        with ZipFile(self.mask_archive) as archive:\n+            with Image.open(\n+                BytesIO(archive.read(self.mask_files[mask_name]))\n+            ) as source:\n+                mask = source.convert(\"L\")\n+\n+        image_tensor, mask_tensor = prepare_segmentation_pair(\n+            image, mask\n+        )\n+\n+        return image_tensor, mask_tensor, image_id\n\\ No newline at end of file\ndiff --git a/preprocessing/preview_roi.py b/preprocessing/preview_roi.py\nindex 33a60c8..836b2c1 100644\n--- a/preprocessing/preview_roi.py\n+++ b/preprocessing/preview_roi.py\n@@ -2,6 +2,8 @@\n import io\n from pathlib import Path\n from zipfile import ZipFile\n+import numpy as np\n+from scipy.ndimage import label\n \n import pandas as pd\n import matplotlib.pyplot as plt\n@@ -86,10 +88,44 @@ with ZipFile(\"Masks.zip\") as archive:\n             archive.read(files[Path(row.Filename).name])\n         )).convert(\"L\")\n \n+        binary = np.asarray(mask) > 127\n+\n+        components, component_count = label(\n+            binary,\n+            structure=np.ones((3, 3), dtype=bool)\n+        )\n+\n+        sizes = np.bincount(components.ravel())[1:]\n+\n+        secondary_share = (\n+            1 - sizes.max() / sizes.sum()\n+            if component_count > 0 else 0.0\n+        )\n+\n         cropped, status = crop_lesion_with_margin(\n             image, mask\n         )\n \n+\n+        largest_only_status = None\n+        crop_area_ratio = None\n+\n+        if component_count > 1:\n+            largest_id = np.argmax(sizes) + 1\n+\n+            largest_mask = Image.fromarray(\n+                ((components == largest_id) * 255).astype(np.uint8)\n+            )\n+\n+            alternative_crop, largest_only_status = crop_lesion_with_margin(\n+                image, largest_mask\n+            )\n+\n+            crop_area_ratio = (\n+                alternative_crop.width * alternative_crop.height\n+                / (cropped.width * cropped.height)\n+            )\n+\n         assert cropped.width > 0 and cropped.height > 0\n         assert cropped.width <= image.width\n         assert cropped.height <= image.height\n@@ -98,6 +134,10 @@ with ZipFile(\"Masks.zip\") as archive:\n             \"image_id\": row.image_id,\n             \"dx\": row.dx,\n             \"status\": status,\n+            \"component_count\": component_count,\n+            \"secondary_share\": secondary_share,\n+            \"largest_only_status\": largest_only_status,\n+            \"crop_area_ratio\": crop_area_ratio,\n         })\n \n report = pd.DataFrame(records)\n@@ -113,4 +153,123 @@ print(\n         report[\"status\"],\n         normalize=\"index\"\n     ) * 100).round(1)\n+)\n+\n+multi = report[report[\"component_count\"] > 1]\n+\n+print(f\"Multiple components: {len(multi)} / {len(report)}\")\n+\n+print(\n+    multi[[\"image_id\", \"dx\", \"component_count\"]]\n+    .sort_values(\"component_count\", ascending=False)\n+    .head(15)\n+)\n+\n+ids = [\n+    \"ISIC_0031268\",\n+    \"ISIC_0025399\",\n+    \"ISIC_0029408\",\n+    \"ISIC_0024315\",\n+    \"ISIC_0025628\",\n+    \"ISIC_0024675\",\n+]\n+\n+mask_names = mapping.set_index(\"ISIC_ID\")[\"Filename\"]\n+\n+fig, axes = plt.subplots(len(ids), 4, figsize=(16, 18))\n+\n+with ZipFile(\"Masks.zip\") as archive:\n+    files = {\n+        Path(name).name: name\n+        for name in archive.namelist()\n+        if name.lower().endswith(\".png\")\n+    }\n+\n+    for i, image_id in enumerate(ids):\n+        with Image.open(f\"data/images/{image_id}.jpg\") as source:\n+            image = source.convert(\"RGB\")\n+\n+        mask_path = files[Path(mask_names.loc[image_id]).name]\n+\n+        with Image.open(io.BytesIO(archive.read(mask_path))) as source:\n+            mask = source.convert(\"L\")\n+\n+        binary = np.asarray(mask) > 127\n+        components, count = label(\n+            binary,\n+            structure=np.ones((3, 3), dtype=bool)\n+        )\n+\n+        cropped, status = crop_lesion_with_margin(image, mask)\n+\n+        sizes = np.bincount(components.ravel())[1:]\n+        largest_id = np.argmax(sizes) + 1\n+\n+        largest_mask = Image.fromarray(\n+            ((components == largest_id) * 255).astype(np.uint8)\n+        )\n+\n+        alternative_crop, alternative_status = crop_lesion_with_margin(\n+            image, largest_mask\n+        )\n+\n+        axes[i, 0].imshow(image)\n+        axes[i, 1].imshow(image)\n+        axes[i, 1].imshow(\n+            np.ma.masked_where(components == 0, components),\n+            cmap=\"tab10\",\n+            alpha=0.5,\n+            vmin=0,\n+            vmax=10,\n+        )\n+        axes[i, 2].imshow(cropped)\n+\n+        axes[i, 3].imshow(alternative_crop)\n+        axes[i, 3].set_title(f\"Largest only — {alternative_status}\")\n+\n+        axes[i, 0].set_title(f\"{image_id} — Original\")\n+        axes[i, 1].set_title(f\"{count} components\")\n+        axes[i, 2].set_title(f\"Crop — {status}\")\n+\n+        for ax in axes[i]:\n+            ax.axis(\"off\")\n+\n+plt.tight_layout()\n+plt.show()\n+\n+print(\"\\nMulti-component crop statuses:\")\n+print(pd.crosstab(\n+    report[\"component_count\"] > 1,\n+    report[\"status\"]\n+))\n+\n+print(\"\\nLargest secondary shares:\")\n+print(\n+    report[report[\"component_count\"] > 1]\n+    .sort_values(\"secondary_share\", ascending=False)\n+    [[\"image_id\", \"dx\", \"status\", \"secondary_share\"]]\n+    .head(15)\n+    .to_string(index=False)\n+)\n+\n+affected = report[report[\"component_count\"] > 1]\n+\n+print(\"\\nOriginal vs largest-only status:\")\n+print(pd.crosstab(\n+    affected[\"status\"],\n+    affected[\"largest_only_status\"]\n+))\n+\n+print(\"\\nStatus changes:\",\n+      (affected[\"status\"] != affected[\"largest_only_status\"]).sum())\n+\n+print(\"\\nLargest crop-area reductions:\")\n+print(\n+    affected[\n+        [\"image_id\", \"dx\", \"status\",\n+         \"largest_only_status\", \"crop_area_ratio\"]\n+    ]\n+    .sort_values(\"crop_area_ratio\")\n+    .head(15)\n+    .to_string(index=False)\n )\n\\ No newline at end of file\n",
+    "staged_diff": "",
+    "original_untracked_file_count": 77,
+    "original_modified_tracked_files": [
+      "core/cross_validation_dataset.py",
+      "preprocessing/preview_roi.py"
+    ],
+    "remote_operations_performed": false
+  },
+  "preservation_baselines": {
+    "all_original_project_python": {
+      "count": 131,
+      "aggregate_sha256": "df9f11ae13263502dcb716e1e2a0e26443bba4d2b586465034b16f083bbf2e2c"
+    },
+    "all_original_reports": {
+      "count": 2400,
+      "aggregate_sha256": "61910d3214e9f721d6d8b31d0b01df1e886a37ccf18f0ccf742e7e03dc0d14ed"
+    },
+    "aggregate_definition": "SHA-256 of sorted repository-relative path + NUL + size_bytes + NUL + file SHA-256 + LF records. Individual critical artifacts are listed above."
+  },
+  "verification_limits": [
+    "Current byte identity does not prove the exact source used historically to train each checkpoint.",
+    "No neural-network inference, retraining, external evaluation or environment modification performed.",
+    "Generated Phase 1 files are excluded from this pre-edit manifest to avoid self-reference."
+  ],
+  "post_edit_verification": {
+    "status": "passed",
+    "verified_at_utc": "2026-11-05T10:06:06.634Z",
+    "unchanged_original_project_python_files": 131,
+    "unchanged_original_report_files": 2400,
+    "unchanged_identified_checkpoint_files": 10,
+    "unchanged_original_split_files": 2,
+    "original_two_tracked_source_diffs_preserved": true,
+    "original_77_untracked_file_bytes_preserved": true,
+    "original_d22_section_preserved": true,
+    "no_deleted_files": true,
+    "only_approved_files_created_or_modified": true,
+    "saved_summary_matches_independent_recalculation": true,
+    "documented_metric_strings_match_recalculation": true,
+    "source_report_discrepancies": [],
+    "relative_markdown_links_checked": 53,
+    "relative_markdown_link_problems": [],
+    "missing_summary_evidence_paths": [],
+    "ignore_rules_check": "Six exact local ZIP paths excluded; numerical CSV/JSON, Markdown and Python evidence remain visible.",
+    "head_unchanged": true,
+    "staged_diff_unchanged": true,
+    "no_remote_git_operations": true,
+    "no_model_inference_or_retraining": true,
+    "final_status_porcelain_v1": " M .gitignore\n M README.md\n M core/cross_validation_dataset.py\n M docs/research/Diploma_Experiment_History.md\n M docs/research/README.md\n M docs/research/SOURCE_PROVENANCE.md\n M preprocessing/preview_roi.py\n?? core/segmentation_losses.py\n?? core/segmentation_unet.py\n?? evaluation/analyze_predicted_roi_classification_fold1.py\n?? evaluation/analyze_segmentation_fold1.py\n?? evaluation/audit_segmentation_roi_fold1.py.py\n?? evaluation/audit_segmentation_roi_fold1_original.py\n?? evaluation/compare_predicted_roi_fold1.py\n?? evaluation/compare_predicted_roi_fold2.py\n?? evaluation/compare_predicted_roi_fold3.py\n?? evaluation/compare_predicted_roi_fold4.py\n?? evaluation/compare_predicted_roi_fold5.py\n?? evaluation/evaluate_largest_component_roi.py\n?? evaluation/export_predicted_roi_fold1.py\n?? evaluation/export_predicted_roi_fold2.py\n?? evaluation/export_predicted_roi_fold3.py\n?? evaluation/export_predicted_roi_fold4.py\n?? evaluation/export_predicted_roi_fold5.py\n?? evaluation/mask_component_audit.py\n?? evaluation/preview_segmentation_failures.py\n?? evaluation/roi_geometry_diagnostics.py\n?? evaluation/segmentation_metrics.py\n?? evaluation/segmentation_validation.py\n?? experiments/segmentation/sanity_overfit.py\n?? experiments/segmentation/train_fold1.py\n?? experiments/segmentation/train_fold2.py\n?? experiments/segmentation/train_fold3.py\n?? experiments/segmentation/train_fold4.py\n?? experiments/segmentation/train_fold5.py\n?? fold5_regressions_ranked_by_geometry.csv\n?? preprocessing/check_segmentation_data.py\n?? reports/segmentation/README.md\n?? reports/segmentation/automatic_roi_5fold_summary.json\n?? reports/segmentation/largest_component_roi_5fold_summary.json\n?? reports/segmentation/phase1_artifact_manifest.json\n?? reports/segmentation/small_unet_fold1_seed123/best_validation_per_image.csv\n?? reports/segmentation/small_unet_fold1_seed123/classifier_predicted_vs_reference_fold1.csv\n?? reports/segmentation/small_unet_fold1_seed123/history.json\n?? reports/segmentation/small_unet_fold1_seed123/largest_component_roi_comparison_fold1.csv\n?? reports/segmentation/small_unet_fold1_seed123/largest_component_roi_comparison_fold1_summary.json\n?? reports/segmentation/small_unet_fold1_seed123/roi_retention_audit.csv\n?? reports/segmentation/small_unet_fold1_seed123/roi_retention_audit_original_resolution.csv\n?? reports/segmentation/small_unet_fold2_seed123/best_validation_per_image.csv\n?? reports/segmentation/small_unet_fold2_seed123/classifier_predicted_vs_reference_fold2.csv\n?? reports/segmentation/small_unet_fold2_seed123/history.json\n?? reports/segmentation/small_unet_fold2_seed123/largest_component_roi_comparison_fold2.csv\n?? reports/segmentation/small_unet_fold2_seed123/largest_component_roi_comparison_fold2_summary.json\n?? reports/segmentation/small_unet_fold3_seed123/best_validation_per_image.csv\n?? reports/segmentation/small_unet_fold3_seed123/classifier_predicted_vs_reference_fold3.csv\n?? reports/segmentation/small_unet_fold3_seed123/history.json\n?? reports/segmentation/small_unet_fold3_seed123/largest_component_roi_comparison_fold3.csv\n?? reports/segmentation/small_unet_fold3_seed123/largest_component_roi_comparison_fold3_summary.json\n?? reports/segmentation/small_unet_fold4_seed123/best_validation_per_image.csv\n?? reports/segmentation/small_unet_fold4_seed123/classifier_predicted_vs_reference_fold4.csv\n?? reports/segmentation/small_unet_fold4_seed123/history.json\n?? reports/segmentation/small_unet_fold4_seed123/largest_component_roi_comparison_fold4.csv\n?? reports/segmentation/small_unet_fold4_seed123/largest_component_roi_comparison_fold4_summary.json\n?? reports/segmentation/small_unet_fold5_seed123/best_validation_per_image.csv\n?? reports/segmentation/small_unet_fold5_seed123/classifier_predicted_vs_reference_fold5.csv\n?? reports/segmentation/small_unet_fold5_seed123/history.json\n?? reports/segmentation/small_unet_fold5_seed123/largest_component_roi_comparison_fold5.csv\n?? reports/segmentation/small_unet_fold5_seed123/largest_component_roi_comparison_fold5_summary.json\n?? reports/segmentation/small_unet_fold5_seed123/mask_component_audit_fold5.csv\n?? reports/segmentation/small_unet_fold5_seed123/mask_component_audit_fold5_summary.json\n?? reports/segmentation/small_unet_fold5_seed123/roi_geometry_diagnostic_fold5.csv\n?? reports/segmentation/small_unet_fold5_seed123/roi_geometry_diagnostic_fold5_summary.json\n?? roi_diagnostics/analyze_roi_5fold.py\n?? roi_diagnostics/prepare_roi_visual_review.py\n?? roi_diagnostics/roi_5fold_changed_predictions.csv\n?? roi_diagnostics/roi_5fold_diagnostic_report.md\n?? roi_diagnostics/roi_changed_transitions.csv\n?? roi_diagnostics/roi_fold5_priority_cases.csv\n?? roi_diagnostics/roi_fold_summary.csv\n?? roi_diagnostics/roi_per_class_metrics.csv\n?? roi_fold5_geometry_analysis_report.md\n"
+  }
+}

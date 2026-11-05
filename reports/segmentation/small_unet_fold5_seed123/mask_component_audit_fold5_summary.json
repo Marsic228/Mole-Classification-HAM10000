@@ -1,0 +1,37 @@
+{
+  "fold": 5,
+  "n_images": 1706,
+  "n_multicomponent_masks": 472,
+  "n_changed_crops_with_largest_only": 258,
+  "n_changed_statuses_with_largest_only": 44,
+  "n_5percent_foreground_removed": 141,
+  "original_status_counts": {
+    "fallback_large_crop": 384,
+    "roi": 1237,
+    "fallback_edge": 53,
+    "fallback_large_area": 32
+  },
+  "largest_only_status_counts": {
+    "fallback_large_crop": 368,
+    "roi": 1275,
+    "fallback_large_area": 32,
+    "fallback_edge": 31
+  },
+  "safety_notes": [
+    "Largest-component filtering is an exploratory hypothetical change; no classifier performance is measured.",
+    "Small true lesion components can be removed; do not adopt without downstream evaluation.",
+    "Reference ROI crops, saved images, checkpoints and existing reports are unchanged."
+  ],
+  "changed_crops_by_outcome": {
+    "unchanged": 225,
+    "wrong_to_other_wrong": 10,
+    "regression": 14,
+    "corrected": 9
+  },
+  "all_outcomes": {
+    "unchanged": 1612,
+    "regression": 44,
+    "wrong_to_other_wrong": 22,
+    "corrected": 28
+  }
+}

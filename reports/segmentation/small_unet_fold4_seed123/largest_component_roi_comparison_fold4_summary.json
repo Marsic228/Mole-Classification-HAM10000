@@ -1,0 +1,70 @@
+{
+  "fold": 4,
+  "n_images": 1705,
+  "reference_roi_macro_f1": 0.7367845889558217,
+  "original_predicted_roi_macro_f1": 0.7369317185553144,
+  "largest_component_roi_macro_f1": 0.7280646123164939,
+  "delta_vs_original_predicted_roi": -0.008867106238820477,
+  "original_accuracy": 0.8469208211143695,
+  "largest_accuracy": 0.8469208211143695,
+  "n_multicomponent": 608,
+  "n_changed_crops": 325,
+  "n_changed_statuses": 51,
+  "n_changed_class_predictions": 42,
+  "outcomes_vs_original_predicted_roi": {
+    "unchanged": 1663,
+    "corrected": 18,
+    "regression": 18,
+    "wrong_to_other_wrong": 6
+  },
+  "original_roi_status_counts": {
+    "fallback_large_crop": 397,
+    "roi": 1217,
+    "fallback_large_area": 38,
+    "fallback_edge": 53
+  },
+  "largest_component_status_counts": {
+    "fallback_large_crop": 353,
+    "roi": 1266,
+    "fallback_large_area": 38,
+    "fallback_edge": 48
+  },
+  "per_class": {
+    "akiec": {
+      "original_predicted_roi_f1": 0.6851851851851852,
+      "largest_component_roi_f1": 0.6153846153846154,
+      "delta": -0.06980056980056981
+    },
+    "bcc": {
+      "original_predicted_roi_f1": 0.7659574468085106,
+      "largest_component_roi_f1": 0.7845303867403315,
+      "delta": 0.018572939931820853
+    },
+    "bkl": {
+      "original_predicted_roi_f1": 0.6723646723646723,
+      "largest_component_roi_f1": 0.676056338028169,
+      "delta": 0.003691665663496657
+    },
+    "df": {
+      "original_predicted_roi_f1": 0.6875,
+      "largest_component_roi_f1": 0.6666666666666666,
+      "delta": -0.02083333333333337
+    },
+    "mel": {
+      "original_predicted_roi_f1": 0.6212534059945504,
+      "largest_component_roi_f1": 0.6270270270270271,
+      "delta": 0.0057736210324766946
+    },
+    "nv": {
+      "original_predicted_roi_f1": 0.926261319534282,
+      "largest_component_roi_f1": 0.9267872523686477,
+      "delta": 0.0005259328343656389
+    },
+    "vasc": {
+      "original_predicted_roi_f1": 0.8,
+      "largest_component_roi_f1": 0.8,
+      "delta": 0.0
+    }
+  },
+  "note": "Exploratory post-hoc controlled evaluation; not independent external validation."
+}

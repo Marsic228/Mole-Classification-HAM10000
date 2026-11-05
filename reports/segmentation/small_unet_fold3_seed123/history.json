@@ -1,0 +1,98 @@
+[
+  {
+    "epoch": 1,
+    "train_loss": 0.5728066340001499,
+    "n_images": 1706,
+    "mean_dice": 0.8494669806645093,
+    "mean_iou": 0.7687372976846082,
+    "empty_predictions": 4
+  },
+  {
+    "epoch": 2,
+    "train_loss": 0.3400282216130604,
+    "n_images": 1706,
+    "mean_dice": 0.869100136494598,
+    "mean_iou": 0.7977901753136432,
+    "empty_predictions": 6
+  },
+  {
+    "epoch": 3,
+    "train_loss": 0.2960171598989128,
+    "n_images": 1706,
+    "mean_dice": 0.9005897771326906,
+    "mean_iou": 0.8381633297971517,
+    "empty_predictions": 1
+  },
+  {
+    "epoch": 4,
+    "train_loss": 0.2722775804911765,
+    "n_images": 1706,
+    "mean_dice": 0.9066121733953777,
+    "mean_iou": 0.8480715566518927,
+    "empty_predictions": 1
+  },
+  {
+    "epoch": 5,
+    "train_loss": 0.26241835700249755,
+    "n_images": 1706,
+    "mean_dice": 0.8878513268714526,
+    "mean_iou": 0.8195234693291762,
+    "empty_predictions": 1
+  },
+  {
+    "epoch": 6,
+    "train_loss": 0.257050964559875,
+    "n_images": 1706,
+    "mean_dice": 0.8933184136880031,
+    "mean_iou": 0.8263207206487271,
+    "empty_predictions": 0
+  },
+  {
+    "epoch": 7,
+    "train_loss": 0.2455060362863897,
+    "n_images": 1706,
+    "mean_dice": 0.9128470885865434,
+    "mean_iou": 0.8580557196362846,
+    "empty_predictions": 1
+  },
+  {
+    "epoch": 8,
+    "train_loss": 0.23983987000446597,
+    "n_images": 1706,
+    "mean_dice": 0.8980351086893716,
+    "mean_iou": 0.83547306354709,
+    "empty_predictions": 0
+  },
+  {
+    "epoch": 9,
+    "train_loss": 0.23606977010187272,
+    "n_images": 1706,
+    "mean_dice": 0.9156430380687485,
+    "mean_iou": 0.8616919698999432,
+    "empty_predictions": 0
+  },
+  {
+    "epoch": 10,
+    "train_loss": 0.2302809928403021,
+    "n_images": 1706,
+    "mean_dice": 0.905188441350794,
+    "mean_iou": 0.8466795411065727,
+    "empty_predictions": 0
+  },
+  {
+    "epoch": 11,
+    "train_loss": 0.22935891675938616,
+    "n_images": 1706,
+    "mean_dice": 0.9103468676105334,
+    "mean_iou": 0.8528216896886562,
+    "empty_predictions": 1
+  },
+  {
+    "epoch": 12,
+    "train_loss": 0.22371719192586847,
+    "n_images": 1706,
+    "mean_dice": 0.8960227320169438,
+    "mean_iou": 0.8307095127396399,
+    "empty_predictions": 0
+  }
+]

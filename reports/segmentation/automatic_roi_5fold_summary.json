@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-11-05",
+  "verification_method": "Recomputed from saved per-image CSVs and training histories with Python standard-library csv/statistics; no neural-network evaluation or retraining.",
+  "class_order": [
+    "akiec",
+    "bcc",
+    "bkl",
+    "df",
+    "mel",
+    "nv",
+    "vasc"
+  ],
+  "aggregation_definitions": {
+    "fold_mean": "Unweighted arithmetic mean of the five per-fold scores.",
+    "sample_standard_deviation": "Across five folds, denominator n-1 (ddof=1).",
+    "paired_difference": "Predicted ROI minus reference ROI within each fold; LCC difference is LCC minus original predicted ROI.",
+    "segmentation_dice": "Mean per-image binary Dice within each selected validation fold at 256x192, then unweighted fold mean; sigmoid threshold 0.5.",
+    "pooled_oof": "Macro F1 recomputed after concatenating all 8530 unique held-out image predictions; separate from fold means."
+  },
+  "canonical_folds": {
+    "csv": "splits/ham10000_dev_cv_v1.csv",
+    "manifest": "splits/ham10000_dev_cv_v1.json",
+    "sha256_matches_manifest": true,
+    "n_images": 8530,
+    "n_lesions": 6349,
+    "lesion_fold_conflicts": 0
+  },
+  "fold_mean_metrics": {
+    "segmentation_dice": {
+      "mean": 0.9133929123301356,
+      "sample_sd": 0.003421593237993236,
+      "n_folds": 5
+    },
+    "reference_roi_macro_f1": {
+      "mean": 0.7511940267835202,
+      "sample_sd": 0.01739035665183274,
+      "n_folds": 5
+    },
+    "predicted_roi_macro_f1": {
+      "mean": 0.742622768912494,
+      "sample_sd": 0.027058388578480724,
+      "n_folds": 5
+    },
+    "paired_macro_f1_difference": {
+      "mean": -0.008571257871026172,
+      "sample_sd": 0.015487099143278055,
+      "n_folds": 5
+    },
+    "largest_component_paired_macro_f1_difference": {
+      "mean": 0.0007515898192400839,
+      "sample_sd": 0.008047241481512602,
+      "n_folds": 5
+    }
+  },
+  "predicted_roi_coverage": {
+    "roi_images": 6103,
+    "all_images": 8530,
+    "fraction": 0.715474794841735,
+    "status_counts": {
+      "roi": 6103,
+      "fallback_large_crop": 2027,
+      "fallback_edge": 239,
+      "fallback_large_area": 160,
+      "fallback_empty": 1
+    },
+    "source": "Original-status columns in the five largest_component_roi_comparison_foldN.csv files; matches per-fold saved summaries."
+  },
+  "pooled_oof_metrics": {
+    "n_images": 8530,
+    "reference_roi_macro_f1": 0.752871532124112,
+    "predicted_roi_macro_f1": 0.74366088763504
+  },
+  "largest_component_filtering": {
+    "improved_folds": [
+      2,
+      5
+    ],
+    "n_improved_folds": 2,
+    "source_summary": "reports/segmentation/largest_component_roi_5fold_summary.json",
+    "evaluation_scope": "Fixed fold-specific checkpoints; original saved predictions reused for unchanged crops, original-crop predictions replayed for changed cases; JPEG roundtrip for altered crops.",
+    "decision": "Reject largest-connected-component filtering as default preprocessing.",
+    "post_hoc": true
+  },
+  "fold5_geometry": {
+    "fold": 5,
+    "n_images": 1706,
+    "regressions": 44,
+    "roi_to_roi_regressions": 36,
+    "roi_to_roi_regressions_retaining_all_reference_foreground": 36,
+    "reference_correct_roi_to_roi_population": 1014,
+    "absolute_crop_area_difference_definition": "Absolute difference in final crop area divided by original image area; 0.05 means five percentage points.",
+    "post_hoc_threshold_image_fraction": 0.05,
+    "at_or_above_threshold": {
+      "regressions": 22,
+      "images": 282
+    },
+    "below_threshold": {
+      "regressions": 14,
+      "images": 732
+    },
+    "evidence": "reports/segmentation/small_unet_fold5_seed123/roi_geometry_diagnostic_fold5.csv",
+    "statistical_boundary": "Exploratory association, not causation; detailed diagnostics concentrate on Fold 5. Adjusted odds-ratio/CI/p-value from the older narrative were not independently reproduced here."
+  },
+  "folds": [
+    {
+      "fold": 1,
+      "n_images": 1707,
+      "selected_segmentation_epoch": 9,
+      "segmentation_mean_dice": 0.912280692262264,
+      "reference_roi_macro_f1": 0.7772170947376159,
+      "predicted_roi_macro_f1": 0.7882293222630239,
+      "paired_macro_f1_difference": 0.01101222752540798,
+      "largest_component_roi_macro_f1": 0.7839097690946607,
+      "largest_component_paired_macro_f1_difference": -0.004319553168363188,
+      "predicted_crop_status_counts": {
+        "roi": 1156,
+        "fallback_large_crop": 444,
+        "fallback_edge": 74,
+        "fallback_large_area": 33
+      },
+      "segmentation_checkpoint": "checkpoints/segmentation/small_unet_fold1_seed123_best.pt",
+      "classifier_checkpoint": "checkpoints/convnext_tiny_natural_ce_roi_margin15_seed123_fold1_best.pt",
+      "evidence": {
+        "segmentation_history": "reports/segmentation/small_unet_fold1_seed123/history.json",
+        "segmentation_selected_validation": "reports/segmentation/small_unet_fold1_seed123/best_validation_per_image.csv",
+        "classification_comparison": "reports/segmentation/small_unet_fold1_seed123/classifier_predicted_vs_reference_fold1.csv",
+        "largest_component_comparison": "reports/segmentation/small_unet_fold1_seed123/largest_component_roi_comparison_fold1.csv",
+        "largest_component_summary": "reports/segmentation/small_unet_fold1_seed123/largest_component_roi_comparison_fold1_summary.json",
+        "reference_classification_evaluation": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold1_evaluation.json"
+      }
+    },
+    {
+      "fold": 2,
+      "n_images": 1706,
+      "selected_segmentation_epoch": 12,
+      "segmentation_mean_dice": 0.9181313994651767,
+      "reference_roi_macro_f1": 0.7340883029029014,
+      "predicted_roi_macro_f1": 0.7242267299970757,
+      "paired_macro_f1_difference": -0.009861572905825677,
+      "largest_component_roi_macro_f1": 0.7318810592756142,
+      "largest_component_paired_macro_f1_difference": 0.007654329278538485,
+      "predicted_crop_status_counts": {
+        "roi": 1265,
+        "fallback_large_area": 31,
+        "fallback_large_crop": 371,
+        "fallback_edge": 38,
+        "fallback_empty": 1
+      },
+      "segmentation_checkpoint": "checkpoints/segmentation/small_unet_fold2_seed123_best.pt",
+      "classifier_checkpoint": "checkpoints/convnext_tiny_natural_ce_roi_margin15_seed123_fold2_best.pt",
+      "evidence": {
+        "segmentation_history": "reports/segmentation/small_unet_fold2_seed123/history.json",
+        "segmentation_selected_validation": "reports/segmentation/small_unet_fold2_seed123/best_validation_per_image.csv",
+        "classification_comparison": "reports/segmentation/small_unet_fold2_seed123/classifier_predicted_vs_reference_fold2.csv",
+        "largest_component_comparison": "reports/segmentation/small_unet_fold2_seed123/largest_component_roi_comparison_fold2.csv",
+        "largest_component_summary": "reports/segmentation/small_unet_fold2_seed123/largest_component_roi_comparison_fold2_summary.json",
+        "reference_classification_evaluation": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold2_evaluation.json"
+      }
+    },
+    {
+      "fold": 3,
+      "n_images": 1706,
+      "selected_segmentation_epoch": 9,
+      "segmentation_mean_dice": 0.9156430380687485,
+      "reference_roi_macro_f1": 0.7568708344215451,
+      "predicted_roi_macro_f1": 0.7429608270205632,
+      "paired_macro_f1_difference": -0.013910007400981916,
+      "largest_component_roi_macro_f1": 0.7420010890802602,
+      "largest_component_paired_macro_f1_difference": -0.0009597379403030182,
+      "predicted_crop_status_counts": {
+        "roi": 1228,
+        "fallback_large_crop": 431,
+        "fallback_edge": 21,
+        "fallback_large_area": 26
+      },
+      "segmentation_checkpoint": "checkpoints/segmentation/small_unet_fold3_seed123_best.pt",
+      "classifier_checkpoint": "checkpoints/convnext_tiny_natural_ce_roi_margin15_seed123_fold3_best.pt",
+      "evidence": {
+        "segmentation_history": "reports/segmentation/small_unet_fold3_seed123/history.json",
+        "segmentation_selected_validation": "reports/segmentation/small_unet_fold3_seed123/best_validation_per_image.csv",
+        "classification_comparison": "reports/segmentation/small_unet_fold3_seed123/classifier_predicted_vs_reference_fold3.csv",
+        "largest_component_comparison": "reports/segmentation/small_unet_fold3_seed123/largest_component_roi_comparison_fold3.csv",
+        "largest_component_summary": "reports/segmentation/small_unet_fold3_seed123/largest_component_roi_comparison_fold3_summary.json",
+        "reference_classification_evaluation": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold3_evaluation.json"
+      }
+    },
+    {
+      "fold": 4,
+      "n_images": 1705,
+      "selected_segmentation_epoch": 12,
+      "segmentation_mean_dice": 0.9110910512528811,
+      "reference_roi_macro_f1": 0.7367845889558217,
+      "predicted_roi_macro_f1": 0.7369317185553144,
+      "paired_macro_f1_difference": 0.00014712959949270132,
+      "largest_component_roi_macro_f1": 0.7280646123164939,
+      "largest_component_paired_macro_f1_difference": -0.008867106238820477,
+      "predicted_crop_status_counts": {
+        "fallback_large_crop": 397,
+        "roi": 1217,
+        "fallback_large_area": 38,
+        "fallback_edge": 53
+      },
+      "segmentation_checkpoint": "checkpoints/segmentation/small_unet_fold4_seed123_best.pt",
+      "classifier_checkpoint": "checkpoints/convnext_tiny_natural_ce_roi_margin15_seed123_fold4_best.pt",
+      "evidence": {
+        "segmentation_history": "reports/segmentation/small_unet_fold4_seed123/history.json",
+        "segmentation_selected_validation": "reports/segmentation/small_unet_fold4_seed123/best_validation_per_image.csv",
+        "classification_comparison": "reports/segmentation/small_unet_fold4_seed123/classifier_predicted_vs_reference_fold4.csv",
+        "largest_component_comparison": "reports/segmentation/small_unet_fold4_seed123/largest_component_roi_comparison_fold4.csv",
+        "largest_component_summary": "reports/segmentation/small_unet_fold4_seed123/largest_component_roi_comparison_fold4_summary.json",
+        "reference_classification_evaluation": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold4_evaluation.json"
+      }
+    },
+    {
+      "fold": 5,
+      "n_images": 1706,
+      "selected_segmentation_epoch": 8,
+      "segmentation_mean_dice": 0.909818380601608,
+      "reference_roi_macro_f1": 0.751009312899717,
+      "predicted_roi_macro_f1": 0.720765246726493,
+      "paired_macro_f1_difference": -0.03024406617322395,
+      "largest_component_roi_macro_f1": 0.7310152638916416,
+      "largest_component_paired_macro_f1_difference": 0.010250017165148617,
+      "predicted_crop_status_counts": {
+        "fallback_large_crop": 384,
+        "roi": 1237,
+        "fallback_edge": 53,
+        "fallback_large_area": 32
+      },
+      "segmentation_checkpoint": "checkpoints/segmentation/small_unet_fold5_seed123_best.pt",
+      "classifier_checkpoint": "checkpoints/convnext_tiny_natural_ce_roi_margin15_seed123_fold5_best.pt",
+      "evidence": {
+        "segmentation_history": "reports/segmentation/small_unet_fold5_seed123/history.json",
+        "segmentation_selected_validation": "reports/segmentation/small_unet_fold5_seed123/best_validation_per_image.csv",
+        "classification_comparison": "reports/segmentation/small_unet_fold5_seed123/classifier_predicted_vs_reference_fold5.csv",
+        "largest_component_comparison": "reports/segmentation/small_unet_fold5_seed123/largest_component_roi_comparison_fold5.csv",
+        "largest_component_summary": "reports/segmentation/small_unet_fold5_seed123/largest_component_roi_comparison_fold5_summary.json",
+        "reference_classification_evaluation": "reports/convnext_tiny_natural_ce_roi_margin15_seed123_fold5_evaluation.json"
+      }
+    }
+  ],
+  "interpretations": [
+    "Lesion scale, position and surrounding context plausibly contribute to classification differences.",
+    "Geometry association does not establish causation.",
+    "Retention of reference-mask foreground does not guarantee retention of all useful information."
+  ],
+  "limitations": [
+    "Development-fold model selection; no independent external test.",
+    "Reference-mask provenance is not fully established; Dice measures agreement with available reference masks, not independently established clinical ground truth.",
+    "Detailed geometry diagnostics concentrate on Fold 5.",
+    "Largest-component filtering was investigated post hoc after Fold 5 inspection.",
+    "Inference cost and classifier confidence were not measured.",
+    "No clinical validation.",
+    "Artifact fingerprints identify currently available bytes; they do not authenticate exact historical training-source attribution or establish reproducible retraining."
+  ],
+  "next_untested_hypothesis": {
+    "text": "Training ConvNeXt with controlled crop-scale and crop-position variation might improve robustness to predicted-mask inputs.",
+    "tested": false,
+    "approved_training_experiment": false,
+    "future_design_requirement": "Prevent held-out-lesion leakage when generating predictions for training crops."
+  },
+  "preserved_model_selection": "Keep historical v17 standalone reference, natural-CE control, D22 ROI development candidate, prior rejected methods and existing ensemble-candidate status.",
+  "evidence_manifest": "reports/segmentation/phase1_artifact_manifest.json",
+  "source_discrepancies": []
+}

@@ -1,0 +1,359 @@
+{
+  "folds": [
+    {
+      "fold": 1,
+      "n_images": 1707,
+      "reference_roi_macro_f1": 0.777217094737616,
+      "original_predicted_roi_macro_f1": 0.7882293222630239,
+      "largest_component_roi_macro_f1": 0.7839097690946607,
+      "delta_vs_original_predicted_roi": -0.004319553168363188,
+      "original_accuracy": 0.8652606912712361,
+      "largest_accuracy": 0.8611599297012302,
+      "n_multicomponent": 600,
+      "n_changed_crops": 316,
+      "n_changed_statuses": 80,
+      "n_changed_class_predictions": 29,
+      "outcomes_vs_original_predicted_roi": {
+        "unchanged": 1678,
+        "wrong_to_other_wrong": 4,
+        "regression": 16,
+        "corrected": 9
+      },
+      "original_roi_status_counts": {
+        "roi": 1156,
+        "fallback_large_crop": 444,
+        "fallback_edge": 74,
+        "fallback_large_area": 33
+      },
+      "largest_component_status_counts": {
+        "roi": 1232,
+        "fallback_large_crop": 387,
+        "fallback_edge": 55,
+        "fallback_large_area": 33
+      },
+      "per_class": {
+        "akiec": {
+          "original_predicted_roi_f1": 0.7478260869565218,
+          "largest_component_roi_f1": 0.7241379310344828,
+          "delta": -0.02368815592203899
+        },
+        "bcc": {
+          "original_predicted_roi_f1": 0.8268156424581006,
+          "largest_component_roi_f1": 0.8070175438596491,
+          "delta": -0.019798098598451497
+        },
+        "bkl": {
+          "original_predicted_roi_f1": 0.7272727272727273,
+          "largest_component_roi_f1": 0.7188405797101449,
+          "delta": -0.00843214756258237
+        },
+        "df": {
+          "original_predicted_roi_f1": 0.7428571428571429,
+          "largest_component_roi_f1": 0.7647058823529411,
+          "delta": 0.02184873949579824
+        },
+        "mel": {
+          "original_predicted_roi_f1": 0.6342857142857142,
+          "largest_component_roi_f1": 0.6376811594202898,
+          "delta": 0.00339544513457557
+        },
+        "nv": {
+          "original_predicted_roi_f1": 0.9294570329200513,
+          "largest_component_roi_f1": 0.9258943781942078,
+          "delta": -0.003562654725843495
+        },
+        "vasc": {
+          "original_predicted_roi_f1": 0.9090909090909091,
+          "largest_component_roi_f1": 0.9090909090909091,
+          "delta": 0.0
+        }
+      },
+      "note": "Exploratory post-hoc controlled evaluation; not independent external validation."
+    },
+    {
+      "fold": 2,
+      "n_images": 1706,
+      "reference_roi_macro_f1": 0.7340883029029015,
+      "original_predicted_roi_macro_f1": 0.7242267299970758,
+      "largest_component_roi_macro_f1": 0.7318810592756142,
+      "delta_vs_original_predicted_roi": 0.007654329278538374,
+      "original_accuracy": 0.8481828839390387,
+      "largest_accuracy": 0.8528722157092614,
+      "n_multicomponent": 444,
+      "n_changed_crops": 244,
+      "n_changed_statuses": 38,
+      "n_changed_class_predictions": 31,
+      "outcomes_vs_original_predicted_roi": {
+        "unchanged": 1675,
+        "corrected": 17,
+        "regression": 9,
+        "wrong_to_other_wrong": 5
+      },
+      "original_roi_status_counts": {
+        "roi": 1265,
+        "fallback_large_area": 31,
+        "fallback_large_crop": 371,
+        "fallback_edge": 38,
+        "fallback_empty": 1
+      },
+      "largest_component_status_counts": {
+        "roi": 1301,
+        "fallback_large_area": 31,
+        "fallback_large_crop": 340,
+        "fallback_edge": 33,
+        "fallback_empty": 1
+      },
+      "per_class": {
+        "akiec": {
+          "original_predicted_roi_f1": 0.6915887850467289,
+          "largest_component_roi_f1": 0.6792452830188679,
+          "delta": -0.012343502027861053
+        },
+        "bcc": {
+          "original_predicted_roi_f1": 0.8361581920903954,
+          "largest_component_roi_f1": 0.872093023255814,
+          "delta": 0.03593483116541851
+        },
+        "bkl": {
+          "original_predicted_roi_f1": 0.6979472140762464,
+          "largest_component_roi_f1": 0.7167630057803468,
+          "delta": 0.018815791704100415
+        },
+        "df": {
+          "original_predicted_roi_f1": 0.4827586206896552,
+          "largest_component_roi_f1": 0.5,
+          "delta": 0.017241379310344807
+        },
+        "mel": {
+          "original_predicted_roi_f1": 0.5882352941176471,
+          "largest_component_roi_f1": 0.5994397759103641,
+          "delta": 0.011204481792717047
+        },
+        "nv": {
+          "original_predicted_roi_f1": 0.9218351741716228,
+          "largest_component_roi_f1": 0.9222929936305733,
+          "delta": 0.0004578194589505147
+        },
+        "vasc": {
+          "original_predicted_roi_f1": 0.851063829787234,
+          "largest_component_roi_f1": 0.8333333333333334,
+          "delta": -0.01773049645390068
+        }
+      },
+      "note": "Exploratory post-hoc controlled evaluation; not independent external validation."
+    },
+    {
+      "fold": 3,
+      "n_images": 1706,
+      "reference_roi_macro_f1": 0.7568708344215451,
+      "original_predicted_roi_macro_f1": 0.7429608270205632,
+      "largest_component_roi_macro_f1": 0.7420010890802603,
+      "delta_vs_original_predicted_roi": -0.0009597379403029072,
+      "original_accuracy": 0.8493552168815943,
+      "largest_accuracy": 0.85052754982415,
+      "n_multicomponent": 588,
+      "n_changed_crops": 312,
+      "n_changed_statuses": 54,
+      "n_changed_class_predictions": 37,
+      "outcomes_vs_original_predicted_roi": {
+        "unchanged": 1669,
+        "corrected": 17,
+        "regression": 15,
+        "wrong_to_other_wrong": 5
+      },
+      "original_roi_status_counts": {
+        "roi": 1228,
+        "fallback_large_crop": 431,
+        "fallback_edge": 21,
+        "fallback_large_area": 26
+      },
+      "largest_component_status_counts": {
+        "roi": 1282,
+        "fallback_large_crop": 379,
+        "fallback_edge": 19,
+        "fallback_large_area": 26
+      },
+      "per_class": {
+        "akiec": {
+          "original_predicted_roi_f1": 0.6551724137931034,
+          "largest_component_roi_f1": 0.6491228070175439,
+          "delta": -0.006049606775559546
+        },
+        "bcc": {
+          "original_predicted_roi_f1": 0.7386363636363636,
+          "largest_component_roi_f1": 0.735632183908046,
+          "delta": -0.0030041797283176797
+        },
+        "bkl": {
+          "original_predicted_roi_f1": 0.7433155080213903,
+          "largest_component_roi_f1": 0.7354497354497355,
+          "delta": -0.007865772571654883
+        },
+        "df": {
+          "original_predicted_roi_f1": 0.6285714285714286,
+          "largest_component_roi_f1": 0.6486486486486487,
+          "delta": 0.020077220077220126
+        },
+        "mel": {
+          "original_predicted_roi_f1": 0.6334164588528678,
+          "largest_component_roi_f1": 0.6464646464646465,
+          "delta": 0.013048187611778728
+        },
+        "nv": {
+          "original_predicted_roi_f1": 0.9266136162687887,
+          "largest_component_roi_f1": 0.9276257722859664,
+          "delta": 0.0010121560171777455
+        },
+        "vasc": {
+          "original_predicted_roi_f1": 0.875,
+          "largest_component_roi_f1": 0.851063829787234,
+          "delta": -0.02393617021276595
+        }
+      },
+      "note": "Exploratory post-hoc controlled evaluation; not independent external validation."
+    },
+    {
+      "fold": 4,
+      "n_images": 1705,
+      "reference_roi_macro_f1": 0.7367845889558217,
+      "original_predicted_roi_macro_f1": 0.7369317185553144,
+      "largest_component_roi_macro_f1": 0.7280646123164939,
+      "delta_vs_original_predicted_roi": -0.008867106238820477,
+      "original_accuracy": 0.8469208211143695,
+      "largest_accuracy": 0.8469208211143695,
+      "n_multicomponent": 608,
+      "n_changed_crops": 325,
+      "n_changed_statuses": 51,
+      "n_changed_class_predictions": 42,
+      "outcomes_vs_original_predicted_roi": {
+        "unchanged": 1663,
+        "corrected": 18,
+        "regression": 18,
+        "wrong_to_other_wrong": 6
+      },
+      "original_roi_status_counts": {
+        "fallback_large_crop": 397,
+        "roi": 1217,
+        "fallback_large_area": 38,
+        "fallback_edge": 53
+      },
+      "largest_component_status_counts": {
+        "fallback_large_crop": 353,
+        "roi": 1266,
+        "fallback_large_area": 38,
+        "fallback_edge": 48
+      },
+      "per_class": {
+        "akiec": {
+          "original_predicted_roi_f1": 0.6851851851851852,
+          "largest_component_roi_f1": 0.6153846153846154,
+          "delta": -0.06980056980056981
+        },
+        "bcc": {
+          "original_predicted_roi_f1": 0.7659574468085106,
+          "largest_component_roi_f1": 0.7845303867403315,
+          "delta": 0.018572939931820853
+        },
+        "bkl": {
+          "original_predicted_roi_f1": 0.6723646723646723,
+          "largest_component_roi_f1": 0.676056338028169,
+          "delta": 0.003691665663496657
+        },
+        "df": {
+          "original_predicted_roi_f1": 0.6875,
+          "largest_component_roi_f1": 0.6666666666666666,
+          "delta": -0.02083333333333337
+        },
+        "mel": {
+          "original_predicted_roi_f1": 0.6212534059945504,
+          "largest_component_roi_f1": 0.6270270270270271,
+          "delta": 0.0057736210324766946
+        },
+        "nv": {
+          "original_predicted_roi_f1": 0.926261319534282,
+          "largest_component_roi_f1": 0.9267872523686477,
+          "delta": 0.0005259328343656389
+        },
+        "vasc": {
+          "original_predicted_roi_f1": 0.8,
+          "largest_component_roi_f1": 0.8,
+          "delta": 0.0
+        }
+      },
+      "note": "Exploratory post-hoc controlled evaluation; not independent external validation."
+    },
+    {
+      "fold": 5,
+      "n_images": 1706,
+      "reference_roi_macro_f1": 0.7510093128997168,
+      "original_predicted_roi_macro_f1": 0.720765246726493,
+      "largest_component_roi_macro_f1": 0.7310152638916415,
+      "delta_vs_original_predicted_roi": 0.010250017165148506,
+      "original_accuracy": 0.8446658851113716,
+      "largest_accuracy": 0.8452520515826495,
+      "n_multicomponent": 472,
+      "n_changed_crops": 258,
+      "n_changed_statuses": 44,
+      "n_changed_class_predictions": 30,
+      "outcomes_vs_original_predicted_roi": {
+        "unchanged": 1676,
+        "wrong_to_other_wrong": 7,
+        "corrected": 12,
+        "regression": 11
+      },
+      "original_roi_status_counts": {
+        "fallback_large_crop": 384,
+        "roi": 1237,
+        "fallback_edge": 53,
+        "fallback_large_area": 32
+      },
+      "largest_component_status_counts": {
+        "fallback_large_crop": 368,
+        "roi": 1275,
+        "fallback_large_area": 32,
+        "fallback_edge": 31
+      },
+      "per_class": {
+        "akiec": {
+          "original_predicted_roi_f1": 0.6296296296296297,
+          "largest_component_roi_f1": 0.6111111111111112,
+          "delta": -0.01851851851851849
+        },
+        "bcc": {
+          "original_predicted_roi_f1": 0.7647058823529411,
+          "largest_component_roi_f1": 0.7590361445783133,
+          "delta": -0.00566973777462787
+        },
+        "bkl": {
+          "original_predicted_roi_f1": 0.7214854111405835,
+          "largest_component_roi_f1": 0.7214854111405835,
+          "delta": 0.0
+        },
+        "df": {
+          "original_predicted_roi_f1": 0.625,
+          "largest_component_roi_f1": 0.7027027027027027,
+          "delta": 0.07770270270270274
+        },
+        "mel": {
+          "original_predicted_roi_f1": 0.5581395348837209,
+          "largest_component_roi_f1": 0.5630498533724341,
+          "delta": 0.00491031848871315
+        },
+        "nv": {
+          "original_predicted_roi_f1": 0.9267241379310345,
+          "largest_component_roi_f1": 0.9263882910030133,
+          "delta": -0.0003358469280211329
+        },
+        "vasc": {
+          "original_predicted_roi_f1": 0.819672131147541,
+          "largest_component_roi_f1": 0.8333333333333334,
+          "delta": 0.013661202185792365
+        }
+      },
+      "note": "Exploratory post-hoc controlled evaluation; not independent external validation."
+    }
+  ],
+  "mean_paired_macro_f1_delta": 0.0007515898192400616,
+  "sample_sd_paired_macro_f1_delta": 0.00804724148151254,
+  "note": "Hypothesis designed after Fold 5 inspection; exploratory, not an unbiased test."
+}

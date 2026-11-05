@@ -1,6 +1,6 @@
 # Research source and reproducibility provenance
 
-**Updated:** 2026-10-19
+**Updated:** 2026-11-05 (automatic ROI evidence supplement; historical provenance retained)
 **Repository:** `Marsic228/Mole-Classification-HAM10000`
 **Evidence boundary:** checkpoint *inference* is reproduced within stated tolerances; training has **not** been reproduced from scratch. These are development-set evaluations, not clinical or independent external validation.
 
@@ -54,3 +54,29 @@ Full *observed* environment inventories exist in `reports/repro_audit/{convnext,
 - **UNRESOLVED:** independent evaluation versus training best-summary differences for ConvNeXt v11 CutMix folds 1, 2, and 5. Preserve both records until explained.
 - **RUN NAME SAFETY:** the former generic ConvNeXt trainer was removed from active experiments as a duplicate of the archived v14 SAM source. Future experiments must use distinct, versioned scripts and unique `RUN_NAME` values; never overwrite the natural-CE or Balanced Softmax outputs.
 - **NOT VERIFIED:** deterministic full retraining, exact original checkpoint-source attribution for the recovered historical snapshots, restored backup images/weights, rebuilt locked environments, and independent or clinical generalization.
+
+## Automatic ROI source and artifact chain — 2026-11-05
+
+This supplement records **currently available local evidence**. The segmentation code and reports are uncommitted; current fingerprints do not prove which exact bytes were executed during training. The two pre-existing tracked source modifications remain intact. Full original status and tracked diffs are preserved in the [Phase 1 manifest](../../reports/segmentation/phase1_artifact_manifest.json).
+
+| Stage | Source relationship | Saved artifact relationship |
+|---|---|---|
+| Frozen development folds | core/canonical_cv.py; splits/ham10000_dev_cv_v1.csv and .json | Same canonical held-out image and lesion memberships for segmentation and ROI classifiers |
+| Reference masks and input pairs | core/cross_validation_dataset.py (local segmentation additions); Masks_to_IsicId_mapping.csv; Masks.zip | RGB /255 at 256×192, bilinear image resize; nearest-neighbor mask resize and >127 binarization |
+| Segmentation training | experiments/segmentation/train_fold1.py through train_fold5.py; core/segmentation_unet.py; core/segmentation_losses.py | checkpoints/segmentation/small_unet_foldN_seed123_best.pt; reports/segmentation/small_unet_foldN_seed123/history.json and best_validation_per_image.csv |
+| Predicted ROI export | evaluation/export_predicted_roi_fold1.py through export_predicted_roi_fold5.py; preprocessing/roi_crop.py | data/processed_roi_predicted_foldN_v1/val/CLASS/IMAGE_224x224.jpg; all held-out images stored under val/ |
+| Fixed reference-ROI classifier | experiments/convnext/convnext_tiny_cv_train_roi_margin15.py | checkpoints/convnext_tiny_natural_ce_roi_margin15_seed123_foldN_best.pt and reports/convnext_tiny_natural_ce_roi_margin15_seed123_foldN_evaluation.json |
+| Reference/predicted comparison | evaluation/compare_predicted_roi_fold1.py through compare_predicted_roi_fold5.py | classifier_predicted_vs_reference_foldN.csv in each segmentation run directory; reference crops use original source_split folders |
+| Five-fold and visual diagnostics | roi_diagnostics/analyze_roi_5fold.py; roi_diagnostics/prepare_roi_visual_review.py; evaluation/preview_segmentation_failures.py | roi_diagnostics CSV/Markdown evidence; image-bearing visual-review ZIP remains local |
+| Original-resolution geometry | evaluation/roi_geometry_diagnostics.py | Fold 5 roi_geometry_diagnostic_fold5.csv and summary JSON; its Dice resolution differs from training-validation Dice |
+| Components and downstream LCC | evaluation/mask_component_audit.py; evaluation/evaluate_largest_component_roi.py | Fold 5 component audit; five largest_component_roi_comparison_foldN.csv/summary JSON files and largest_component_roi_5fold_summary.json |
+
+Here N means the corresponding canonical fold 1–5. Exact paths, sizes, availability and SHA-256 values are in the manifest, including all ten checkpoints, original project Python files, critical reports, metadata/mapping and both mask archives. The preserved original Python and report collections also have aggregate baseline fingerprints. No large assets were copied into Git.
+
+**Mask-provenance boundary:** the available reference masks are described in project diagnostics as reviewed/U-Net-assisted; their complete upstream generation/training provenance is not established by the local files. Dice **0.913393 ± 0.003422** measures agreement with those available masks. The separate ISIC2018_Task1_Training_GroundTruth.zip archive is present and fingerprinted, but its availability does not establish that this experiment was validated against independent expert ground truth. Independent annotation provenance, overlap and upstream leakage remain questions for stronger claims.
+
+**Evidence and decisions:** [D23–D25](Diploma_Experiment_History.md#d23-automatic-smallunet-to-roi-to-convnext--local-evidence-verified) contain the canonical interpretation; [verified results](../../reports/segmentation/automatic_roi_5fold_summary.json) separate fold means, sample SDs and pooled OOF. Predicted ROI classification is slightly worse than reference ROI; geometry associations are exploratory; post-hoc LCC filtering is rejected as default. Inference cost and classifier confidence were not measured. The older geometry narrative's adjusted odds ratio/CI/p-value were not independently reproduced in Phase 1.
+
+**Reproduction boundaries:** preprocessing resolution, threshold, ROI rules, JPEG encoding, classifier transforms, class order, AMP/batching and saved fold memberships must be preserved. The LCC evaluator reuses saved predictions for unchanged crops and replays original crops for changed cases before evaluating altered crops. No new inference or retraining was performed in Phase 1. The historical environment manifests remain historical observations, not a newly verified session environment or clean-build lockfile.
+
+**Next hypothesis:** controlled crop-scale/position variation in ConvNeXt training might improve predicted-input robustness; untested and not approved as a training experiment. Any future prediction-generation design must prevent held-out-lesion leakage. Historical baselines and model-selection decisions remain unchanged.

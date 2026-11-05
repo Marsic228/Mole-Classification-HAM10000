@@ -1,0 +1,70 @@
+{
+  "fold": 5,
+  "n_images": 1706,
+  "reference_roi_macro_f1": 0.7510093128997168,
+  "original_predicted_roi_macro_f1": 0.720765246726493,
+  "largest_component_roi_macro_f1": 0.7310152638916415,
+  "delta_vs_original_predicted_roi": 0.010250017165148506,
+  "original_accuracy": 0.8446658851113716,
+  "largest_accuracy": 0.8452520515826495,
+  "n_multicomponent": 472,
+  "n_changed_crops": 258,
+  "n_changed_statuses": 44,
+  "n_changed_class_predictions": 30,
+  "outcomes_vs_original_predicted_roi": {
+    "unchanged": 1676,
+    "wrong_to_other_wrong": 7,
+    "corrected": 12,
+    "regression": 11
+  },
+  "original_roi_status_counts": {
+    "fallback_large_crop": 384,
+    "roi": 1237,
+    "fallback_edge": 53,
+    "fallback_large_area": 32
+  },
+  "largest_component_status_counts": {
+    "fallback_large_crop": 368,
+    "roi": 1275,
+    "fallback_large_area": 32,
+    "fallback_edge": 31
+  },
+  "per_class": {
+    "akiec": {
+      "original_predicted_roi_f1": 0.6296296296296297,
+      "largest_component_roi_f1": 0.6111111111111112,
+      "delta": -0.01851851851851849
+    },
+    "bcc": {
+      "original_predicted_roi_f1": 0.7647058823529411,
+      "largest_component_roi_f1": 0.7590361445783133,
+      "delta": -0.00566973777462787
+    },
+    "bkl": {
+      "original_predicted_roi_f1": 0.7214854111405835,
+      "largest_component_roi_f1": 0.7214854111405835,
+      "delta": 0.0
+    },
+    "df": {
+      "original_predicted_roi_f1": 0.625,
+      "largest_component_roi_f1": 0.7027027027027027,
+      "delta": 0.07770270270270274
+    },
+    "mel": {
+      "original_predicted_roi_f1": 0.5581395348837209,
+      "largest_component_roi_f1": 0.5630498533724341,
+      "delta": 0.00491031848871315
+    },
+    "nv": {
+      "original_predicted_roi_f1": 0.9267241379310345,
+      "largest_component_roi_f1": 0.9263882910030133,
+      "delta": -0.0003358469280211329
+    },
+    "vasc": {
+      "original_predicted_roi_f1": 0.819672131147541,
+      "largest_component_roi_f1": 0.8333333333333334,
+      "delta": 0.013661202185792365
+    }
+  },
+  "note": "Exploratory post-hoc controlled evaluation; not independent external validation."
+}

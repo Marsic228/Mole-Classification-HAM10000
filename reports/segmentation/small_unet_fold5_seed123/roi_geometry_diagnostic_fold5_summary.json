@@ -1,0 +1,91 @@
+{
+  "fold": 5,
+  "n_images": 1706,
+  "outcome_counts": {
+    "unchanged": 1612,
+    "regression": 44,
+    "corrected": 28,
+    "wrong_to_other_wrong": 22
+  },
+  "predicted_crop_status_counts": {
+    "roi": 1237,
+    "fallback_large_crop": 384,
+    "fallback_edge": 53,
+    "fallback_large_area": 32
+  },
+  "outcomes_by_transition": [
+    {
+      "roi_vs_fallback_transition": "fallback -> fallback",
+      "outcome": "unchanged",
+      "count": 410
+    },
+    {
+      "roi_vs_fallback_transition": "fallback -> roi",
+      "outcome": "corrected",
+      "count": 1
+    },
+    {
+      "roi_vs_fallback_transition": "fallback -> roi",
+      "outcome": "regression",
+      "count": 4
+    },
+    {
+      "roi_vs_fallback_transition": "fallback -> roi",
+      "outcome": "unchanged",
+      "count": 55
+    },
+    {
+      "roi_vs_fallback_transition": "fallback -> roi",
+      "outcome": "wrong_to_other_wrong",
+      "count": 1
+    },
+    {
+      "roi_vs_fallback_transition": "roi -> fallback",
+      "outcome": "corrected",
+      "count": 3
+    },
+    {
+      "roi_vs_fallback_transition": "roi -> fallback",
+      "outcome": "regression",
+      "count": 4
+    },
+    {
+      "roi_vs_fallback_transition": "roi -> fallback",
+      "outcome": "unchanged",
+      "count": 51
+    },
+    {
+      "roi_vs_fallback_transition": "roi -> fallback",
+      "outcome": "wrong_to_other_wrong",
+      "count": 1
+    },
+    {
+      "roi_vs_fallback_transition": "roi -> roi",
+      "outcome": "corrected",
+      "count": 24
+    },
+    {
+      "roi_vs_fallback_transition": "roi -> roi",
+      "outcome": "regression",
+      "count": 36
+    },
+    {
+      "roi_vs_fallback_transition": "roi -> roi",
+      "outcome": "unchanged",
+      "count": 1096
+    },
+    {
+      "roi_vs_fallback_transition": "roi -> roi",
+      "outcome": "wrong_to_other_wrong",
+      "count": 20
+    }
+  ],
+  "mean_mask_dice_original_resolution": 0.9093919893514743,
+  "mean_reference_retention_for_predicted_roi": 0.9962104673640271,
+  "notes": [
+    "Development-fold diagnostic; not independent clinical validation.",
+    "Classification confidence is NOT in the saved prediction CSV and is not computed here.",
+    "Mask Dice here is recomputed at original resolution; it can differ from validation Dice at 256x192.",
+    "No classification or segmentation checkpoint was modified."
+  ]
+}

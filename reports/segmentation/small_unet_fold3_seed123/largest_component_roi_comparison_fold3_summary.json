@@ -1,0 +1,70 @@
+{
+  "fold": 3,
+  "n_images": 1706,
+  "reference_roi_macro_f1": 0.7568708344215451,
+  "original_predicted_roi_macro_f1": 0.7429608270205632,
+  "largest_component_roi_macro_f1": 0.7420010890802603,
+  "delta_vs_original_predicted_roi": -0.0009597379403029072,
+  "original_accuracy": 0.8493552168815943,
+  "largest_accuracy": 0.85052754982415,
+  "n_multicomponent": 588,
+  "n_changed_crops": 312,
+  "n_changed_statuses": 54,
+  "n_changed_class_predictions": 37,
+  "outcomes_vs_original_predicted_roi": {
+    "unchanged": 1669,
+    "corrected": 17,
+    "regression": 15,
+    "wrong_to_other_wrong": 5
+  },
+  "original_roi_status_counts": {
+    "roi": 1228,
+    "fallback_large_crop": 431,
+    "fallback_edge": 21,
+    "fallback_large_area": 26
+  },
+  "largest_component_status_counts": {
+    "roi": 1282,
+    "fallback_large_crop": 379,
+    "fallback_edge": 19,
+    "fallback_large_area": 26
+  },
+  "per_class": {
+    "akiec": {
+      "original_predicted_roi_f1": 0.6551724137931034,
+      "largest_component_roi_f1": 0.6491228070175439,
+      "delta": -0.006049606775559546
+    },
+    "bcc": {
+      "original_predicted_roi_f1": 0.7386363636363636,
+      "largest_component_roi_f1": 0.735632183908046,
+      "delta": -0.0030041797283176797
+    },
+    "bkl": {
+      "original_predicted_roi_f1": 0.7433155080213903,
+      "largest_component_roi_f1": 0.7354497354497355,
+      "delta": -0.007865772571654883
+    },
+    "df": {
+      "original_predicted_roi_f1": 0.6285714285714286,
+      "largest_component_roi_f1": 0.6486486486486487,
+      "delta": 0.020077220077220126
+    },
+    "mel": {
+      "original_predicted_roi_f1": 0.6334164588528678,
+      "largest_component_roi_f1": 0.6464646464646465,
+      "delta": 0.013048187611778728
+    },
+    "nv": {
+      "original_predicted_roi_f1": 0.9266136162687887,
+      "largest_component_roi_f1": 0.9276257722859664,
+      "delta": 0.0010121560171777455
+    },
+    "vasc": {
+      "original_predicted_roi_f1": 0.875,
+      "largest_component_roi_f1": 0.851063829787234,
+      "delta": -0.02393617021276595
+    }
+  },
+  "note": "Exploratory post-hoc controlled evaluation; not independent external validation."
+}

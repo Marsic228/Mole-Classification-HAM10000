@@ -2,10 +2,14 @@
 
 **Canonical experiment archive**  
 **Reconstructed:** 2026-10-07; **evidence reconciliation + local static and preflight audits:** 2026-10-14 (GitHub `4088b9d`; bulk audit 16:50:35Z; reproducibility preflight 17:14:34Z)  
-**Most recent experiment entry:** 2026-10-24 (mask-assisted ROI vs natural CE; D22).
+**Most recent experiment entries:** 2026-11-05 local evidence reconciliation (automatic ROI D23, Fold 5 geometry D24, LCC rejection D25). Historical entries retain their original evidence labels and dates.
 **Repository:** `Marsic228/Mole-Classification-HAM10000`
 
 ## Quick navigation
+
+- [D23: automatic SmallUNet → ROI → ConvNeXt evaluation](#d23-automatic-smallunet-to-roi-to-convnext--local-evidence-verified)
+- [D24: Fold 5 geometry association](#d24-fold-5-crop-geometry--exploratory-diagnostic)
+- [D25: largest-component filtering rejected as default](#d25-largest-connected-component-filtering--rejected-as-default)
 
 These links point to entries in this registry; they do not duplicate model status or metrics. For current decisions, check dated revisions and later supplements in the linked sections.
 
@@ -1078,6 +1082,64 @@ Mean per-class independent v18 F1 (computed from rounded fold values): `akiec .6
 **Decision:** **PROMISING / RETAIN AS ROI DEVELOPMENT CANDIDATE**, not a new universally accepted image-only standalone reference. Preserve original CE and historical v17 references; proceed with Stage 3 segmentation feasibility rather than treating the 0.7512 result as a deployable model.
 
 **Next research action:** audit mask shapes/components and quality, investigate confidence/uncertainty of **predicted** masks, define improved fallback rules, and design a segmentation evaluation using independent mask predictions (Dice/IoU) before measuring actual end-to-end classification and inference cost. One-major-factor controlled comparisons should be maintained.
+
+---
+
+## D23. Automatic SmallUNet to ROI to ConvNeXt — LOCAL EVIDENCE VERIFIED
+
+**Evidence reconciliation date:** 2026-11-05. The dates of individual training executions are not authenticated by this documentation update. This record extends D22 without changing its original results or decisions. **LOCAL EVIDENCE VERIFIED** means saved local CSV/JSON evidence was recalculated; the new source and reports remain uncommitted and no remote verification was performed.
+
+**Design:** five canonical lesion-safe folds, 8,530 development images from 6,349 lesions; SmallUNet predicts masks for its held-out fold, and the corresponding fixed D22 reference-ROI-trained ConvNeXt evaluates reference versus predicted ROI inputs. This tests input substitution with existing classifiers, not training a classifier on predicted crops. Selected checkpoints use development-fold validation, so these are not independent test estimates.
+
+**Segmentation protocol:** seed 123; inputs 256×192 (width×height); RGB /255; bilinear image and nearest-neighbor reference-mask resize; BCE + soft Dice; Adam lr 0.001; batch 4; up to 12 epochs, patience 4; a checkpoint improves when mean validation Dice exceeds the previous selected score by more than 0.0001. Binary prediction threshold is sigmoid ≥0.5. The saved per-image selected-validation means match the selection histories.
+
+**ROI protocol:** resize the binary prediction to original resolution with nearest-neighbor interpolation, then apply the unchanged D22 crop function: margin 0.15 per side, minimum dimension fraction 0.35, original aspect ratio, whole-image fallback for empty masks, foreground area >0.60, edge contact or an expanded crop too large to fit. Export 224×224 JPEGs. Reference crops retain original source_split folders; predicted fold crops are all under val/. ConvNeXt uses its original weights transform, class order and inference configuration.
+
+| Fold | Images | Selected U-Net epoch | Dice at 256×192 | Reference ROI macro F1 | Predicted ROI macro F1 | Paired difference |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 1707 | 9 | 0.912281 | 0.777217 | 0.788229 | +0.011012 |
+| 2 | 1706 | 12 | 0.918131 | 0.734088 | 0.724227 | -0.009862 |
+| 3 | 1706 | 9 | 0.915643 | 0.756871 | 0.742961 | -0.013910 |
+| 4 | 1705 | 12 | 0.911091 | 0.736785 | 0.736932 | +0.000147 |
+| 5 | 1706 | 8 | 0.909818 | 0.751009 | 0.720765 | -0.030244 |
+
+**Five-fold means ± sample SD:** Dice **0.913393 ± 0.003422**; reference ROI macro F1 **0.751194 ± 0.017390**; predicted ROI **0.742623 ± 0.027058**; paired predicted-minus-reference difference **−0.008571 ± 0.015487**. Predicted ROI coverage is **6,103/8,530 (71.5%)**, with fallback counts 2,027 large crop, 239 edge, 160 large area and 1 empty. Coverage is recomputed from the original-status columns of the five LCC comparison CSVs and checked against their saved summaries; it describes the unfiltered predicted pipeline.
+
+**Separate pooled development OOF aggregation:** reference macro F1 **0.752872**, predicted **0.743661**, from 8,530 unique held-out predictions. Do not mix these with fold means or compare them as equivalent to historical ensemble means.
+
+**Confirmed conclusion:** SmallUNet has high agreement with the available reference masks; fixed-classifier performance with predicted ROI inputs is slightly worse on average than with reference ROI inputs. This does not establish independent mask-ground-truth accuracy, a deployable benefit over every full-image baseline, or clinical validity.
+
+**Primary evidence:** [verified summary](../../reports/segmentation/automatic_roi_5fold_summary.json), [evidence guide](../../reports/segmentation/README.md), and [fingerprints with pre-edit Git state](../../reports/segmentation/phase1_artifact_manifest.json). Each fold directory contains history.json, best_validation_per_image.csv and classifier_predicted_vs_reference_foldN.csv. Source-to-checkpoint relationships are in [SOURCE_PROVENANCE.md](SOURCE_PROVENANCE.md#automatic-roi-source-and-artifact-chain--2026-11-05).
+
+## D24. Fold 5 crop geometry — EXPLORATORY DIAGNOSTIC
+
+**Evidence reconciliation date:** 2026-11-05. [Original-resolution geometry CSV](../../reports/segmentation/small_unet_fold5_seed123/roi_geometry_diagnostic_fold5.csv) and [saved summary](../../reports/segmentation/small_unet_fold5_seed123/roi_geometry_diagnostic_fold5_summary.json), generated by evaluation/roi_geometry_diagnostics.py. The [earlier narrative](../../reports/segmentation/roi_fold5_geometry_analysis_report.md) and [ranked regressions](../../reports/segmentation/fold5_regressions_ranked_by_geometry.csv) remain unchanged as historical evidence; their proposed LCC next step is superseded by D25.
+
+**Confirmed:** 44 regressions among 1,706 images, including 36 ROI→ROI regressions. All 36 ROI→ROI regressions retained all reference-mask foreground pixels. Restricting to the 1,014 reference-correct ROI→ROI images, regression frequency was **22/282 (7.80%)** when absolute final crop-area difference was ≥0.05 of original image area, versus **14/732 (1.91%)** below that threshold. These counts were recomputed from the saved CSV. The threshold is five percentage points of original image area, not a five-percent relative change in crop size.
+
+**Interpretation:** scale, position and surrounding-context changes plausibly contribute to errors. Geometry association does not establish causation; retaining reference-mask foreground does not guarantee preservation of all useful information. The threshold was selected post hoc, related images may share lesions, and detailed diagnostics concentrate on Fold 5. Do not promote it to a validated inference rule. The older narrative's adjusted odds ratio, confidence interval and p-value were not independently reproduced in Phase 1; a reproducible statistical-analysis entry point remains future work.
+
+## D25. Largest-connected-component filtering — REJECTED AS DEFAULT
+
+**Evidence reconciliation date:** 2026-11-05. The Fold 5 [component audit](../../reports/segmentation/small_unet_fold5_seed123/mask_component_audit_fold5_summary.json) described hypothetical crop effects; downstream classification was subsequently evaluated across all five folds with evaluation/evaluate_largest_component_roi.py. Preserve the earlier audit's narrower scope rather than interpreting its outcome labels as LCC classification measurements.
+
+**Design:** retain the largest 8-connected predicted-mask component, keeping existing threshold, ROI rules and fold-specific segmentation/classification checkpoints. Changed cases replay saved original-crop predictions before evaluating altered JPEG-roundtripped crops; unchanged crops reuse saved predictions. This is an exploratory post-hoc comparison motivated by Fold 5 inspection, not an unbiased independent test.
+
+| Fold | LCC ROI macro F1 | Difference versus original predicted ROI |
+|---:|---:|---:|
+| 1 | 0.783910 | -0.004320 |
+| 2 | 0.731881 | +0.007654 |
+| 3 | 0.742001 | -0.000960 |
+| 4 | 0.728065 | -0.008867 |
+| 5 | 0.731015 | +0.010250 |
+
+**Confirmed:** paired macro F1 change **+0.000752 ± 0.008047** (mean ± sample SD of five fold differences); improvement in **2/5 folds**, folds 2 and 5. The result is small and inconsistent. **Decision: reject LCC filtering as default preprocessing.** Preserve the negative result, original predicted ROI inputs and all checkpoints. [Original LCC summary](../../reports/segmentation/largest_component_roi_5fold_summary.json); per-fold CSV/JSON paths are listed in the [consolidated summary](../../reports/segmentation/automatic_roi_5fold_summary.json).
+
+**Shared limitations:** development-fold model selection; incomplete reference-mask provenance; Fold 5 concentration of detailed geometry diagnostics; post-hoc LCC investigation; inference cost and classifier confidence not measured; no external or clinical validation. Fingerprints establish present byte identity, not successful retraining or authenticated historical source attribution.
+
+**Next untested hypothesis:** training ConvNeXt with controlled crop-scale and crop-position variation might improve robustness to predicted-mask inputs. This has not been tested, is not an approved training experiment, and has no demonstrated benefit. Any future design must prevent held-out-lesion leakage when producing predicted training crops.
+
+**2026-11-05 execution update:** automatic ROI evaluation and the LCC investigation are complete within their development scope. This supersedes pending automatic-segmentation/LCC next-action statements in earlier dated records. Preserve D22, natural CE, the historical v17 standalone reference, rejected long-tail results and existing ensemble-candidate status. Stage 3 retains unresolved inference-cost, confidence, provenance and independent-validation questions. Phase 1 performed documentation and evidence preservation only; no models were evaluated or retrained and no Git inclusion decision was executed.
 
 ---
 
