@@ -22,6 +22,16 @@ N_IMAGES = 8530
 N_LESIONS = 6349
 
 
+def public_artifact_path(path: Path | str) -> str:
+    """Avoid absolute local paths in frozen provenance and terminal output."""
+    root = Path(__file__).resolve().parents[1]
+    try:
+        return Path(path).resolve().relative_to(root).as_posix()
+    except ValueError:
+        return "<EXTERNAL_PATH>"
+
+
+
 def checksum(path: Path) -> str:
     sha = hashlib.sha256()
     with path.open("rb") as handle:
@@ -140,9 +150,9 @@ def freeze(args):
         "name": "ham10000_dev_cv_v1",
         "use": "Future experiments ONLY; historical checkpoints retain their original folds",
         "origin": "convnext (previously audited venv, NOT PanDerm original environment)",
-        "origin_export": str(source),
+        "origin_export": public_artifact_path(source),
         "origin_export_sha256": original["csv_sha256"],
-        "origin_environment_manifest": str(origin_manifest),
+        "origin_environment_manifest": public_artifact_path(origin_manifest),
         "origin_package_versions": original.get("package_versions", {}),
         "origin_source_sha256": original.get("source_file_sha256", {}),
         "frozen_csv_sha256": checksum(dest),
@@ -159,9 +169,9 @@ def freeze(args):
     except Exception:
         dest.unlink(missing_ok=True)
         raise
-    print(f"LOCKED: {dest} ({len(assignments)} images, 5 folds)")
+    print(f"LOCKED: {public_artifact_path(dest)} ({len(assignments)} images, 5 folds)")
     print(f"SHA256: {data['frozen_csv_sha256']}")
-    print(f"Manifest: {dest_manifest}")
+    print(f"Manifest: {public_artifact_path(dest_manifest)}")
     for f, count in counts.items():
         print(f"  Fold {f}: train={N_IMAGES-count['val']}, val={count['val']}")
     print("Existing ConvNeXt/PanDerm checkpoints and exports are NOT changed.")

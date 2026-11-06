@@ -21,6 +21,15 @@ FIELDS = ("image_id", "lesion_id", "dx", "source_split", "fold")
 PACKAGES = ("scikit-learn", "torch", "torchvision", "timm", "pandas", "numpy")
 
 
+def public_repo_path(path: Path | str, project: Path) -> str:
+    """Use a repo-relative path; never serialize machine-specific external paths."""
+    try:
+        return Path(path).resolve().relative_to(project.resolve()).as_posix()
+    except ValueError:
+        return "<EXTERNAL_PATH>"
+
+
+
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -56,11 +65,14 @@ def export(args: argparse.Namespace) -> None:
     # Import exactly the splitting implementation used by existing ConvNeXt
     # code. Check its identity in the saved manifest for other projects.
     project = Path(args.project).resolve()
-    if not (project / "cross_validation_split.py").is_file():
-        raise FileNotFoundError(f"cross_validation_split.py not found in {project}")
+    if not (project / "core" / "cross_validation_split.py").is_file():
+        raise FileNotFoundError("Expected core/cross_validation_split.py is missing")
     os.chdir(project)
     sys.path.insert(0, str(project))
     module = importlib.import_module("core.cross_validation_split")
+    split_path = public_repo_path(module.__file__, project)
+    if split_path == "<EXTERNAL_PATH>":
+        raise ValueError("Split implementation must be imported from the repository")
 
     metadata = module.metadata.reset_index(drop=True)
     required = {"image_id", "lesion_id", "dx", "source_split"}
@@ -123,6 +135,8 @@ def export(args: argparse.Namespace) -> None:
         lesion_folds[lesion] = row["fold"]
 
     outdir = (project / args.output_dir).resolve()
+    if public_repo_path(outdir, project) == "<EXTERNAL_PATH>":
+        raise ValueError("Report output directory must be inside the repository")
     outdir.mkdir(parents=True, exist_ok=True)
     csv_file = outdir / f"{args.tag}_folds.csv"
     manifest_file = outdir / f"{args.tag}_environment.json"
@@ -135,15 +149,16 @@ def export(args: argparse.Namespace) -> None:
         writer.writerows(sorted(all_rows, key=lambda row: row["image_id"]))
 
     relevant_files = (
-        "cross_validation_split.py", "split_dataset.py", "split_config.py",
-        "validate_image_paths.py", "HAM10000_metadata.csv",
+        "core/cross_validation_split.py", "preprocessing/split_dataset.py",
+        "preprocessing/split_config.py", "preprocessing/validate_image_paths.py",
+        "HAM10000_metadata.csv",
     )
     manifest = {
         "tag": args.tag,
         "script_purpose": "original runtime fold assignment audit; not new canonical folds",
-        "project_root": str(project),
-        "split_module": str(Path(module.__file__).resolve()),
-        "python_executable": sys.executable,
+        "project_root": ".",
+        "split_module": split_path,
+        "python_executable": public_repo_path(sys.executable, project),
         "python": sys.version,
         "platform": platform.platform(),
         "package_versions": {package: version(package) for package in PACKAGES},
@@ -158,7 +173,7 @@ def export(args: argparse.Namespace) -> None:
         },
         "images": len(all_rows),
         "lesions": len(lesion_folds),
-        "csv_file": str(csv_file),
+        "csv_file": public_repo_path(csv_file, project),
         "csv_sha256": sha256_file(csv_file),
         "fold_stats": fold_stats,
     }
@@ -168,7 +183,7 @@ def export(args: argparse.Namespace) -> None:
     print(f"Exported {len(all_rows)} images, {len(lesion_folds)} lesions")
     for s in fold_stats:
         print(f"  Fold {s['fold']}: train={s['train']}, val={s['validation']}, overlap=0")
-    print(f"CSV: {csv_file}\nManifest: {manifest_file}")
+    print(f"CSV: {public_repo_path(csv_file, project)}\nManifest: {public_repo_path(manifest_file, project)}")
 
 
 def compare(args: argparse.Namespace) -> None:

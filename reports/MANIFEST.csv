@@ -1950,9 +1950,9 @@ reports/preprocessing_report.json,Other reports,Other,,artifact,122
 reports/preprocessing_sample_manifest.json,Other reports,Other,,artifact,1163
 reports/preprocessing_sample_report.json,Other reports,Other,,artifact,88
 reports/processed_sample_validation_report.json,Other reports,Other,,artifact,188
-reports/repro_audit/convnext_environment.json,Other reports,Other,,artifact,4308
+reports/repro_audit/convnext_environment.json,Other reports,Other,,artifact,4128
 reports/repro_audit/convnext_folds.csv,Other reports,Other,,artifact,307544
-reports/repro_audit/panderm_environment.json,Other reports,Other,,artifact,5708
+reports/repro_audit/panderm_environment.json,Other reports,Other,,artifact,5510
 reports/repro_audit/panderm_folds.csv,Other reports,Other,,artifact,307544
 reports/resnet18_discriminative_lr_epoch_1_evaluation_report.json,resnet18,ResNet,,artifact,1702
 reports/resnet18_discriminative_lr_epoch_1_report.json,resnet18,ResNet,,epoch,129
