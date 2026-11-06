@@ -108,7 +108,10 @@ Mole-Classification/
 │   └── recovered_sources/ # Preserved historical snapshots and provenance
 ├── splits/                # Frozen canonical fold assignments
 ├── reports/               # Experiment results
+├── scripts/               # Publication and maintenance utilities
+├── tests/                 # Regression tests
 ├── HAM10000_metadata.csv
+├── AGENTS.md              # Codex guidance and privacy rules
 ├── README.md
 ├── requirements.txt
 ├── data/                  # Local dataset; ignored by Git
@@ -119,6 +122,23 @@ Mole-Classification/
 ```
 
 Historical scripts are retained for research traceability. Some require their original Python environments, checkpoints and fold assignments.
+
+### Maintenance scripts and tests
+
+- [`AGENTS.md`](AGENTS.md) — working instructions for Codex, including privacy and publication safeguards.
+- [`scripts/prepublish_check.py`](scripts/prepublish_check.py) — read-only inspection of **staged** Git text blobs before a commit. Detects common sensitive-data patterns and blocks unsupported artifacts; it is not a guarantee that all secrets are absent.
+- [`tests/test_report_path_privacy.py`](tests/test_report_path_privacy.py) — regression tests for repository-relative paths in generated reports and detection of escaped private paths in JSON.
+
+Run these checks from the repository root before publishing changes:
+
+```powershell
+python -B -m unittest discover -s tests -p test_report_path_privacy.py -v
+# Stage only explicitly reviewed files before running the next check.
+python -B scripts/prepublish_check.py
+git diff --cached --check
+```
+
+The prepublication scan checks the Git index, **not** unstaged working-tree changes. Keep local datasets, backups, virtual environments, and credentials outside committed artifacts.
 
 ## Installation (Windows / PowerShell)
 
